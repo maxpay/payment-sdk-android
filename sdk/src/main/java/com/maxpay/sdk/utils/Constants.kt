@@ -6,13 +6,16 @@ class Constants{
     companion object {
         const val MAXPAY_CALLBACK_BROADCAST = "maxpay_callback_BROADCAST"
 
-
-        @StringDef(Extra.MAXPAY_DATA, Extra.RETURN_URL)
+        @StringDef(Extra.MAXPAY_DATA, Extra.RETURN_URL, Extra.MAXPAY_TERM_URL,
+                   Extra.MAXPAY_PARAQ, Extra.MAXPAY_MD)
         @Retention(AnnotationRetention.SOURCE)
         annotation class Extra {
             companion object {
                 const val MAXPAY_DATA = "maxpay.data"
                 const val RETURN_URL = "return_url"
+                const val MAXPAY_TERM_URL = "maxpay_term_url"
+                const val MAXPAY_PARAQ = "maxpay_paraq"
+                const val MAXPAY_MD = "maxpay_md"
             }
         }
 

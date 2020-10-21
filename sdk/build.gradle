@@ -18,9 +18,13 @@ android {
     }
 
     productFlavors {
-//        prod {}
+//        prod {
+//            // TODO add real URL for prod
+//            buildConfigField "String", "BASE_URL", "\"https://gateway-sandbox.maxpay.com/api/\""
+//        }
         dev {
-            buildConfigField "String", "BASE_URL", "\"https://maxpay.com/\""
+            buildConfigField "String", "BASE_URL", "\"https://gateway-sandbox.maxpay.com/api/\""
+
         }
     }
 

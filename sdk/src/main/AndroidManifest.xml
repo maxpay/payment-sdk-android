@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.maxpay.sdk">
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:name="com.maxpay.sdk.core.App"
@@ -9,6 +10,7 @@
             android:name=".SdkActivity"
             android:label="@string/title_activity_sdk"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".ui.MaxPayActivity"/>
     </application>
 
 </manifest>

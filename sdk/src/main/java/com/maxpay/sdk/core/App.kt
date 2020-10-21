@@ -1,6 +1,7 @@
 package com.maxpay.sdk.core
 
 import android.app.Application
+import com.maxpay.sdk.di.dataModule
 import com.maxpay.sdk.di.networkModule
 import com.maxpay.sdk.di.utils
 import com.maxpay.sdk.di.viewModelModule
@@ -17,7 +18,8 @@ class App: Application() {
                 listOf(
                     networkModule,
                     viewModelModule,
-                    utils
+                    utils,
+                    dataModule
                 )
             )
         }
