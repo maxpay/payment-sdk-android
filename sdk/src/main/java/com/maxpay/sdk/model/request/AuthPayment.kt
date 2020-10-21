@@ -12,7 +12,7 @@ data class AuthPayment(
     val transactionId: String,
     @SerializedName("transaction_type")
     val transactionType: TransactionType,
-    val amount: Int,
+    val amount: Float,
     val currency: String,
     @SerializedName("card_number")
     val cardNumber: String,

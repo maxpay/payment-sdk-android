@@ -88,7 +88,7 @@ class PaymentFragment : Fragment() {
                 "h6Zq7dLPYMcve1F2",
                 "AUTH3В$formatted",
                 TransactionType.AUTH3D,
-                9,
+                9F,
                 "EUR",
                 "4012000300001003",
                 "05",
