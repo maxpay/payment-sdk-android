@@ -15,10 +15,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         val sdk: SDKFacade = SdkFacadeImpl(applicationContext)
-        navController = findNavController(R.id.nav_host_fragment_main)
-        fab.setOnClickListener {
+//        navController = findNavController(R.id.nav_host_fragment_main)
+//        fab.setOnClickListener {
             sdk.init()
-        }
+//        }
 
 
     }
