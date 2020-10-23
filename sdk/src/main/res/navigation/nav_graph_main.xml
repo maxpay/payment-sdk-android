@@ -3,20 +3,29 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph_main.xml"
-    app:startDestination="@id/firstFragment">
+    app:startDestination="@id/paymentFragment">
 
     <fragment
-        android:id="@+id/firstFragment"
+        android:id="@+id/paymentFragment"
         android:name="com.maxpay.sdk.ui.PaymentFragment"
         android:label="fragment_first"
         tools:layout="@layout/fragment_payment" >
         <action
-            android:id="@+id/action_firstFragment_to_secondFragment"
-            app:destination="@id/secondFragment" />
+            android:id="@+id/action_firstFragment_to_threeDSFragment"
+            app:destination="@id/threeDSFragment" >
+        </action>
     </fragment>
     <fragment
-        android:id="@+id/secondFragment"
-        android:name="com.maxpay.sdk.ui.SecondFragment"
-        android:label="fragment_second"
-        tools:layout="@layout/fragment_second" />
+        android:id="@+id/threeDSFragment"
+        android:name="com.maxpay.sdk.ui.threeds.ThreeDSFragment"
+        android:label="fragment_three_d_s"
+        tools:layout="@layout/fragment_three_d_s" >
+        <action
+            android:id="@+id/action_threeDSFragment_to_paymentFragment"
+            app:destination="@id/paymentFragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@+id/paymentFragment"
+            app:popUpToInclusive="true">
+        </action>
+    </fragment>
 </navigation>

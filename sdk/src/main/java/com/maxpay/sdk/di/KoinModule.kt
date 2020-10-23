@@ -1,11 +1,15 @@
 package com.maxpay.sdk.di
 import android.app.Application
+import android.content.Context
 import com.maxpay.sdk.SDKFacade
 import com.maxpay.sdk.SdkFacadeImpl
+import com.maxpay.sdk.SdkHelper
 import com.maxpay.sdk.datamodule.api.Api
 import com.maxpay.sdk.datamodule.repository.MaxPayRepositoryImpl
 import com.maxpay.sdk.model.MaxPayRepository
 import com.maxpay.sdk.ui.MainViewModel
+import com.maxpay.sdk.utils.DateFormat
+import com.maxpay.sdk.utils.DateInterface
 import org.koin.android.ext.koin.androidApplication
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -15,9 +19,11 @@ val viewModelModule = module {
     viewModel { MainViewModel(androidApplication()) }
 }
 
-val networkModule = module {
-//    single { SDKFacade(get()) }
-    single <SDKFacade> { SdkFacadeImpl(androidContext()) }
+val facadeModule = module {
+//    single<Context> { androidContext() }
+//    single <SDKFacade> { SdkFacadeImpl() }
+//    single { SdkFacadeImpl() }
+    single { SdkHelper() }
 }
 
 val dataModule = module {
@@ -26,11 +32,9 @@ val dataModule = module {
 }
 
 val utils = module {
-//    factory<DateInterface> {
-//        return@factory DateFormat()
-//    }
-//    single { ColorSetter(get()) }
-//
+    factory<DateInterface> {
+        return@factory DateFormat()
+    }
 //    factory { WebViewUtil() }
 //
 //    single { FileUtil(get()) }

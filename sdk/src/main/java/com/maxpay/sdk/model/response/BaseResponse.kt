@@ -7,7 +7,10 @@ data class BaseResponse(
     val pareq: String,
     @SerializedName("acs_url")
     val accessUrl: String,
-    val reference: String
+    val reference: String,
+    val status: ResponseStatus,
+    val code: Int?,
+    val message: String?
 //    "sessionid": "905714-fba-5f8eb65c-1754af4a60f-1249",
 //    "transaction_unique_id": "AUTH3В_transaction_Levitskiy_1603280348",
 //    "token": "5f8eeb55-6d70-4802-bfa8-0cbaa94aef34",

@@ -3,7 +3,6 @@ package com.maxpay.sdk.datamodule.repository
 import com.maxpay.sdk.datamodule.api.Api
 import com.maxpay.sdk.datamodule.api.PayApi
 import com.maxpay.sdk.model.MaxPayRepository
-import com.maxpay.sdk.model.request.AuthPayment
 import com.maxpay.sdk.model.request.SalePayment
 import com.maxpay.sdk.model.response.BaseResponse
 import io.reactivex.Single
@@ -18,7 +17,7 @@ class MaxPayRepositoryImpl(
             .subscribeOn(Schedulers.io())
     }
 
-    override fun payAuth3D(authPayment: AuthPayment): Single<BaseResponse> {
+    override fun payAuth3D(authPayment: SalePayment): Single<BaseResponse> {
         return api.createApi(PayApi::class.java)
             .payAuth(authPayment)
             .subscribeOn(Schedulers.io())

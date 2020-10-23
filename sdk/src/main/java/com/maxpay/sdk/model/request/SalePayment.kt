@@ -12,7 +12,7 @@ data class SalePayment(
     val transactionId: String,
     @SerializedName("transaction_type")
     val transactionType: TransactionType,
-    val amount: Int,
+    val amount: Float,
     val currency: String,
     @SerializedName("card_number")
     val cardNumber: String,
@@ -37,21 +37,9 @@ data class SalePayment(
     @SerializedName("user_email")
     val userEmail: String,
     @SerializedName("user_ip")
-    val userIp: String
+    val userIp: String,
+    @SerializedName("callback_url")
+    val callBackUrl: String? = null,
+    @SerializedName("redirect_url")
+    val redirectUrl: String? = null
 )
-
-enum class TransactionType {
-    SALE, AUTH, SALE3D, REFUND, AUTH3D,
-    VOID, SETTLE, TOKENIZE, CHECK
-}
-//: 1,
-//"": "{{account}}",
-//"": "{{password}}",
-//"transaction_unique_id": "sale_request{{$timestamp}}",
-//"transaction_type": "SALE",
-//"amount": 11,
-//"currency": "USD",
-//"": "4012001038443335",
-//"": "04",
-//"": "2021",
-//}

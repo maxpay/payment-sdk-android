@@ -4,10 +4,12 @@ import androidx.annotation.StringDef
 
 class Constants{
     companion object {
+
         const val MAXPAY_CALLBACK_BROADCAST = "maxpay_callback_BROADCAST"
+        const val PERMISSION = 999
 
         @StringDef(Extra.MAXPAY_DATA, Extra.RETURN_URL, Extra.MAXPAY_TERM_URL,
-                   Extra.MAXPAY_PARAQ, Extra.MAXPAY_MD)
+                   Extra.MAXPAY_PARAQ, Extra.MAXPAY_MD, Extra.MAXPAY_INIT_DATA)
         @Retention(AnnotationRetention.SOURCE)
         annotation class Extra {
             companion object {
@@ -16,6 +18,8 @@ class Constants{
                 const val MAXPAY_TERM_URL = "maxpay_term_url"
                 const val MAXPAY_PARAQ = "maxpay_paraq"
                 const val MAXPAY_MD = "maxpay_md"
+
+                const val MAXPAY_INIT_DATA = "maxpay_init_data"
             }
         }
 

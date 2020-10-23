@@ -30,7 +30,7 @@ class MaxPayActivity : AppCompatActivity() {
 //        }
         val progressDialog = ProgressDialog(this)
         progressDialog.setMessage("Loading...")
-//        progressDialog.show()
+        progressDialog.show()
         var reqData: String? = null
         val url = this.intent.getStringExtra(Constants.Companion.Extra.RETURN_URL)
 //        this.intent.getStringExtra(Constants.Companion.Extra.MAXPAY_DATA)?.let {
@@ -47,7 +47,7 @@ class MaxPayActivity : AppCompatActivity() {
 //        }
         Log.d("Jackk", " $url PaymentActivity $reqData")
 
-        mWebView?.postUrl(url!!, reqData?.toByteArray())
+//        mWebView?.postUrl(url!!, reqData?.toByteArray())
 
 //        mWebView?.loadUrl("https://www.google.com/")
         mWebView?.settings?.javaScriptEnabled = true
