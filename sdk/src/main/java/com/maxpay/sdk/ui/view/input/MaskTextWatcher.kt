@@ -132,6 +132,8 @@ class MaskTextWatcher(
     }
 
     private fun removeLastLetterOrDigit(string: String): String {
+        if (string.isEmpty())
+            return string
         var str = string
         while (!str.last().isLetterOrDigit()) {
             str = str.removeRange(str.length - 1, str.length)

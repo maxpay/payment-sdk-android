@@ -6,5 +6,5 @@ import java.io.Serializable
 data class MaxPayInitData(
     val accountName: String,
     val accountPassword: String,
-    val transactionType: TransactionType
+    val apiVersion: Int
 ): Serializable

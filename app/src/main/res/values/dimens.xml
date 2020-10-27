@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="height_bottom_bar">64dp</dimen>
+    <dimen name="corner_radius">4dp</dimen>
+    <dimen name="corner_radius_small">6dp</dimen>
+    <dimen name="corner_radius_catalog_card">12dp</dimen>
+    <dimen name="corner_radius_medium">8dp</dimen>
+    <dimen name="corner_radius_bot_bar">16dp</dimen>
+    <dimen name="corner_radius_popups">16dp</dimen>
+
+    <dimen name="elevation_low">3dp</dimen>
+    <dimen name="elevation_mid">6dp</dimen>
+    <dimen name="elevation_high">9dp</dimen>
+
+    <dimen name="text_size_extra_large">24sp</dimen>
+    <dimen name="text_size_large">18sp</dimen>
+    <dimen name="text_size_extra_medium">16sp</dimen>
+    <dimen name="text_size_medium">14sp</dimen>
+    <dimen name="text_size_small">12sp</dimen>
+    <dimen name="text_size_extra_small">10sp</dimen>
+    <dimen name="text_size_extra_tiny">8sp</dimen>
+    <dimen name="text_size_mini_square_button">9sp</dimen>
+    <dimen name="text_size_tab_bar">8sp</dimen>
+</resources>

@@ -1,5 +1,6 @@
 package com.maxpay.sdk.utils
 
+import androidx.annotation.IntDef
 import androidx.annotation.StringDef
 
 class Constants{
@@ -18,8 +19,8 @@ class Constants{
                 const val MAXPAY_TERM_URL = "maxpay_term_url"
                 const val MAXPAY_PARAQ = "maxpay_paraq"
                 const val MAXPAY_MD = "maxpay_md"
-
                 const val MAXPAY_INIT_DATA = "maxpay_init_data"
+                const val MAXPAY_PAYMENT_DATA = "maxpay_payment_data"
             }
         }
 
@@ -29,6 +30,18 @@ class Constants{
             companion object {
                 const val ACCESS_TOKEN_KEY = "access_token_key"
                 const val USER_ACCESS_TOKEN_KEY = "user_access_token_key"
+            }
+        }
+
+        @IntDef(RequiredLength.CARD_INPUT_LENGTH, RequiredLength.CVV_INPUT_LENGTH,
+                RequiredLength.EXPIRY_INPUT_LENGTH, RequiredLength.ZIP_INPUT_LENGTH)
+        @Retention(AnnotationRetention.SOURCE)
+        annotation class RequiredLength {
+            companion object {
+                const val CARD_INPUT_LENGTH = 16
+                const val CVV_INPUT_LENGTH = 3
+                const val EXPIRY_INPUT_LENGTH = 2
+                const val ZIP_INPUT_LENGTH = 6
             }
         }
     }

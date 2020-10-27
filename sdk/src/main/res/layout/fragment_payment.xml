@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/margin_medium"
     tools:context=".ui.PaymentFragment">
 
     <com.google.android.material.textfield.TextInputLayout
@@ -13,21 +12,20 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:hint="@string/card_number"
-        android:layout_marginTop="@dimen/margin_medium"
+        android:layout_marginTop="@dimen/height_toolbar"
         app:layout_constraintEnd_toEndOf="parent"
         app:startIconDrawable="@drawable/ic_visa_logo"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <com.google.android.material.textfield.TextInputEditText
+        <com.maxpay.sdk.ui.view.input.MaskEditText
             android:id="@+id/etSurname"
             style="@style/AppInputEditText"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:inputType="number"
-            android:maxLength="@integer/max_length_confirm_code"
-            app:edit_text_mask="@string/mask_month" />
+            app:edit_text_mask="@string/mask_credit_card_number" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -48,7 +46,8 @@
             style="@style/AppInputEditText"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:inputType="number" />
+            android:inputType="number"
+            app:edit_text_mask="@string/mask_expiry"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -69,7 +68,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:inputType="number"
-            />
+            app:edit_text_mask="@string/mask_cvc"/>
     </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -90,7 +89,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:inputType="number"
-            />
+            app:edit_text_mask="@string/mask_zip_code"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
@@ -98,34 +97,10 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="@dimen/margin_medium"
         app:layout_constraintStart_toStartOf="parent"
         android:text="Send"
         app:layout_constraintTop_toBottomOf="@+id/ilExpiry" />
-
-
-
-<!--    <com.google.android.material.textfield.TextInputLayout-->
-<!--        android:id="@+id/ilSecondName"-->
-<!--        style="@style/AppInputLayoutStyle"-->
-<!--        android:layout_width="0dp"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginTop="@dimen/margin_medium"-->
-<!--        android:hint="Sh"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintHorizontal_chainStyle="packed"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@id/ilCardNumber">-->
-
-<!--        <com.google.android.material.textfield.TextInputEditText-->
-<!--            android:id="@+id/etSecondName"-->
-<!--            style="@style/AppInputEditText"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:inputType="number"-->
-<!--            android:maxLength="@integer/max_length_confirm_code"-->
-<!--            app:edit_text_mask="@string/mask_month" />-->
-
-<!--    </com.google.android.material.textfield.TextInputLayout>-->
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline13"
@@ -133,5 +108,55 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.5" />
+
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/layout_simple_toolbar"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+<!--    <com.google.android.material.textfield.TextInputLayout-->
+<!--        android:id="@+id/ilAutoComplete"-->
+<!--        style="@style/AppInputLayoutStyle"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:paddingLeft="@dimen/padding_medium"-->
+<!--        android:hint="@string/zip"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toEndOf="@id/ilCVC"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/payBtn">-->
+
+<!--        <com.maxpay.sdk.ui.view.input.MaskEditText-->
+<!--            android:id="@+id/etAu"-->
+<!--            style="@style/AppInputEditText"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:inputType="number"-->
+<!--            app:edit_text_mask="AutoComplete"/>-->
+<!--    </com.google.android.material.textfield.TextInputLayout>-->
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/ilAutoComplete"
+        style="@style/AppInputLayoutStyle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/padding_medium"
+        android:hint="@string/zip"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/ilCVC"
+        app:layout_constraintTop_toBottomOf="@+id/payBtn">
+
+        <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+            style="@style/Widget.MaterialComponents.AutoCompleteTextView.FilledBox"
+            android:id="@+id/etAu"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="text"
+            app:edit_text_mask="AutoComplete" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

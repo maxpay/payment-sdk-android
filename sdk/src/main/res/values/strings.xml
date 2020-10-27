@@ -8,7 +8,7 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
-    <string name="input_passport_series">ыы</string>
+    <string name="mask_credit_card_number">____ ____ ____ ____</string>
     <string name="mask_month"><![CDATA[>__]]></string>
     <string name="card_number">Card number</string>
     <string name="expiry">Expiry</string>
@@ -19,4 +19,9 @@
     <string name="Global_ok">Ok</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="mask_expiry">__/__</string>
+    <string name="mask_cvc">___</string>
+    <string name="mask_zip_code">_____</string>
+    <string name="Global_field_empty">Field is empty</string>
+    <string name="Global_field_not_vaild">Поле неверно заполненно</string>
 </resources>

@@ -8,5 +8,14 @@
     <fragment
         android:id="@+id/blankFragment"
         android:name="com.maxpay.testappmaxpay.ui.BlankFragment"
-        android:label="BlankFragment" />
+        android:label="BlankFragment" >
+        <action
+            android:id="@+id/action_blankFragment_to_basketFragment"
+            app:destination="@id/basketFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/basketFragment"
+        android:name="com.maxpay.testappmaxpay.ui.BasketFragment"
+        android:label="fragment_basket"
+        tools:layout="@layout/fragment_basket" />
 </navigation>

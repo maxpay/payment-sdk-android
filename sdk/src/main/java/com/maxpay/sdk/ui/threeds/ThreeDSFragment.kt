@@ -22,10 +22,6 @@ class ThreeDSFragment: FragmentWithToolbar(R.layout.fragment_three_d_s) {
     private val viewModel: MainViewModel by activityViewModels()
     override fun getCurrentViewModel() = viewModel
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

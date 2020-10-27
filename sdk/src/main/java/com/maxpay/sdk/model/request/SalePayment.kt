@@ -3,11 +3,11 @@ package com.maxpay.sdk.model.request
 import com.google.gson.annotations.SerializedName
 data class SalePayment(
     @SerializedName("api_version")
-    val apiVersion: Int,
+    val apiVersion: Int?,
     @SerializedName("merchant_account")
-    val merchantAccount: String,
+    val merchantAccount: String?,
     @SerializedName("merchant_password")
-    val merchantPassword: String,
+    val merchantPassword: String?,
     @SerializedName("transaction_unique_id")
     val transactionId: String,
     @SerializedName("transaction_type")
@@ -42,4 +42,6 @@ data class SalePayment(
     val callBackUrl: String? = null,
     @SerializedName("redirect_url")
     val redirectUrl: String? = null
-)
+) {
+    var shit = false
+}

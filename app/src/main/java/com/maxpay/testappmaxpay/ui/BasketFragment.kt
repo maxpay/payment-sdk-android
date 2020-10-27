@@ -7,15 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.fragment.findNavController
-import com.maxpay.sdk.model.request.TransactionType
 import com.maxpay.testappmaxpay.R
 import com.maxpay.testappmaxpay.model.CardsPaymentUI
 import com.maxpay.testappmaxpay.ui.adapter.ItemsAdapter
-import kotlinx.android.synthetic.main.fragment_blank.*
-import kotlinx.android.synthetic.main.fragment_blank.toolbar
+import kotlinx.android.synthetic.main.fragment_basket.*
+import kotlinx.android.synthetic.main.layout_bottom_bar_basket_screen_confirm_order.*
 
-class BlankFragment : Fragment() {
+class BasketFragment : Fragment() {
 
     private val viewModel: MainViewModel by activityViewModels()
 
@@ -23,9 +21,8 @@ class BlankFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val tt = TransactionType.AUTH3D
 
-        return inflater.inflate(R.layout.fragment_blank, container, false)
+        return inflater.inflate(R.layout.fragment_basket, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -33,19 +30,18 @@ class BlankFragment : Fragment() {
         initToolbar()
         setupRV()
         fillData()
-        btnNavigateToBasket.setOnClickListener {
-            findNavController().navigate(R.id.action_blankFragment_to_basketFragment)
-        }
+        tvOldPrice.text = "1200"
+        tvDiscountValue.text = "120"
+        tvFullPrice.text = "1080"
     }
+
     private fun initToolbar() {
         val toolbar = toolbar as Toolbar
-        toolbar.navigationIcon = null
-        toolbar.title = "Main screen"
+        toolbar.title = resources.getString(R.string.basket)
         toolbar.setNavigationOnClickListener {
             activity?.onBackPressed()
         }
     }
-
 
     private fun setupRV() {
 //        val dividerItemDecoration = SimpleDividerItemDecoration(
@@ -54,17 +50,18 @@ class BlankFragment : Fragment() {
 //                R.drawable.item_divider_grey
 //            ), SimpleDividerItemDecoration.VERTICAL
 //        )
-//        basketListRecyclerView.addItemDecoration(dividerItemDecoration)
-//        rvItems.adapter = ItemsAdapter().apply {
-//            selectedItemListener = {
-//
-//            }
-//        }
+//        rvItems.addItemDecoration(dividerItemDecoration)
+        rvItems.adapter = ItemsAdapter().apply {
+            selectedItemListener = {
+
+            }
+        }
     }
 
     private fun fillData() {
-//        (rvItems.adapter as? ItemsAdapter)?.setCheckOutItems(
-//            arrayListOf(CardsPaymentUI("Ssd"), CardsPaymentUI("1213"))
-//        )
+        (rvItems.adapter as? ItemsAdapter)?.setCheckOutItems(
+            arrayListOf(CardsPaymentUI("First cool item"),
+                CardsPaymentUI("Second cool item"))
+        )
     }
 }

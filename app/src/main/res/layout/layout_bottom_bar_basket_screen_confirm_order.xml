@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/height_bottom_bar"
+    android:padding="0dp"
+    android:theme="@style/BottomMaterialCard"
+    app:cardBackgroundColor="@color/colorBarTransparent"
+    app:cardElevation="@dimen/elevation_mid"
+    app:contentPadding="0dp"
+    tools:context=".ui.BasketFragment"
+    tools:layout_gravity="bottom">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_bottom_bar"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <TextView
+            android:id="@+id/tvOldPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="0dp"
+            android:paddingEnd="@dimen/margin_extra_small"
+            android:textColor="@color/colorHint"
+            android:textSize="@dimen/text_size_small"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/tvFullPrice"
+            app:layout_constraintStart_toStartOf="@id/tvFullPrice"
+            app:layout_constraintVertical_chainStyle="packed"
+            tools:text="999" />
+
+        <TextView
+            android:id="@+id/tvDiscountValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/padding_extra_small"
+            android:paddingEnd="@dimen/padding_extra_small"
+            android:textSize="@dimen/text_size_small"
+            app:layout_constraintBottom_toBottomOf="@id/tvOldPrice"
+            app:layout_constraintStart_toEndOf="@id/tvOldPrice"
+            app:layout_constraintTop_toTopOf="@id/tvOldPrice"
+            tools:text="-100" />
+
+        <TextView
+            android:id="@+id/tvFullPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_medium"
+            android:textSize="@dimen/text_size_large"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvOldPrice"
+            tools:text="899 $" />
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/priceBarrier"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:barrierDirection="right"
+            app:constraint_referenced_ids="tvFullPrice, tvDiscountValue" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnConfirmOrder"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="@dimen/margin_extra_medium"
+            android:layout_marginTop="@dimen/margin_extra_medium"
+            android:layout_marginEnd="@dimen/margin_extra_medium"
+            android:layout_marginBottom="@dimen/margin_small"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/priceBarrier"
+            app:layout_constraintTop_toTopOf="parent"
+            android:text="Купить" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>
