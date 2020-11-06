@@ -16,6 +16,7 @@
     <color name="colorRedText">#D9615C</color>
     <color name="colorPurpleText">@color/colorSecondary</color>
     <color name="colorHint">#9A9A9A</color>
+    <color name="colorCheckBox">#666666</color>
 
     <color name="colorDisabled">#9A9A9A</color>
     <color name="colorGrey">#9A9A9A</color>
@@ -46,4 +47,11 @@
     <color name="colorEmptyRatingStar">@color/colorDisableBackgroundPrimaryBtn</color>
     <color name="alertGreen">#D5F0D3</color>
     <color name="alertRed">#FFEBEB</color>
+    <color name="editTextBackgroundColor">#F9F9FB</color>
+    <color name="editTextHintColor">#8E8E93</color>
+
+    <color name="divider_line">#E4E4E4</color>
+    <color name="primary_green">#6DB026</color>
+
+
 </resources>

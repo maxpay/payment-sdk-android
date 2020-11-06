@@ -61,6 +61,61 @@
     <style name="CircularProgress" parent="Theme.AppCompat.Light">
         <item name="android:indeterminateTint">@color/colorPrimary</item>
     </style>
+<!--    <style name="InputEditText">-->
+<!--        <item name="android:textAllCaps">true</item>-->
+<!--        <item name="android:textColor">@color/colorDarkText</item>-->
+<!--        <item name="android:textColorHint">@color/editTextHintColor</item>-->
+<!--        <item name="android:textSize">@dimen/text_size_medium</item>-->
+<!--        <item name="android:layout_gravity">center</item>-->
+<!--        <item name="android:background">@android:color/transparent</item>-->
+<!--        <item name="android:maxLines">1</item>-->
+<!--    </style>-->
+
+
+    <style name="Btn" >
+<!--        <item name="android:textAppearance">@style/AppButtonTextAppearance</item>-->
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:stateListAnimator">@null</item>
+        <item name="android:background">@drawable/bg_btn_so</item>
+        <item name="backgroundTint">@android:color/transparent</item>
+        <item name="android:backgroundTintMode">src_over</item>
+        <item name="drawableTint">@color/colorSecondary</item>
+    </style>
+
+    <style name="AppButtonTextAppearance">
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textSize">@dimen/text_size_medium</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+
+    <style name="InputEditText">
+        <item name="android:textColor">@color/colorDarkText</item>
+        <item name="android:textColorHint">@color/editTextHintColor</item>
+        <item name="android:textSize">@dimen/text_size_medium</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:maxLines">1</item>
+    </style>
+
+    <style name="TextMedium">
+        <item name="android:textColor">@color/colorDarkText</item>
+        <item name="android:textColorHint">@color/editTextHintColor</item>
+        <item name="android:textSize">@dimen/text_size_medium</item>
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
+    <style name="TextLargeBold">
+        <item name="android:textColor">@color/colorDarkText</item>
+        <item name="android:textSize">@dimen/text_size_large</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextSmallCheckBox">
+        <item name="android:textColor">@color/colorCheckBox</item>
+        <item name="android:textSize">@dimen/text_size_small</item>
+        <item name="android:background">@android:color/transparent</item>
+    </style>
 
 
     <!--    <color name="colorWindowBackground">#fff</color>-->

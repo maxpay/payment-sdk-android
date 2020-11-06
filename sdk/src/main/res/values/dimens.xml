@@ -1,6 +1,8 @@
 <resources>
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="text_size_small">12sp</dimen>
     <dimen name="text_size_medium">16sp</dimen>
+    <dimen name="text_size_large">20sp</dimen>
     <dimen name="margin_huge">48dp</dimen>
 
 
@@ -23,4 +25,5 @@
     <dimen name="height_toolbar">56dp</dimen>
     <dimen name="height_top_tab_layout">44dp</dimen>
     <dimen name="height_top_tab_layout_and_toolbar">100dp</dimen>
+    <dimen name="corner_radius_card">12dp</dimen>
 </resources>

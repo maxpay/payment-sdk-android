@@ -24,4 +24,24 @@
     <string name="mask_zip_code">_____</string>
     <string name="Global_field_empty">Field is empty</string>
     <string name="Global_field_not_vaild">Поле неверно заполненно</string>
+    <string name="hint_email">your@emai.com</string>
+    <string name="payment_amount">Payment amount:</string>
+    <string name="hint_card_number">1234567891234567</string>
+    <string name="email_address">Email address</string>
+    <string name="expiration_date">Expiration Date</string>
+    <string name="hint_expiration_date">mm/yy</string>
+    <string name="hint_cvv">***</string>
+    <string name="card_holder_name">Card holder`s name</string>
+    <string name="hint_card_holder_name">Full name</string>
+    <string name="name">Name</string>
+    <string name="address">Address</string>
+    <string name="hind_addr">Address</string>
+    <string name="city">City</string>
+    <string name="hint_zip">55001</string>
+    <string name="hint_city">New York</string>
+    <string name="country">Country</string>
+    <string name="hint_country">USA</string>
+    <string name="billing_address">Billing Address</string>
+    <string name="auto_debt_text">I confirm that an automatic debit maybe made from my card if i buy new product or a subscription payment is required</string>
+    <string name="terms_of_use">By clicking Pay you agree to our Terms of Use and our Privacy Policy and confirm that you have read carefully and fully understand its provisions. You may receive email message notifications from Maxpay and can op at any time.</string>
 </resources>

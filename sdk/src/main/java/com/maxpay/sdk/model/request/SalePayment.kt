@@ -42,6 +42,4 @@ data class SalePayment(
     val callBackUrl: String? = null,
     @SerializedName("redirect_url")
     val redirectUrl: String? = null
-) {
-    var shit = false
-}
+)

@@ -1,31 +1,20 @@
 package com.maxpay.sdk.ui
 
-import android.content.Context
-import android.net.wifi.WifiManager
 import android.os.Bundle
-import android.text.format.Formatter
 import android.view.View
 import android.widget.ArrayAdapter
-import android.widget.AutoCompleteTextView
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.maxpay.sdk.R
 import com.maxpay.sdk.core.FragmentWithToolbar
-import com.maxpay.sdk.model.InputFormLength
 import com.maxpay.sdk.model.MaxPayInitData
 import com.maxpay.sdk.model.MaxpayPaymentData
-import com.maxpay.sdk.model.request.SalePayment
-import com.maxpay.sdk.model.request.TransactionType
 import com.maxpay.sdk.utils.Constants
 import com.maxpay.sdk.utils.DateInterface
-import com.maxpay.sdk.utils.extensions.isFormCompleted
-import com.maxpay.sdk.utils.extensions.isFormLengthValid
 import com.maxpay.sdk.utils.extensions.observeCommandSafety
 import kotlinx.android.synthetic.main.fragment_payment.*
 import org.koin.android.ext.android.inject
-import java.math.BigInteger
-import java.net.InetAddress
 import java.util.*
 
 class PaymentFragment: FragmentWithToolbar(R.layout.fragment_payment) {
@@ -48,7 +37,7 @@ class PaymentFragment: FragmentWithToolbar(R.layout.fragment_payment) {
 //        ipPlaying()
         val adapter = ArrayAdapter<String>(requireContext(),
             android.R.layout.simple_dropdown_item_1line, arrayListOf("Belgium", "France", "Italy", "Germany", "Spain", "Belarus"));
-        etAu.setAdapter(adapter);
+//        etAu.setAdapter(adapter);
 
 
 
@@ -72,7 +61,7 @@ class PaymentFragment: FragmentWithToolbar(R.layout.fragment_payment) {
         val some = Currency.getAvailableCurrencies()
         val s = some.elementAt(0)
         payBtn.setOnClickListener {
-            if (isFormLengthValid(InputFormLength(ilCardNumber, Constants.Companion.RequiredLength.CARD_INPUT_LENGTH) ))
+//            if (isFormLengthValid(InputFormLength(ilCardNumber, Constants.Companion.RequiredLength.CARD_INPUT_LENGTH) ))
                 viewModel.payAuth3D(maxpayPaymentData)
         }
     }
@@ -87,7 +76,7 @@ class PaymentFragment: FragmentWithToolbar(R.layout.fragment_payment) {
         toolbar.setNavigationOnClickListener {
             activity?.onBackPressed()
         }
-//        toolbar.inflateMenu(R.menu.backet_menu)
+//        toolbar.inflateMenu(R.menu.main_menu)
 //        toolbar.setOnMenuItemClickListener {
 //            when (it.itemId) {
 //                R.id.menuBurger -> basketViewModel.openTrashBasketMenu()

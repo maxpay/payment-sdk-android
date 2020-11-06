@@ -2,20 +2,22 @@ package com.maxpay.sdk.model
 
 import com.maxpay.sdk.model.request.TransactionType
 import java.io.Serializable
+import java.util.*
 
 data class MaxpayPaymentData(
-    val transactionType: TransactionType,
-    val amount: Float,
-    val firstName: String,
-    val lastName: String,
-    val cardHolder: String,
-    val address: String,
-    val city: String,
-    val state: String,
-    val zip: String,
-    val country: String,
-    val userPhone: String,
-    val userEmail: String
+    var transactionType: TransactionType = TransactionType.AUTH,
+    var amount: Float = 0F,
+    var firstName: String = "",
+    var lastName: String = "",
+    val cardHolder: String = "",
+    var address: String = "",
+    var city: String = "",
+    val state: String = "",
+    var zip: String = "",
+    var country: String = "",
+    var userPhone: String = "",
+    val userEmail: String = "",
+    var currency: String = ""
 ): Serializable
 //val amount: Float,
 //val currency: String,
