@@ -5,6 +5,9 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+<!--        <item name="android:buttonStyle">@style/AppPrimaryButton</item>-->
+<!--        <item name="materialButtonStyle">@style/AppPrimaryButton</item>-->
+        <item name="android:actionMenuTextColor">@color/colorWhite</item>
     </style>
 
     <style name="BottomMaterialCard">
@@ -14,5 +17,40 @@
         <item name="cornerSizeBottomRight">0dp</item>
         <item name="cornerSizeBottomLeft">0dp</item>
     </style>
+
+    <style name="AppBorderButtonViolet" parent="Widget.AppCompat.Button">
+        <item name="android:textAppearance">@style/AppBorderButtonTextAppearance</item>
+        <item name="android:textColor">@color/colorSecondary</item>
+        <item name="android:stateListAnimator">@null</item>
+        <item name="android:background">@drawable/bg_btn_border_violet</item>
+        <item name="backgroundTint">@android:color/transparent</item>
+        <item name="android:backgroundTintMode">src_over</item>
+        <item name="drawableTint">@color/colorSecondary</item>
+    </style>
+
+    <style name="AppPrimaryButton" parent="Widget.MaterialComponents.Button">
+        <item name="android:background">@drawable/bg_btn_solid</item>
+        <item name="android:textAppearance">@style/AppButtonTextAppearance</item>
+        <item name="android:stateListAnimator">@animator/btn_animator</item>
+        <item name="android:textColor">@color/colorLightText</item>
+        <item name="iconPadding">0dp</item>
+    </style>
+
+    <style name="AppBorderButtonTextAppearance">
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textSize">@dimen/text_size_small</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="AppButtonTextAppearance">
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textSize">@dimen/text_size_medium</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="ColorSwitchStyle">
+        <item name="colorControlActivated">@color/colorPrimary</item>
+    </style>
+
 
 </resources>

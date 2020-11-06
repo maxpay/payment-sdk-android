@@ -9,7 +9,7 @@
     app:cardBackgroundColor="@color/colorBarTransparent"
     app:cardElevation="@dimen/elevation_mid"
     app:contentPadding="0dp"
-    tools:context=".ui.BasketFragment"
+    tools:context=".ui.basket.BasketFragment"
     tools:layout_gravity="bottom">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -18,63 +18,46 @@
         app:layout_constraintBottom_toBottomOf="parent">
 
         <TextView
-            android:id="@+id/tvOldPrice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingStart="0dp"
-            android:paddingEnd="@dimen/margin_extra_small"
-            android:textColor="@color/colorHint"
-            android:textSize="@dimen/text_size_small"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/tvFullPrice"
-            app:layout_constraintStart_toStartOf="@id/tvFullPrice"
-            app:layout_constraintVertical_chainStyle="packed"
-            tools:text="999" />
-
-        <TextView
-            android:id="@+id/tvDiscountValue"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingStart="@dimen/padding_extra_small"
-            android:paddingEnd="@dimen/padding_extra_small"
-            android:textSize="@dimen/text_size_small"
-            app:layout_constraintBottom_toBottomOf="@id/tvOldPrice"
-            app:layout_constraintStart_toEndOf="@id/tvOldPrice"
-            app:layout_constraintTop_toTopOf="@id/tvOldPrice"
-            tools:text="-100" />
-
-        <TextView
             android:id="@+id/tvFullPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_medium"
-            android:textSize="@dimen/text_size_large"
+            android:textColor="@color/colorDarkText"
+            android:textSize="@dimen/margin_extra_large"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.91"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvOldPrice"
-            tools:text="899 $" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Total 899 $" />
 
-        <androidx.constraintlayout.widget.Barrier
-            android:id="@+id/priceBarrier"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:barrierDirection="right"
-            app:constraint_referenced_ids="tvFullPrice, tvDiscountValue" />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnConfirmOrder"
+            android:id="@+id/btnContinueShopping"
+            style="@style/AppBorderButtonViolet"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_margin="@dimen/margin_medium"
+            android:text="Continue shopping"
+            android:textAllCaps="false"
+            app:layout_constraintBottom_toTopOf="@+id/btnCheckout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnFormExample" />
+
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnCheckout"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="45dp"
             android:layout_marginStart="@dimen/margin_extra_medium"
             android:layout_marginTop="@dimen/margin_extra_medium"
             android:layout_marginEnd="@dimen/margin_extra_medium"
             android:layout_marginBottom="@dimen/margin_small"
+            android:textAllCaps="false"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/priceBarrier"
-            app:layout_constraintTop_toTopOf="parent"
-            android:text="Купить" />
+            app:layout_constraintStart_toStartOf="parent"
+            android:text="Checkout" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

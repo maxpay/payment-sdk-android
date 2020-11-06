@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="height_bottom_bar">64dp</dimen>
+    <dimen name="height_bottom_bar">164dp</dimen>
     <dimen name="corner_radius">4dp</dimen>
     <dimen name="corner_radius_small">6dp</dimen>
     <dimen name="corner_radius_catalog_card">12dp</dimen>
