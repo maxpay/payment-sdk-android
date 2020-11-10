@@ -1,8 +1,10 @@
 package com.maxpay.sdk.model
 
-import com.google.android.material.textfield.TextInputLayout
+import android.widget.EditText
+import com.google.android.material.card.MaterialCardView
 
 data class InputFormLength(
-    val input: TextInputLayout,
+    val input: EditText,
+    val card: MaterialCardView,
     val requiredLength: Int
 )

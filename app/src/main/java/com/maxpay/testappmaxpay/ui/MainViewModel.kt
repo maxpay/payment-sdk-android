@@ -4,12 +4,15 @@ import android.app.Application
 import com.maxpay.sdk.SDKFacade
 import com.maxpay.sdk.SdkFacadeImpl
 import com.maxpay.sdk.core.MyAndroidViewModel
+import com.maxpay.sdk.data.MaxpayCallback
+import com.maxpay.sdk.data.MaxpayResult
 import com.maxpay.sdk.model.MaxPayInitData
 import com.maxpay.sdk.model.MaxpayPaymentData
 import com.maxpay.testappmaxpay.model.ProductItemtUI
 import com.maxpay.testappmaxpay.ui.state.MainViewState
 import com.maxpay.testappmaxpay.ui.state.MainViewStateImpl
 import org.koin.core.KoinComponent
+import java.util.*
 
 class MainViewModel(application: Application)
     : MyAndroidViewModel(application), KoinComponent {
@@ -21,7 +24,8 @@ class MainViewModel(application: Application)
 
     init {
         if (_viewState.settings.value == null)
-            _viewState.settings.value = MaxpayPaymentData(currency = "USD")
+            _viewState.settings.value = MaxpayPaymentData(currency = Currency.getInstance(Locale.getDefault()))
+//            _viewState.settings.value = MaxpayPaymentData(currency = "USD")
     }
 
     fun addToBasket(item: ProductItemtUI) {
@@ -33,6 +37,13 @@ class MainViewModel(application: Application)
             }
         }?: kotlin.run {
             viewState.listOfProducts.value = mutableListOf(item)
+        }
+        calculateProducts()
+    }
+
+    fun removeFromBasket(item: ProductItemtUI) {
+        _viewState.listOfProducts.value?.let { list ->
+            list.remove(item)
         }
         calculateProducts()
     }
@@ -70,7 +81,16 @@ class MainViewModel(application: Application)
         )
 
         _viewState.settings.value?.let {
-            sdk.pay(it)
+            sdk.pay(it, object: MaxpayCallback {
+                override fun onResponseSuccess(result: MaxpayResult?) {
+                    _viewState.maxpayResult.value = result
+                }
+
+                override fun onResponceError(result: MaxpayResult?) {
+                    _viewState.maxpayResult.value = result
+                }
+
+            })
         }
     }
 }

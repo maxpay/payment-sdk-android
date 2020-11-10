@@ -48,13 +48,13 @@ object AlternativeDialogFactory {
         title: String,
         message: String,
         btnOkText: String,
-        onOk: () -> Unit
+        onOk: (() -> Unit)? = null
     ) {
         AlertDialog.Builder(context)
             .setTitle(title)
             .setMessage(message)
             .setPositiveButton(btnOkText) { _, _ ->
-                onOk.invoke()
+                onOk?.invoke()
             }
             .setCancelable(false)
             .show()

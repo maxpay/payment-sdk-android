@@ -58,7 +58,6 @@ class BasketFragment : Fragment() {
             observeCommandSafety(viewState.fullPrice) {
                 tvFullPrice.text ="Total: ${it.getPriceString()} ${viewModel.viewState.settings.value?.currency}"
             }
-
         }
     }
 
@@ -75,6 +74,13 @@ class BasketFragment : Fragment() {
         rvItems.adapter = BasketItemsAdapter().apply {
             selectedItemListener = {
                 viewModel.changeBasketItemCount(it)
+            }
+            removeItemListener = {
+                viewModel.removeFromBasket(it)
+                viewModel.viewState.listOfProducts.value?.let {
+                    (rvItems.adapter as? BasketItemsAdapter)?.setItems(it)
+                    (rvItems.adapter as? BasketItemsAdapter)?.notifyDataSetChanged()
+                }
             }
         }
     }

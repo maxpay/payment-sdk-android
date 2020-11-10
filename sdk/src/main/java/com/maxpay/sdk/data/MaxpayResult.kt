@@ -1,8 +1,16 @@
 package com.maxpay.sdk.data
 
-enum class MaxpayResult {
+import java.io.Serializable
+
+data class MaxpayResult(
+    val status: MaxpayResultStatus,
+    val message: String?
+): Serializable
+
+enum class MaxpayResultStatus {
     SUCCESS,
     REJECTED,
+    ERROR,
     UNDEF,
     CANCELED
 }

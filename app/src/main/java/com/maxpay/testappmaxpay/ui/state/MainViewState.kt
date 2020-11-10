@@ -1,10 +1,8 @@
 package com.maxpay.testappmaxpay.ui.state
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.maxpay.sdk.model.MaxPayInitData
+import com.maxpay.sdk.data.MaxpayResult
 import com.maxpay.sdk.model.MaxpayPaymentData
-import com.maxpay.sdk.model.response.BaseResponse
 import com.maxpay.testappmaxpay.model.ProductItemtUI
 
 interface MainViewState {
@@ -13,4 +11,5 @@ interface MainViewState {
      val fullPrice: MutableLiveData<Float>
 
      val settings: MutableLiveData<MaxpayPaymentData>
+     val maxpayResult: MutableLiveData<MaxpayResult>
 }

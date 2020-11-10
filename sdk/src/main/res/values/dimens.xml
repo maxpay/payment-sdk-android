@@ -26,4 +26,6 @@
     <dimen name="height_top_tab_layout">44dp</dimen>
     <dimen name="height_top_tab_layout_and_toolbar">100dp</dimen>
     <dimen name="corner_radius_card">12dp</dimen>
+    <dimen name="stroke_card_view">1dp</dimen>
+<!--    <item name="stroke_card_view" type="dimen" format="float">0.8dp</item>-->
 </resources>

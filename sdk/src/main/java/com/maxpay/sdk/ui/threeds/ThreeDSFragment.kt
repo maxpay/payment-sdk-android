@@ -13,6 +13,8 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.maxpay.sdk.R
 import com.maxpay.sdk.core.FragmentWithToolbar
+import com.maxpay.sdk.data.MaxpayResult
+import com.maxpay.sdk.data.MaxpayResultStatus
 import com.maxpay.sdk.ui.MainViewModel
 import kotlinx.android.synthetic.main.fragment_three_d_s.*
 import java.net.URLEncoder
@@ -81,10 +83,11 @@ class ThreeDSFragment: FragmentWithToolbar(R.layout.fragment_three_d_s) {
                     }
                     viewModel.viewState.isFromWebView.value = true
 //                    findNavController().navigate(ThreeDSFragmentDirections.actionThreeDSFragmentToPaymentFragment())
-                    activity?.runOnUiThread {
-                        this@ThreeDSFragment.findNavController()
-                            .navigate(ThreeDSFragmentDirections.actionThreeDSFragmentToPaymentFragment())
-                    }
+                    viewModel.sendBroadcastResult(activity, MaxpayResult(MaxpayResultStatus.SUCCESS, "Success"))
+//                    activity?.runOnUiThread {
+//                        this@ThreeDSFragment.findNavController()
+//                            .navigate(ThreeDSFragmentDirections.actionThreeDSFragmentToPaymentFragment())
+//                    }
                 }
             }
 

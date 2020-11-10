@@ -15,6 +15,7 @@ class BasketItemsAdapter :
     RecyclerView.Adapter<BasketItemsAdapter.CheckoutItemViewHolder>() {
     private val productsList: MutableList<ProductItemtUI> = mutableListOf()
     var selectedItemListener: ((ProductItemtUI) -> Unit)? = null
+    var removeItemListener: ((ProductItemtUI) -> Unit)? = null
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -30,7 +31,7 @@ class BasketItemsAdapter :
     override fun getItemCount(): Int = productsList.size
 
     override fun onBindViewHolder(holder: CheckoutItemViewHolder, position: Int) {
-        holder.bind(productsList[position], selectedItemListener)
+        holder.bind(productsList[position], selectedItemListener, removeItemListener)
     }
 
     fun setItems(list: MutableList<ProductItemtUI>) {
@@ -40,7 +41,9 @@ class BasketItemsAdapter :
     }
 
     class CheckoutItemViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
-        fun bind(item: ProductItemtUI, selectedItemListener: ((ProductItemtUI) -> Unit)?) {
+        fun bind(item: ProductItemtUI,
+                 selectedItemListener: ((ProductItemtUI) -> Unit)?,
+                 removeItemListener: ((ProductItemtUI) -> Unit)?) {
             view.run {
                 tvTitle.text = item.title
                 tvPrice.text = "${item.price.getPriceString()} ${item.currency.currencyCode}"
@@ -57,7 +60,7 @@ class BasketItemsAdapter :
                         selectedItemListener?.invoke(item)
                     }
                 }
-                btnRemove.setOnClickListener { selectedItemListener?.invoke(item) }
+                btnRemove.setOnClickListener { removeItemListener?.invoke(item) }
                 Glide.with(view)
                     .load(ContextCompat.getDrawable(view.context, item.pictureDrawable))
                     .into(ivProduct);

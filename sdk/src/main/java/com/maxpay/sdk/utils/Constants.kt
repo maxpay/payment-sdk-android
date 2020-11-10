@@ -21,6 +21,18 @@ class Constants{
                 const val MAXPAY_MD = "maxpay_md"
                 const val MAXPAY_INIT_DATA = "maxpay_init_data"
                 const val MAXPAY_PAYMENT_DATA = "maxpay_payment_data"
+
+                const val MAXPAY_BROADCAST_DATA = "broadcast_data"
+            }
+        }
+
+        @StringDef( Extra.MAXPAY_INIT_DATA)
+        @Retention(AnnotationRetention.SOURCE)
+        annotation class Links {
+            companion object {
+                const val MAXPAY_CONTACT = "https://maxpay.com/contact.html"
+                const val MAXPAY_PRIVACY = "https://maxpay.com/privacy/"
+                const val MAXPAY_TERMS = "https://maxpay.com/terms/"
             }
         }
 
@@ -39,6 +51,7 @@ class Constants{
         annotation class RequiredLength {
             companion object {
                 const val CARD_INPUT_LENGTH = 16
+                const val COUNTRY_INPUT_LENGTH = 3
                 const val CVV_INPUT_LENGTH = 3
                 const val EXPIRY_INPUT_LENGTH = 2
                 const val ZIP_INPUT_LENGTH = 6

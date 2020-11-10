@@ -36,7 +36,7 @@ class SettingsFragment : Fragment() {
     }
 
     private fun initUIelements() {
-        tvCurrency.text = viewModel.viewState.settings.value?.currency
+        tvCurrency.text = viewModel.viewState.settings.value?.currency?.currencyCode
         when(viewModel.viewState.settings.value?.transactionType) {
             TransactionType.AUTH -> segmentControlTransaction.setSelectedSegment(0)
             TransactionType.AUTH3D -> segmentControlTransaction.setSelectedSegment(1)
@@ -44,13 +44,18 @@ class SettingsFragment : Fragment() {
             TransactionType.SALE3D -> segmentControlTransaction.setSelectedSegment(3)
         }
         segmentControlTransaction.addOnSegmentClickListener {
-            it.column
             it.sectionData?.let {
                 viewModel.viewState.settings.value?.transactionType = TransactionType.valueOf(it.segmentData as String)
             }
+        }
 
-            val s = it
-            val t = ""
+        segmentedControlTheme.addOnSegmentClickListener {
+            when(it.column) {
+//                0 -> viewModel.viewState.settings.value.
+            }
+            it.sectionData?.let {
+                viewModel.viewState.settings.value?.transactionType = TransactionType.valueOf(it.segmentData as String)
+            }
         }
         tvChange.setOnClickListener {
             chooseCurrency()
@@ -70,9 +75,12 @@ class SettingsFragment : Fragment() {
         }
         builder.setAdapter(arrayAdapter
         ) { _, l ->
-            val currCode = Currency.getAvailableCurrencies().elementAt(l).currencyCode
-            viewModel.viewState.settings.value?.currency = currCode
-            tvCurrency.text = currCode
+//            val currCode = Currency.getAvailableCurrencies().elementAt(l).currencyCode
+//            viewModel.viewState.settings.value?.currency = currCode
+//            tvCurrency.text = currCode
+            val curr = Currency.getAvailableCurrencies().elementAt(l)
+            viewModel.viewState.settings.value?.currency = curr
+            tvCurrency.text = curr.currencyCode
         }
         val dialog = builder.create()
         dialog.show()

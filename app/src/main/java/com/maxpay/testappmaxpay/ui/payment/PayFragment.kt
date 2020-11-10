@@ -1,7 +1,6 @@
 package com.maxpay.testappmaxpay.ui.payment
 
 import android.app.AlertDialog
-import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,17 +9,11 @@ import android.widget.ArrayAdapter
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import com.maxpay.sdk.SDKFacade
-import com.maxpay.sdk.SdkFacadeImpl
-import com.maxpay.sdk.model.MaxPayInitData
-import com.maxpay.sdk.model.MaxpayPaymentData
-import com.maxpay.sdk.model.request.TransactionType
 import com.maxpay.testappmaxpay.R
+import com.maxpay.testappmaxpay.core.getPriceString
 import com.maxpay.testappmaxpay.ui.MainViewModel
 import kotlinx.android.synthetic.main.fragment_pay.*
-import kotlinx.android.synthetic.main.fragment_settings.*
 import kotlinx.android.synthetic.main.fragment_settings.toolbar
-import java.util.*
 
 
 class PayFragment : Fragment() {
@@ -42,6 +35,7 @@ class PayFragment : Fragment() {
     }
 
     private fun initUIelements() {
+        tvTotalAmount.text ="${viewModel.viewState.fullPrice.value?.getPriceString()} ${viewModel.viewState.settings.value?.currency}"
         btnPay.setOnClickListener {
             ilFirstName.editText?.let {
                 viewModel.viewState.settings.value?.firstName = it.text.toString()
@@ -65,20 +59,7 @@ class PayFragment : Fragment() {
             ilZip.editText?.let {
                 viewModel.viewState.settings.value?.zip = it.text.toString()
             }
-
-            val sdk: SDKFacade = SdkFacadeImpl(
-                MaxPayInitData(
-                    accountName = "Dinarys",
-                    accountPassword = "h6Zq7dLPYMcve1F2",
-                    apiVersion = 1
-                )
-//            object: onSuccess() {
-//
-//            }
-            )
-            viewModel.viewState.settings.value?.let {
-                sdk.pay(it)
-            }
+            viewModel.payWithSDK()
         }
     }
 

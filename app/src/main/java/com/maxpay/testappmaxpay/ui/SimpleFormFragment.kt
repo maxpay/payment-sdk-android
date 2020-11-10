@@ -1,7 +1,6 @@
 package com.maxpay.testappmaxpay.ui
 
 import android.app.AlertDialog
-import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,9 +11,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.maxpay.sdk.model.request.TransactionType
+import com.maxpay.sdk.utils.extensions.observeCommandSafety
+import com.maxpay.sdk.utils.extensions.showDialog
+import com.maxpay.sdk.utils.extensions.showInfo
 import com.maxpay.testappmaxpay.R
-import com.maxpay.testappmaxpay.ui.MainViewModel
-import kotlinx.android.synthetic.main.fragment_settings.*
 import kotlinx.android.synthetic.main.fragment_settings.segmentControlTransaction
 import kotlinx.android.synthetic.main.fragment_settings.toolbar
 import kotlinx.android.synthetic.main.fragment_settings.tvChange
@@ -42,7 +42,7 @@ class SimpleFormFragment : Fragment() {
     }
 
     private fun initUIelements() {
-        tvCurrency.text = viewModel.viewState.settings.value?.currency
+        tvCurrency.text = viewModel.viewState.settings.value?.currency?.currencyCode
         when(viewModel.viewState.settings.value?.transactionType) {
             TransactionType.AUTH -> segmentControlTransaction.setSelectedSegment(0)
             TransactionType.AUTH3D -> segmentControlTransaction.setSelectedSegment(1)
@@ -66,10 +66,19 @@ class SimpleFormFragment : Fragment() {
                 findNavController().navigate(R.id.action_simpleFormFragment_to_payFragment)
             else
                 viewModel.payWithSDK()
+
         }
         tvChange.setOnClickListener {
             chooseCurrency()
         }
+        viewModel.run {
+            observeCommandSafety(viewState.maxpayResult) {
+//                it.status
+                showDialog(it.status.toString(), it.message?: "Undefined error")
+//                showInfo(it.message)
+            }
+        }
+
     }
 
     private fun chooseCurrency() {
@@ -85,9 +94,13 @@ class SimpleFormFragment : Fragment() {
         }
         builder.setAdapter(arrayAdapter
         ) { _, l ->
-            val currCode = Currency.getAvailableCurrencies().elementAt(l).currencyCode
-            viewModel.viewState.settings.value?.currency = currCode
-            tvCurrency.text = currCode
+//            val currCode = Currency.getAvailableCurrencies().elementAt(l).currencyCode
+//            viewModel.viewState.settings.value?.currency = currCode
+//            tvCurrency.text = currCode
+
+            val curr = Currency.getAvailableCurrencies().elementAt(l)
+            viewModel.viewState.settings.value?.currency = curr
+            tvCurrency.text = curr.currencyCode
         }
         val dialog = builder.create()
         dialog.show()

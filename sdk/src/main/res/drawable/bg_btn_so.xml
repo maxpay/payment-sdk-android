@@ -3,7 +3,14 @@
     <item android:state_enabled="false">
         <shape>
             <corners android:radius="8dp" />
-            <solid android:color="@color/colorGrey" />
+            <solid android:color="@color/divider_line" />
+        </shape>
+    </item>
+
+    <item android:state_enabled="true">
+        <shape>
+            <corners android:radius="8dp" />
+            <solid android:color="@color/primary_green" />
         </shape>
     </item>
     <item android:state_focused="true">

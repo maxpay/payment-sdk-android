@@ -74,13 +74,13 @@ class MaxPayActivity : AppCompatActivity() {
                 }
                 if (url.contains(resultLink)) {
                     try {
-                        if (parseUri(Uri.parse(url)))
-                            sendBroadcastResult(MaxpayResult.SUCCESS)
-                        else
-                            sendBroadcastResult(null)
+//                        if (parseUri(Uri.parse(url)))
+//                            sendBroadcastResult(MaxpayResult.SUCCESS)
+//                        else
+//                            sendBroadcastResult(null)
                     } catch (var6: Exception) {
                         var6.printStackTrace()
-                        sendBroadcastResult(MaxpayResult.UNDEF)
+//                        sendBroadcastResult(MaxpayResult.UNDEF)
                     }
                     this@MaxPayActivity.finish()
                 }

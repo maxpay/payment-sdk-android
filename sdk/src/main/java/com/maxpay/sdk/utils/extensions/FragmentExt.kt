@@ -1,6 +1,7 @@
 package com.maxpay.sdk.utils.extensions
 
 import android.content.Context
+import android.graphics.Color
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
@@ -34,8 +35,8 @@ fun Fragment.showError(errorText: String) {
                 it,
                 getString(R.string.global_error),
                 errorText,
-                getString(R.string.Global_ok),
-                {})
+                getString(R.string.Global_ok)
+            ) {}
         }
     }
 }
@@ -58,12 +59,14 @@ fun Fragment.isFormCompleted(vararg input: TextInputLayout): Boolean {
 fun Fragment.isFormLengthValid(vararg inputLengthForm: InputFormLength): Boolean {
     var isValidate: Boolean? = null
     for (item in inputLengthForm) {
-        item.input.editText?.text?.let {
+        item.input.text?.let {
             val validText = it.toString().replace(" ", "")
                                          .replace("_", "")
                                          .replace("/", "")
             if (validText.length < item.requiredLength) {
-                item.input.error = getString(R.string.Global_field_not_vaild)
+                item.input.setTextColor(Color.RED)
+                item.card.strokeColor = Color.RED
+//                item.input.error = getString(R.string.Global_field_not_vaild)
                 isValidate = false
             } else {
                 if (isValidate != false)
@@ -79,13 +82,26 @@ fun Fragment.isFormLengthValid(vararg inputLengthForm: InputFormLength): Boolean
 }
 
 
-fun Fragment.showInfo(errorText: String, onOk: () -> Unit ) {
+fun Fragment.showInfo(errorText: String, onOk: (() -> Unit)? = null ) {
     if (activity != null && activity is AppCompatActivity) {
         context?.let {
             AlternativeDialogFactory.showAlertWithOneButton(
                 it,
                 getString(R.string.global_info),
                 errorText,
+                getString(R.string.Global_ok),
+                onOk)
+        }
+    }
+}
+
+fun Fragment.showDialog(title: String, text: String, onOk: (() -> Unit)? = null ) {
+    if (activity != null && activity is AppCompatActivity) {
+        context?.let {
+            AlternativeDialogFactory.showAlertWithOneButton(
+                it,
+                getString(R.string.global_info),
+                text,
                 getString(R.string.Global_ok),
                 onOk)
         }

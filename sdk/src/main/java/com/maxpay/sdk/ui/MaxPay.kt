@@ -19,42 +19,42 @@ class MaxPay()  {
                 intent.getSerializableExtra("data")?.let {
                     this@MaxPay.checkoutCallBack?.onResponseSuccess(it as? MaxpayResult)
                 }?: kotlin.run {
-                    this@MaxPay.checkoutCallBack?.onResponceError(MaxpayResult.REJECTED)
+//                    this@MaxPay.checkoutCallBack?.onResponceError(MaxpayResult.REJECTED)
                 }
                 context.unregisterReceiver(this)
             }
         }
     }
 
-    fun checkout(context: Context, data: String?, url: String?, callBack: MaxpayCallback) {
-        this.context = context
-        this.checkoutCallBack = callBack
-        context.registerReceiver(mReceiver,
-            IntentFilter(Constants.MAXPAY_CALLBACK_BROADCAST))
-        if (!data.isNullOrEmpty()) {
-            val intent = Intent(context, MaxPayActivity::class.java)
-            intent.putExtra(Constants.Companion.Extra.MAXPAY_DATA, URLEncoder.encode(data))
-            intent.putExtra(Constants.Companion.Extra.RETURN_URL, url)
-            intent.addFlags(268435456)
-            context.startActivity(intent)
-        } else
-            this@MaxPay.checkoutCallBack?.onResponceError(MaxpayResult.UNDEF)
-
-    }
-
-    fun threeDS(context: Context, md: String?, url: String?, paraq: String?, termUrl: String?, callBack: MaxpayCallback) {
-        this.context = context
-        this.checkoutCallBack = callBack
-        context.registerReceiver(mReceiver,
-            IntentFilter(Constants.MAXPAY_CALLBACK_BROADCAST))
-        if (!paraq.isNullOrEmpty()) {
-            val intent = Intent(context, MaxPayActivity::class.java)
-//            intent.putExtra(Constants.Companion.Extra.PORTMONE_MD, URLEncoder.encode(md)) //TODO put some extra
-            intent.addFlags(268435456)
-            context.startActivity(intent)
-        } else
-            this@MaxPay.checkoutCallBack?.onResponceError(MaxpayResult.UNDEF)
-
-    }
+//    fun checkout(context: Context, data: String?, url: String?, callBack: MaxpayCallback) {
+//        this.context = context
+//        this.checkoutCallBack = callBack
+//        context.registerReceiver(mReceiver,
+//            IntentFilter(Constants.MAXPAY_CALLBACK_BROADCAST))
+//        if (!data.isNullOrEmpty()) {
+//            val intent = Intent(context, MaxPayActivity::class.java)
+//            intent.putExtra(Constants.Companion.Extra.MAXPAY_DATA, URLEncoder.encode(data))
+//            intent.putExtra(Constants.Companion.Extra.RETURN_URL, url)
+//            intent.addFlags(268435456)
+//            context.startActivity(intent)
+//        } else
+//            this@MaxPay.checkoutCallBack?.onResponceError(MaxpayResult.UNDEF)
+//
+//    }
+//
+//    fun threeDS(context: Context, md: String?, url: String?, paraq: String?, termUrl: String?, callBack: MaxpayCallback) {
+//        this.context = context
+//        this.checkoutCallBack = callBack
+//        context.registerReceiver(mReceiver,
+//            IntentFilter(Constants.MAXPAY_CALLBACK_BROADCAST))
+//        if (!paraq.isNullOrEmpty()) {
+//            val intent = Intent(context, MaxPayActivity::class.java)
+////            intent.putExtra(Constants.Companion.Extra.PORTMONE_MD, URLEncoder.encode(md)) //TODO put some extra
+//            intent.addFlags(268435456)
+//            context.startActivity(intent)
+//        } else
+//            this@MaxPay.checkoutCallBack?.onResponceError(MaxpayResult.UNDEF)
+//
+//    }
 }
 

@@ -34,6 +34,9 @@ val utils = module {
     }
     single { PrefsUtils(get()) }
     single<IpHelper> { IpHelperImpl() }
+    single { CustomTabsHelper() }
+    single { ExpiryParser() }
+    factory { EditTextValidator() }
 //    factory { WebViewUtil() }
 //
 //    single { FileUtil(get()) }

@@ -22,9 +22,9 @@ data class SalePayment(
     val cardExpYear: String,
     val cvv: String,
     @SerializedName("first_name")
-    val firstName: String,
+    val firstName: String?,
     @SerializedName("last_name")
-    val lastName: String,
+    val lastName: String?,
     @SerializedName("card_holder")
     val cardHolder: String,
     val address: String,

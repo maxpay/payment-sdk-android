@@ -1,27 +1,42 @@
 package com.maxpay.sdk.ui
 
+import android.graphics.Color
+import android.graphics.drawable.Drawable
+import android.net.Uri
 import android.os.Bundle
+import android.text.*
 import android.view.View
-import android.widget.ArrayAdapter
 import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.maxpay.sdk.R
 import com.maxpay.sdk.core.FragmentWithToolbar
+import com.maxpay.sdk.data.MaxpayResult
+import com.maxpay.sdk.data.MaxpayResultStatus
+import com.maxpay.sdk.model.InputFormLength
 import com.maxpay.sdk.model.MaxPayInitData
 import com.maxpay.sdk.model.MaxpayPaymentData
-import com.maxpay.sdk.utils.Constants
-import com.maxpay.sdk.utils.DateInterface
+import com.maxpay.sdk.model.response.ResponseStatus
+import com.maxpay.sdk.utils.*
+import com.maxpay.sdk.utils.extensions.isFormLengthValid
+import com.maxpay.sdk.utils.extensions.makeLinks
 import com.maxpay.sdk.utils.extensions.observeCommandSafety
+import com.maxpay.sdk.utils.extensions.showInfo
 import kotlinx.android.synthetic.main.fragment_payment.*
+import kotlinx.android.synthetic.main.layout_billing_address.*
 import org.koin.android.ext.android.inject
-import java.util.*
+
 
 class PaymentFragment: FragmentWithToolbar(R.layout.fragment_payment) {
 
     private val viewModel: MainViewModel by activityViewModels()
     override fun getCurrentViewModel() = viewModel
     private val dateInterface: DateInterface by inject()
+    private val customTabsHelper: CustomTabsHelper by inject()
+    private val expiryParser: ExpiryParser by inject()
+    private val editTextValidator: EditTextValidator by inject()
     private lateinit var maxPayInitData: MaxPayInitData
     private lateinit var maxpayPaymentData: MaxpayPaymentData
 //    private val args: PaymentFragmentArgs by navArgs()
@@ -34,58 +49,128 @@ class PaymentFragment: FragmentWithToolbar(R.layout.fragment_payment) {
             viewModel.viewState.maxpayInitData.value = maxPayInitData
             maxpayPaymentData = it.getSerializableExtra(Constants.Companion.Extra.MAXPAY_PAYMENT_DATA) as MaxpayPaymentData
         }
-//        ipPlaying()
-        val adapter = ArrayAdapter<String>(requireContext(),
-            android.R.layout.simple_dropdown_item_1line, arrayListOf("Belgium", "France", "Italy", "Germany", "Spain", "Belarus"));
-//        etAu.setAdapter(adapter);
-
-
+        initUIElements()
 
         viewModel.run {
             observeCommandSafety(viewState.authPaymentResponse) {
-//                val i = Intent(context, MaxPayActivity::class.java).apply {
-//                    putExtra(Constants.Companion.Extra.RETURN_URL, it.accessUrl)
-//                    putExtra(Constants.Companion.Extra.MAXPAY_PARAQ, URLEncoder.encode(it.pareq))
-//                    putExtra(Constants.Companion.Extra.MAXPAY_MD, URLEncoder.encode(it.reference))
-//                    putExtra(Constants.Companion.Extra.MAXPAY_TERM_URL, URLEncoder.encode("https://google.com"))
-//                }
-//                startActivity(i)
-
                 viewState.isFromWebView.value?: kotlin.run { findNavController().navigate(R.id.action_firstFragment_to_threeDSFragment) }
+            }
 
+            observeCommandSafety(viewState.salePaymentResponse) {
+                val status = when(it.status) {
+                    ResponseStatus.success -> MaxpayResultStatus.SUCCESS
+                    ResponseStatus.decline -> MaxpayResultStatus.REJECTED
+                    ResponseStatus.error -> MaxpayResultStatus.ERROR
+                }
+
+                viewModel.sendBroadcastResult(activity, MaxpayResult(status, it.message))
             }
         }
 
         initToolbar()
 
-        val some = Currency.getAvailableCurrencies()
-        val s = some.elementAt(0)
-        payBtn.setOnClickListener {
-//            if (isFormLengthValid(InputFormLength(ilCardNumber, Constants.Companion.RequiredLength.CARD_INPUT_LENGTH) ))
-                viewModel.payAuth3D(maxpayPaymentData)
-        }
     }
 
-    private fun ipPlaying() {
+    private fun initUIElements() {
+        tvFullPrice.text = "${maxpayPaymentData.currency.symbol} ${maxpayPaymentData.amount}"
+
+        val customTabs = customTabsHelper
+            .getTabs(ContextCompat.getColor(requireContext(), R.color.primary_green))
+        tvTerms.makeLinks(
+            Pair("Terms of Use", View.OnClickListener {
+                customTabs.launchUrl(requireContext(), Uri.parse(Constants.Companion.Links.MAXPAY_TERMS))
+            }),
+            Pair("Privacy Policy", View.OnClickListener {
+                customTabs.launchUrl(requireContext(), Uri.parse(Constants.Companion.Links.MAXPAY_PRIVACY))
+            }),
+            Pair("Maxpay", View.OnClickListener {
+                customTabs.launchUrl(requireContext(), Uri.parse(Constants.Companion.Links.MAXPAY_CONTACT))
+            })
+        )
+        maxpayPaymentData.currency.currencyCode
+
+
+        editTextValidator.validateCardNumber(
+            InputFormLength(etCardNumber, cvCardNumber, Constants.Companion.RequiredLength.CARD_INPUT_LENGTH), ivCard)
+
+        editTextValidator.validateET(InputFormLength(etCvv, cvCvv, Constants.Companion.RequiredLength.CVV_INPUT_LENGTH))
+
+//        etCardNumber.addTextChangedListener {
+//            val img: Drawable?
+//            when (it?.get(0)) {
+//                '4' -> img = ContextCompat.getDrawable(requireContext(), R.drawable.ic_visa_logo)
+//                '5' -> img = ContextCompat.getDrawable(
+//                    requireContext(),
+//                    R.drawable.ic_logo_mastercard
+//                )
+//                else -> img = ContextCompat.getDrawable(requireContext(), R.drawable.ic_credit_card)
+//            }
+//            img?.let { ivCard.setImageDrawable(it) }
+//        }
+//
+//        etCardNumber.setOnFocusChangeListener{_, b ->
+//            if (!b && etCardNumber.text!!.length > 0)
+//                cvCardNumber.strokeColor = Color.RED
+//        }
+
+
+        etCountry.addTextChangedListener{
+            if(etCountry.currentTextColor == Color.RED) {
+                etCountry.setTextColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.colorDarkText
+                    )
+                )
+                cvCountry.strokeColor = Color.TRANSPARENT
+            }
+
+        }
+        etCountry.filters = arrayOf(InputFilter.AllCaps(), InputFilter.LengthFilter(3))
+        payBtn.setOnClickListener {
+//            viewModel.sendBroadcastResult(activity, null)
+            if (isFormLengthValid(InputFormLength(etCountry, cvCountry, Constants.Companion.RequiredLength.COUNTRY_INPUT_LENGTH) ))
+
+            if (checkBoxAutoDebt.isChecked && checkBoxTermsOfUse.isChecked) {
+                maxpayPaymentData.userEmail = etEmail.text.toString()
+                maxpayPaymentData.cardNumber = etCardNumber.text.toString().replace(" ", "")
+                maxpayPaymentData.expMonth = expiryParser.getMonth(etExpirationDate.text.toString())
+                maxpayPaymentData.expYear = expiryParser.getYear(etExpirationDate.text.toString())
+                maxpayPaymentData.country = etCountry.text.toString()
+                maxpayPaymentData.city = etCity.text.toString()
+                maxpayPaymentData.zip = etZip.text.toString()
+                maxpayPaymentData.cardHolder = etCardHolderName.text.toString()
+//                viewModel.payAuth3D(maxpayPaymentData)
+            }
+        }
+        etCountry.setText(maxpayPaymentData.country)
+        etCity.setText(maxpayPaymentData.city)
+        etZip.setText(maxpayPaymentData.zip)
+        etAddr.setText(maxpayPaymentData.address)
+        if (!maxpayPaymentData.firstName.isNullOrEmpty() || !maxpayPaymentData.lastName.isNullOrEmpty())
+            etName.setText("${maxpayPaymentData.firstName} ${maxpayPaymentData.lastName}")
+        checkBoxAutoDebt.setOnClickListener {
+            payBtn.isEnabled = checkBoxTermsOfUse.isChecked && checkBoxAutoDebt.isChecked
+        }
+
+        checkBoxTermsOfUse.setOnClickListener {
+            payBtn.isEnabled = checkBoxTermsOfUse.isChecked && checkBoxAutoDebt.isChecked
+        }
 
     }
 
     private fun initToolbar() {
         val toolbar = toolbar as Toolbar
-        toolbar.title = "Payment"
+        toolbar.title = resources.getString(R.string.payment_title)
         toolbar.setNavigationOnClickListener {
             activity?.onBackPressed()
         }
-//        toolbar.inflateMenu(R.menu.main_menu)
-//        toolbar.setOnMenuItemClickListener {
-//            when (it.itemId) {
-//                R.id.menuBurger -> basketViewModel.openTrashBasketMenu()
-//                R.id.menuSearch -> //todo Add search
-//            }
-//            return@setOnMenuItemClickListener true
-//        }
     }
 }
+
+//val adapter = ArrayAdapter<String>(requireContext(),
+//    android.R.layout.simple_dropdown_item_1line, arrayListOf("Belgium", "France", "Italy", "Germany", "Spain", "Belarus"));
+//        etAu.setAdapter(adapter);
 
 //val authPayment = SalePayment(
 //    1,

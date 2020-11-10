@@ -5,8 +5,8 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-<!--        <item name="android:buttonStyle">@style/AppPrimaryButton</item>-->
-<!--        <item name="materialButtonStyle">@style/AppPrimaryButton</item>-->
+        <item name="android:buttonStyle">@style/AppPrimaryButton</item>
+        <item name="materialButtonStyle">@style/AppPrimaryButton</item>
         <item name="android:actionMenuTextColor">@color/colorWhite</item>
     </style>
 

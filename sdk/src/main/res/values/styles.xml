@@ -73,7 +73,7 @@
 
 
     <style name="Btn" >
-<!--        <item name="android:textAppearance">@style/AppButtonTextAppearance</item>-->
+        <item name="android:textAppearance">@style/AppButtonTextAppearance</item>
         <item name="android:textColor">@color/colorWhite</item>
         <item name="android:stateListAnimator">@null</item>
         <item name="android:background">@drawable/bg_btn_so</item>
@@ -109,6 +109,12 @@
         <item name="android:textColor">@color/colorDarkText</item>
         <item name="android:textSize">@dimen/text_size_large</item>
         <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextLargeBoldPrice">
+        <item name="android:textSize">@dimen/text_size_large</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/primary_green</item>
     </style>
 
     <style name="TextSmallCheckBox">

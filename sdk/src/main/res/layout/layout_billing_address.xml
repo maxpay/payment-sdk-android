@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="@dimen/margin_medium"
-        android:text="@string/billing_address"
+        android:text="@string/payment_billing_header_title"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -31,7 +31,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="@dimen/margin_medium"
-        android:text="@string/name"
+        android:text="@string/payment_billing_name_title"
         android:textColor="@color/colorDarkText"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -54,7 +54,8 @@
             style="@style/InputEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/hint_card_holder_name"
+            android:hint="@string/payment_billing_name_placeholder"
+            android:inputType="textPersonName"
             android:padding="@dimen/margin_medium" />
     </androidx.cardview.widget.CardView>
 
@@ -64,7 +65,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="@dimen/margin_medium"
-        android:text="@string/address"
+        android:text="@string/payment_billing_address_title"
         android:textColor="@color/colorDarkText"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -87,7 +88,8 @@
             style="@style/InputEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/hind_addr"
+            android:hint="@string/payment_billing_address_placeholder"
+            android:inputType="textPersonName"
             android:padding="@dimen/margin_medium" />
     </androidx.cardview.widget.CardView>
 
@@ -105,7 +107,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="@dimen/margin_medium"
-        android:text="@string/city"
+        android:text="@string/payment_billing_city_title"
         android:textColor="@color/colorDarkText"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -129,7 +131,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/margin_medium"
-            android:hint="@string/hint_city" />
+            android:inputType="text"
+            android:hint="@string/payment_billing_city_placeholder" />
     </androidx.cardview.widget.CardView>
 
     <TextView
@@ -146,7 +149,7 @@
         app:layout_constraintBottom_toBottomOf="@id/tvED"/>
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/cvCvv"
+        android:id="@+id/cvZip"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_medium"
@@ -158,12 +161,12 @@
         app:layout_constraintTop_toBottomOf="@+id/tvED">
 
         <EditText
-            android:id="@+id/etCvv"
+            android:id="@+id/etZip"
             style="@style/InputEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/margin_medium"
-            android:hint="@string/hint_zip" />
+            android:hint="@string/payment_billing_zip_placeholder" />
     </androidx.cardview.widget.CardView>
 
     <TextView
@@ -172,13 +175,13 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="@dimen/margin_medium"
-        android:text="@string/country"
+        android:text="@string/payment_billing_country_title"
         android:textColor="@color/colorDarkText"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/cvCity"/>
 
-    <androidx.cardview.widget.CardView
+    <com.google.android.material.card.MaterialCardView
         android:id="@+id/cvCountry"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -186,6 +189,7 @@
         app:cardBackgroundColor="@color/editTextBackgroundColor"
         app:cardCornerRadius="@dimen/corner_radius_card"
         app:cardElevation="2dp"
+        app:strokeWidth="@dimen/stroke_card_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvCountry">
@@ -195,9 +199,12 @@
             style="@style/InputEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/hint_country"
+            android:hint="@string/payment_billing_country_placeholder"
+            android:inputType="textCapCharacters"
+            android:maxLength="3"
             android:padding="@dimen/margin_medium" />
-    </androidx.cardview.widget.CardView>
+
+    </com.google.android.material.card.MaterialCardView>
 
     <View
         android:layout_width="wrap_content"

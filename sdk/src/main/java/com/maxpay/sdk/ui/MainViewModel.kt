@@ -1,17 +1,22 @@
 package com.maxpay.sdk.ui
 
+import android.app.Activity
 import android.app.Application
 import android.content.Context.WIFI_SERVICE
+import android.content.Intent
 import android.net.wifi.WifiManager
 import android.text.format.Formatter
 import androidx.core.content.ContextCompat.getSystemService
 import com.maxpay.sdk.core.MyAndroidViewModel
+import com.maxpay.sdk.data.MaxpayResult
 import com.maxpay.sdk.model.MaxPayRepository
 import com.maxpay.sdk.model.MaxpayPaymentData
 import com.maxpay.sdk.model.request.SalePayment
+import com.maxpay.sdk.model.request.TransactionType
 import com.maxpay.sdk.model.response.ResponseStatus
 import com.maxpay.sdk.ui.state.PaymentViewState
 import com.maxpay.sdk.ui.state.PaymentViewStateImpl
+import com.maxpay.sdk.utils.Constants
 import com.maxpay.sdk.utils.DateInterface
 import com.maxpay.sdk.utils.IpHelper
 import com.maxpay.sdk.utils.StateEnum
@@ -35,18 +40,18 @@ class MainViewModel(application: Application)
         get() = _viewState
 
 
-    fun pay(salePayment: SalePayment) {
-        repository.paySale(salePayment)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeBy(
-                onSuccess = {
-                    _viewState.salePaymentResponse.value = it
-                },
-                onError = {
-                }
-            ).addTo(disposables)
-    }
+//    fun pay(salePayment: SalePayment) {
+//        repository.paySale(salePayment)
+//            .subscribeOn(Schedulers.io())
+//            .observeOn(AndroidSchedulers.mainThread())
+//            .subscribeBy(
+//                onSuccess = {
+//                    _viewState.salePaymentResponse.value = it
+//                },
+//                onError = {
+//                }
+//            ).addTo(disposables)
+//    }
 
     fun payAuth3D(salePayment: SalePayment) {
         state.value = StateEnum.LOADING
@@ -81,22 +86,22 @@ class MainViewModel(application: Application)
             "AUTH3В${dateInterface.getCurrentTimeStamp()}",
             paymentData.transactionType,
             paymentData.amount,
-            "EUR",
-            "4012000300001003", // TODO card data we must get from SDK
+            paymentData.currency.currencyCode,
+            paymentData.cardNumber,
             "05",
             "2019",
             "111",
-            paymentData.firstName,
-            paymentData.lastName,
-            paymentData.cardHolder,
-            paymentData.address,
-            paymentData.city,
-            paymentData.state,
-            paymentData.zip,
-            paymentData.country,
-            paymentData.userPhone,
-            paymentData.userEmail,
-            ipHelper.getUserIp()
+            firstName = paymentData.firstName,
+            lastName = paymentData.lastName,
+            cardHolder = paymentData.cardHolder,
+            address = paymentData.address,
+            city = paymentData.city,
+            state = paymentData.state,
+            zip = paymentData.zip,
+            country = paymentData.country,
+            userPhone = paymentData.userPhone,
+            userEmail = paymentData.userEmail,
+            userIp = ipHelper.getUserIp()
         )
         repository.payAuth3D(authPayment)
             .subscribeOn(Schedulers.io())
@@ -105,7 +110,12 @@ class MainViewModel(application: Application)
                 onSuccess = {
                     if (it.status == ResponseStatus.success) {
                         state.value = StateEnum.COMPLETE
-                        _viewState.authPaymentResponse.value = it
+                        when(authPayment.transactionType){
+                            TransactionType.AUTH3D, TransactionType.SALE3D ->
+                                _viewState.authPaymentResponse.value = it
+                            else -> _viewState.salePaymentResponse.value = it
+                        }
+
                     } else {
                         errorMessage = "${it.message}"
                         state.postValue(StateEnum.ERROR)
@@ -116,6 +126,16 @@ class MainViewModel(application: Application)
                     state.postValue(StateEnum.ERROR)
                 }
             ).addTo(disposables)
+    }
+
+    fun sendBroadcastResult(activity: Activity?, data: MaxpayResult?) {
+        activity?.finish()
+        val intent = Intent(Constants.MAXPAY_CALLBACK_BROADCAST)
+        data?.let {
+            intent.setPackage(activity?.packageName)
+            intent.putExtra(Constants.Companion.Extra.MAXPAY_BROADCAST_DATA, data)
+        }
+        activity?.sendBroadcast(intent)
     }
 
 

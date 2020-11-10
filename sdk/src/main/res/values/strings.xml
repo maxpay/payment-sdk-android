@@ -8,7 +8,7 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
-    <string name="mask_credit_card_number">____ ____ ____ ____</string>
+    <string name="mask_credit_card_number">#### #### #### ####</string>
     <string name="mask_month"><![CDATA[>__]]></string>
     <string name="card_number">Card number</string>
     <string name="expiry">Expiry</string>
@@ -17,31 +17,45 @@
     <string name="global_error">Error</string>
     <string name="global_info">Info</string>
     <string name="Global_ok">Ok</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="mask_expiry">__/__</string>
-    <string name="mask_cvc">___</string>
+    <string name="mask_expiry">##/##</string>
+    <string name="mask_cvc">###</string>
+    <string name="mask_country">###</string>
     <string name="mask_zip_code">_____</string>
     <string name="Global_field_empty">Field is empty</string>
     <string name="Global_field_not_vaild">Поле неверно заполненно</string>
-    <string name="hint_email">your@emai.com</string>
-    <string name="payment_amount">Payment amount:</string>
-    <string name="hint_card_number">1234567891234567</string>
-    <string name="email_address">Email address</string>
-    <string name="expiration_date">Expiration Date</string>
-    <string name="hint_expiration_date">mm/yy</string>
-    <string name="hint_cvv">***</string>
-    <string name="card_holder_name">Card holder`s name</string>
-    <string name="hint_card_holder_name">Full name</string>
-    <string name="name">Name</string>
-    <string name="address">Address</string>
-    <string name="hind_addr">Address</string>
-    <string name="city">City</string>
-    <string name="hint_zip">55001</string>
-    <string name="hint_city">New York</string>
-    <string name="country">Country</string>
-    <string name="hint_country">USA</string>
-    <string name="billing_address">Billing Address</string>
-    <string name="auto_debt_text">I confirm that an automatic debit maybe made from my card if i buy new product or a subscription payment is required</string>
-    <string name="terms_of_use">By clicking Pay you agree to our Terms of Use and our Privacy Policy and confirm that you have read carefully and fully understand its provisions. You may receive email message notifications from Maxpay and can op at any time.</string>
+
+    <string name="payment_screen_title">Add a Card</string>
+
+
+    <string name="payment_amount">Payment Amount:</string>
+    <string name="payment_email_title">Email Address</string>
+    <string name="payment_email_placeholder">youremail@gmail.com</string>
+    <string name="payment_cardnumber_title">Card number</string>
+    <string name="payment_cardnumber_placeholder">1234567891234567</string>
+    <string name="payment_expired_title">Expiration Date</string>
+    <string name="payment_expired_placeholder">mmyy</string>
+    <string name="payment_cvv_title">CVV</string>
+    <string name="payment_cvv_placeholder">123</string>
+    <string name="payment_cardholder_title">Card holder’s name</string>
+    <string name="payment_cardholder_placeholder">Full Name</string>
+    <string name="payment_billing_header_title">Billing Address</string>
+    <string name="payment_billing_name_title">Name</string>
+    <string name="payment_billing_name_placeholder">Full Name</string>
+    <string name="payment_billing_address_title">Address</string>
+    <string name="payment_billing_address_placeholder">Placeholder</string>
+    <string name="payment_billing_city_title">City</string>
+    <string name="payment_billing_city_placeholder">Placeholder</string>
+    <string name="payment_billing_zip_title">Zip</string>
+    <string name="payment_billing_zip_placeholder">55001</string>
+    <string name="payment_billing_country_title">Country</string>
+    <string name="payment_billing_country_placeholder">Placeholder</string>
+
+    <string name="terms_key">Terms of Use</string>
+    <string name="privacy_key">Privacy Policy</string>
+    <string name="maxpay_key">Maxpay</string>
+    <string name="payment_autodebit_confirmation">I confirm that an automatic debit maybe made from my card if i buy new product or a subscription payment is required</string>
+    <string name="payment_terms_and_privacy_confirmation">By clicking Pay you agree to our Terms of Use and our Privacy Policy and confirm that you have read carefully and fully understand its provisions. You may receive email message notifications from Maxpay and can op at any time.</string>
+    <string name="payment_pay_button_title">Pay now</string>
+    <string name="payment_title">Payment</string>
+
 </resources>

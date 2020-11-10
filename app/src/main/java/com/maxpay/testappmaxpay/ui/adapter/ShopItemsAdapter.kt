@@ -9,7 +9,6 @@ import com.bumptech.glide.Glide
 import com.maxpay.testappmaxpay.R
 import com.maxpay.testappmaxpay.core.getPriceString
 import com.maxpay.testappmaxpay.model.ProductItemtUI
-import kotlinx.android.synthetic.main.item_basket.view.*
 import kotlinx.android.synthetic.main.item_shop.view.*
 import kotlinx.android.synthetic.main.item_shop.view.ivProduct
 import kotlinx.android.synthetic.main.item_shop.view.tvPrice
@@ -50,9 +49,6 @@ class ShopItemsAdapter :
                 tvTitle.text = item.title
                 tvPrice.text = "${item.price.getPriceString()} ${item.currency.currencyCode}"
                 btnBuy.setOnClickListener { selectedItemListener?.invoke(item) }
-                btnRemove.setOnClickListener {
-
-                }
                 Glide.with(view)
                     .load(ContextCompat.getDrawable(view.context, item.pictureDrawable))
                     .into(ivProduct);
