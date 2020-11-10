@@ -53,7 +53,7 @@ class Constants{
                 const val CARD_INPUT_LENGTH = 16
                 const val COUNTRY_INPUT_LENGTH = 3
                 const val CVV_INPUT_LENGTH = 3
-                const val EXPIRY_INPUT_LENGTH = 2
+                const val EXPIRY_INPUT_LENGTH = 4
                 const val ZIP_INPUT_LENGTH = 6
             }
         }

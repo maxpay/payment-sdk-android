@@ -95,6 +95,8 @@ class PaymentFragment: FragmentWithToolbar(R.layout.fragment_payment) {
 
         editTextValidator.validateET(InputFormLength(etCvv, cvCvv, Constants.Companion.RequiredLength.CVV_INPUT_LENGTH))
 
+        editTextValidator.validateExpirationDate(InputFormLength(etExpirationDate, cvExpirDate, Constants.Companion.RequiredLength.EXPIRY_INPUT_LENGTH))
+
 //        etCardNumber.addTextChangedListener {
 //            val img: Drawable?
 //            when (it?.get(0)) {
@@ -140,7 +142,7 @@ class PaymentFragment: FragmentWithToolbar(R.layout.fragment_payment) {
                 maxpayPaymentData.city = etCity.text.toString()
                 maxpayPaymentData.zip = etZip.text.toString()
                 maxpayPaymentData.cardHolder = etCardHolderName.text.toString()
-//                viewModel.payAuth3D(maxpayPaymentData)
+                viewModel.payAuth3D(maxpayPaymentData)
             }
         }
         etCountry.setText(maxpayPaymentData.country)

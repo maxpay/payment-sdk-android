@@ -1,14 +1,14 @@
 package com.maxpay.testappmaxpay.ui.payment
 
-import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import com.maxpay.sdk.utils.extensions.observeCommandSafety
+import com.maxpay.sdk.utils.extensions.showDialog
 import com.maxpay.testappmaxpay.R
 import com.maxpay.testappmaxpay.core.getPriceString
 import com.maxpay.testappmaxpay.ui.MainViewModel
@@ -31,6 +31,11 @@ class PayFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initToolbar()
         initUIelements()
+        viewModel.run {
+            observeCommandSafety(viewState.maxpayResult) {
+                showDialog(it.status.toString(), it.message?: "Undefined error")
+            }
+        }
 
     }
 

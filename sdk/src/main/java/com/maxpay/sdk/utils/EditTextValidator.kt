@@ -16,6 +16,8 @@ import org.koin.core.inject
 
 class EditTextValidator : KoinComponent {
 
+    private val dateInterface: DateInterface by inject()
+
     fun validateET(inputForm: InputFormLength) {
         inputForm.input.addTextChangedListener {
             removeErrorFromField(inputForm)
@@ -28,21 +30,70 @@ class EditTextValidator : KoinComponent {
     }
 
     fun validateExpirationDate(inputForm: InputFormLength) {
+        val currYear = dateInterface.getYearTwoSymbols(System.currentTimeMillis())
         inputForm.input.addTextChangedListener {
             removeErrorFromField(inputForm)
+            setError(inputForm)
+            it?.let {
+
+                when(it.getOrNull(0)) {
+                    '0', '1' -> {
+                        removeErrorFromField(inputForm)
+                    }
+                    else -> setError(inputForm)
+                }
+
+                when(it.getOrNull(1)) {
+                    '0', '1', '2' -> { removeErrorFromField(inputForm) }
+                    else -> setError(inputForm)
+                }
+
+                it.getOrNull(3)?.let {
+                    if (it.toInt() < currYear[0].toInt())
+                        setError(inputForm)
+                    else
+                        removeErrorFromField(inputForm)
+                }
+
+                it.getOrNull(4)?.let { c ->
+                    if (it.contains("y"))
+                        return@let
+                    if (it.subSequence(3, 4).toString().toInt() < currYear.toInt())
+                        setError(inputForm)
+                    else
+                        removeErrorFromField(inputForm)
+                }
+
+
+//                when(it.getOrNull(3)) {
+//                    '0', '1', '2' -> { removeErrorFromField(inputForm) }
+//                    else -> setError(inputForm)
+//                }
+
+//                if (it.length > 0)
+//                    when (it.get(0)) {
+//                    '0', '1' -> {}
+//                    else -> {
+//                        inputForm.input.setTextColor(Color.RED)
+//                        inputForm.card.strokeColor = Color.RED
+//                    }
+//                }
+//                else if ( it.length == ) {
+
+//            }
+            }
         }
 
-        inputForm.input.setOnFocusChangeListener { _, b ->
-            if (!b)
-                isFormLengthValid(inputForm)
-        }
+//        inputForm.input.setOnFocusChangeListener { _, b ->
+//            if (!b)
+//                isFormLengthValid(inputForm)
+//        }
     }
 
 
     fun validateCardNumber(inputForm: InputFormLength, imageView: ImageView) {
         inputForm.input.addTextChangedListener {
             removeErrorFromField(inputForm)
-//            if (it?.get(0))
             it?.let {
                 val img = when (if (it.length > 0) it.get(0) else '0') {
                     '4' -> ContextCompat.getDrawable(
@@ -70,6 +121,11 @@ class EditTextValidator : KoinComponent {
 //                cardView.strokeColor = Color.RED
         }
 
+    }
+
+    private fun setError(inputForm: InputFormLength) {
+        inputForm.input.setTextColor(Color.RED)
+        inputForm.card.strokeColor = Color.RED
     }
 
     private fun removeErrorFromField(inputForm: InputFormLength) {
