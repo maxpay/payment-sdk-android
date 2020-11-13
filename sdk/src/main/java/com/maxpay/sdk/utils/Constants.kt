@@ -21,6 +21,7 @@ class Constants{
                 const val MAXPAY_MD = "maxpay_md"
                 const val MAXPAY_INIT_DATA = "maxpay_init_data"
                 const val MAXPAY_PAYMENT_DATA = "maxpay_payment_data"
+                const val MAXPAY_CUSTOM_THEME_DATA = "maxpay_custom_theme_data"
 
                 const val MAXPAY_BROADCAST_DATA = "broadcast_data"
             }

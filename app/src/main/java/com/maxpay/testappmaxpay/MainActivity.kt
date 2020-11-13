@@ -25,17 +25,8 @@ class MainActivity : AppCompatActivity() {
                 accountPassword = "h6Zq7dLPYMcve1F2",
                 apiVersion = 1
             )
-//            object: onSuccess() {
-//
-//            }
         )
         navController = findNavController(R.id.nav_host_fragment_main)
 
-//        fab.setOnClickListener {
-//            sdk.pay(MaxpayPaymentData(TransactionType.AUTH3D, 12F, "Jack",
-//                "Jacky", "Jack", "Win street 74", "New York",
-//                "New york", "49000", "USA", "+380509337788",
-//            "someEmail@gmail.com"))
-//        }
     }
 }

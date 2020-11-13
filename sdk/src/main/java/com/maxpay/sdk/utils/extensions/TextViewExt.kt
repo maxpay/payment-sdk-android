@@ -8,15 +8,17 @@ import android.view.View
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.maxpay.sdk.R
+import com.maxpay.sdk.model.MaxPayTheme
 
-fun TextView.makeLinks(vararg links: Pair<String, View.OnClickListener>) {
+fun TextView.makeLinks(vararg links: Pair<String, View.OnClickListener>, theme: MaxPayTheme?) {
+    val linkColor = theme?.let { it.hyperlinkColor?: R.color.primary_green }?: R.color.primary_green
     val spannableString = SpannableString(this.text)
     for (link in links) {
         val clickableSpan = object : ClickableSpan() {
 
             override fun updateDrawState(textPaint: TextPaint) {
                 // use this to change the link color
-                textPaint.color = ContextCompat.getColor(context, R.color.primary_green)
+                textPaint.color = ContextCompat.getColor(context, linkColor)
                 // toggle below value to enable/disable
                 // the underline shown below the clickable text
                 textPaint.typeface = Typeface.create(Typeface.DEFAULT, Typeface.BOLD);

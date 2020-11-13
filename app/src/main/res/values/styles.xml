@@ -27,6 +27,19 @@
         <item name="android:backgroundTintMode">src_over</item>
         <item name="drawableTint">@color/colorSecondary</item>
     </style>
+        <style name="AppInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
+            <item name="theme">@style/AppInputLayoutTheme</item>
+            <item name="boxBackgroundColor">@color/colorWindowBackground</item>
+            <item name="hintTextAppearance">@style/InputLayoutHintText</item>
+            <item name="android:textColorHint">@color/colorHint</item>
+            <item name="prefixTextColor">@color/colorDarkText</item>
+            <item name="boxStrokeColor">@color/colorLayoutThingsAttentionGrey</item>
+            <item name="paddingStart">@dimen/padding_medium</item>
+            <item name="paddingEnd">@dimen/padding_medium</item>
+            <item name="android:layout_marginStart">@dimen/margin_medium</item>
+            <item name="android:layout_marginEnd">@dimen/margin_medium</item>
+        </style>
+
 
     <style name="AppPrimaryButton" parent="Widget.MaterialComponents.Button">
         <item name="android:background">@drawable/bg_btn_solid</item>

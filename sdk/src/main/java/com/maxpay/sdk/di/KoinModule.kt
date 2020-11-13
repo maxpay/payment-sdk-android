@@ -1,10 +1,10 @@
 package com.maxpay.sdk.di
 import android.app.Application
-import android.content.SharedPreferences
 import com.maxpay.sdk.SdkHelper
 import com.maxpay.sdk.datamodule.api.Api
 import com.maxpay.sdk.datamodule.repository.MaxPayRepositoryImpl
 import com.maxpay.sdk.model.MaxPayRepository
+import com.maxpay.sdk.model.MaxPayTheme
 import com.maxpay.sdk.ui.MainViewModel
 import com.maxpay.sdk.utils.*
 import org.koin.android.ext.koin.androidApplication
@@ -36,7 +36,10 @@ val utils = module {
     single<IpHelper> { IpHelperImpl() }
     single { CustomTabsHelper() }
     single { ExpiryParser() }
-    factory { EditTextValidator() }
+    factory { (theme: MaxPayTheme?) -> EditTextValidator(theme) }
+    single { (theme: MaxPayTheme?) -> UIComponentThemeEditor(theme) }
+
+//    viewModel { (someValue : SomeValue) -> SomeViewModel(someValue ) }
 //    factory { WebViewUtil() }
 //
 //    single { FileUtil(get()) }

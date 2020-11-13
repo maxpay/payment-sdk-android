@@ -8,7 +8,7 @@ import android.widget.ProgressBar
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import com.maxpay.sdk.utils.CheckPermissionsUtils
-import io.github.inflationx.viewpump.ViewPumpContextWrapper
+//import io.github.inflationx.viewpump.ViewPumpContextWrapper
 
 abstract class ProgressActivity(@LayoutRes layoutId: Int) : AppCompatActivity(layoutId) {
 
@@ -32,9 +32,9 @@ abstract class ProgressActivity(@LayoutRes layoutId: Int) : AppCompatActivity(la
             permitAction.run()
     }
 
-    override fun attachBaseContext(newBase: Context) {
-        super.attachBaseContext(ViewPumpContextWrapper.wrap(newBase))
-    }
+//    override fun attachBaseContext(newBase: Context) {
+//        super.attachBaseContext(ViewPumpContextWrapper.wrap(newBase))
+//    }
 
     override fun onRequestPermissionsResult(
         requestCode: Int,

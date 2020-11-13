@@ -13,6 +13,7 @@
         android:fillViewport="true">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clFullView"
             android:layout_width="match_parent"
             android:paddingBottom="@dimen/height_toolbar"
             android:layout_marginTop="@dimen/height_toolbar"
@@ -62,7 +63,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tvFullPrice" />
 
-            <androidx.cardview.widget.CardView
+            <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cvEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -70,6 +71,7 @@
                 app:cardBackgroundColor="@color/editTextBackgroundColor"
                 app:cardCornerRadius="@dimen/corner_radius_card"
                 app:cardElevation="2dp"
+                app:strokeWidth="@dimen/stroke_card_view"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvEA">
@@ -82,7 +84,7 @@
                     android:hint="@string/payment_email_placeholder"
                     android:padding="@dimen/margin_medium" />
 
-            </androidx.cardview.widget.CardView>
+            </com.google.android.material.card.MaterialCardView>
 
 
             <TextView
@@ -208,7 +210,7 @@
                     style="@style/InputEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/payment_cvv_placeholder"
+                    android:hint="123"
                     android:inputType="number"
                     app:mask="@string/mask_cvc"
                     app:allowed_chars="1234567890"
@@ -228,7 +230,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/cvCvv" />
 
-            <androidx.cardview.widget.CardView
+            <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cvCardHolderName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -236,6 +238,7 @@
                 app:cardBackgroundColor="@color/editTextBackgroundColor"
                 app:cardCornerRadius="@dimen/corner_radius_card"
                 app:cardElevation="2dp"
+                app:strokeWidth="@dimen/stroke_card_view"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvCHN">
@@ -248,7 +251,7 @@
                     android:hint="@string/payment_cardholder_placeholder"
                     android:inputType="textPersonName"
                     android:padding="@dimen/margin_medium" />
-            </androidx.cardview.widget.CardView>
+            </com.google.android.material.card.MaterialCardView>
 
             <include
                 android:id="@+id/layoutBillingAddress"

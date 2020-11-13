@@ -1,7 +1,6 @@
 package com.maxpay.sdk.ui
 
 import android.graphics.Color
-import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
 import android.text.*
@@ -17,16 +16,15 @@ import com.maxpay.sdk.data.MaxpayResult
 import com.maxpay.sdk.data.MaxpayResultStatus
 import com.maxpay.sdk.model.InputFormLength
 import com.maxpay.sdk.model.MaxPayInitData
+import com.maxpay.sdk.model.MaxPayTheme
 import com.maxpay.sdk.model.MaxpayPaymentData
 import com.maxpay.sdk.model.response.ResponseStatus
 import com.maxpay.sdk.utils.*
-import com.maxpay.sdk.utils.extensions.isFormLengthValid
-import com.maxpay.sdk.utils.extensions.makeLinks
-import com.maxpay.sdk.utils.extensions.observeCommandSafety
-import com.maxpay.sdk.utils.extensions.showInfo
+import com.maxpay.sdk.utils.extensions.*
 import kotlinx.android.synthetic.main.fragment_payment.*
 import kotlinx.android.synthetic.main.layout_billing_address.*
 import org.koin.android.ext.android.inject
+import org.koin.core.parameter.parametersOf
 
 
 class PaymentFragment: FragmentWithToolbar(R.layout.fragment_payment) {
@@ -36,9 +34,15 @@ class PaymentFragment: FragmentWithToolbar(R.layout.fragment_payment) {
     private val dateInterface: DateInterface by inject()
     private val customTabsHelper: CustomTabsHelper by inject()
     private val expiryParser: ExpiryParser by inject()
-    private val editTextValidator: EditTextValidator by inject()
+    private val editTextValidator: EditTextValidator by inject() {
+        parametersOf((activity?.intent?.getSerializableExtra(Constants.Companion.Extra.MAXPAY_INIT_DATA) as MaxPayInitData).theme)
+    }
+    private val themeEditor: UIComponentThemeEditor by inject() {
+        parametersOf((activity?.intent?.getSerializableExtra(Constants.Companion.Extra.MAXPAY_INIT_DATA) as MaxPayInitData).theme)
+    }
     private lateinit var maxPayInitData: MaxPayInitData
     private lateinit var maxpayPaymentData: MaxpayPaymentData
+    private var maxpayTheme: MaxPayTheme? = null
 //    private val args: PaymentFragmentArgs by navArgs()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -48,8 +52,12 @@ class PaymentFragment: FragmentWithToolbar(R.layout.fragment_payment) {
             maxPayInitData = it.getSerializableExtra(Constants.Companion.Extra.MAXPAY_INIT_DATA) as MaxPayInitData
             viewModel.viewState.maxpayInitData.value = maxPayInitData
             maxpayPaymentData = it.getSerializableExtra(Constants.Companion.Extra.MAXPAY_PAYMENT_DATA) as MaxpayPaymentData
+
+            maxpayTheme =
+                (it.getSerializableExtra(Constants.Companion.Extra.MAXPAY_INIT_DATA) as MaxPayInitData).theme//it.getSerializableExtra(Constants.Companion.Extra.MAXPAY_CUSTOM_THEME_DATA) as? MaxPayTheme
         }
         initUIElements()
+        initThemeIfNeeded()
 
         viewModel.run {
             observeCommandSafety(viewState.authPaymentResponse) {
@@ -68,11 +76,21 @@ class PaymentFragment: FragmentWithToolbar(R.layout.fragment_payment) {
         }
 
         initToolbar()
+//        isFormLengthValid(InputFormLength(etCvv, cvCvv, Constants.Companion.RequiredLength.CVV_INPUT_LENGTH))
+
+    }
+
+    private fun initThemeIfNeeded() {
+        themeEditor.setInputStyle(view)
+        themeEditor.setMainPageStyle(view)
 
     }
 
     private fun initUIElements() {
         tvFullPrice.text = "${maxpayPaymentData.currency.symbol} ${maxpayPaymentData.amount}"
+        tvFullPrice.setOnClickListener{
+            isFormLengthValid(InputFormLength(etCvv, cvCvv, Constants.Companion.RequiredLength.CVV_INPUT_LENGTH))
+        }
 
         val customTabs = customTabsHelper
             .getTabs(ContextCompat.getColor(requireContext(), R.color.primary_green))
@@ -85,35 +103,16 @@ class PaymentFragment: FragmentWithToolbar(R.layout.fragment_payment) {
             }),
             Pair("Maxpay", View.OnClickListener {
                 customTabs.launchUrl(requireContext(), Uri.parse(Constants.Companion.Links.MAXPAY_CONTACT))
-            })
+            }),
+            theme = maxpayTheme
         )
-        maxpayPaymentData.currency.currencyCode
 
-
+        editTextValidator.validateETWithoutLength(InputFormLength(etEmail, cvEmail, 0))
         editTextValidator.validateCardNumber(
             InputFormLength(etCardNumber, cvCardNumber, Constants.Companion.RequiredLength.CARD_INPUT_LENGTH), ivCard)
-
         editTextValidator.validateET(InputFormLength(etCvv, cvCvv, Constants.Companion.RequiredLength.CVV_INPUT_LENGTH))
-
         editTextValidator.validateExpirationDate(InputFormLength(etExpirationDate, cvExpirDate, Constants.Companion.RequiredLength.EXPIRY_INPUT_LENGTH))
-
-//        etCardNumber.addTextChangedListener {
-//            val img: Drawable?
-//            when (it?.get(0)) {
-//                '4' -> img = ContextCompat.getDrawable(requireContext(), R.drawable.ic_visa_logo)
-//                '5' -> img = ContextCompat.getDrawable(
-//                    requireContext(),
-//                    R.drawable.ic_logo_mastercard
-//                )
-//                else -> img = ContextCompat.getDrawable(requireContext(), R.drawable.ic_credit_card)
-//            }
-//            img?.let { ivCard.setImageDrawable(it) }
-//        }
-//
-//        etCardNumber.setOnFocusChangeListener{_, b ->
-//            if (!b && etCardNumber.text!!.length > 0)
-//                cvCardNumber.strokeColor = Color.RED
-//        }
+        editTextValidator.validateETWithoutLength(InputFormLength(etCardHolderName, cvCardHolderName, 0))
 
 
         etCountry.addTextChangedListener{
@@ -130,9 +129,16 @@ class PaymentFragment: FragmentWithToolbar(R.layout.fragment_payment) {
         }
         etCountry.filters = arrayOf(InputFilter.AllCaps(), InputFilter.LengthFilter(3))
         payBtn.setOnClickListener {
-//            viewModel.sendBroadcastResult(activity, null)
-            if (isFormLengthValid(InputFormLength(etCountry, cvCountry, Constants.Companion.RequiredLength.COUNTRY_INPUT_LENGTH) ))
-
+            if (isFormCompleted(InputFormLength(etEmail, cvEmail, 0),
+                    InputFormLength(etCardHolderName, cvCardHolderName, 0))
+//                    InputFormLength(etName, cvName, 0),
+//                    InputFormLength(etAddr, cvAddress, 0),)
+                and
+                isFormLengthValid(InputFormLength(etCardNumber, cvCardNumber, Constants.Companion.RequiredLength.CARD_INPUT_LENGTH),
+                    InputFormLength(etExpirationDate, cvExpirDate, Constants.Companion.RequiredLength.EXPIRY_INPUT_LENGTH),
+                    InputFormLength(etCvv, cvCvv, Constants.Companion.RequiredLength.CVV_INPUT_LENGTH),
+                    InputFormLength(etCountry, cvCountry, Constants.Companion.RequiredLength.COUNTRY_INPUT_LENGTH))
+            )
             if (checkBoxAutoDebt.isChecked && checkBoxTermsOfUse.isChecked) {
                 maxpayPaymentData.userEmail = etEmail.text.toString()
                 maxpayPaymentData.cardNumber = etCardNumber.text.toString().replace(" ", "")
@@ -145,6 +151,7 @@ class PaymentFragment: FragmentWithToolbar(R.layout.fragment_payment) {
                 viewModel.payAuth3D(maxpayPaymentData)
             }
         }
+
         etCountry.setText(maxpayPaymentData.country)
         etCity.setText(maxpayPaymentData.city)
         etZip.setText(maxpayPaymentData.zip)

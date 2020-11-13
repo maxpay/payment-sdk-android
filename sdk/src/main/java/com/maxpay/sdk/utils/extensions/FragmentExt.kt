@@ -63,7 +63,8 @@ fun Fragment.isFormLengthValid(vararg inputLengthForm: InputFormLength): Boolean
             val validText = it.toString().replace(" ", "")
                                          .replace("_", "")
                                          .replace("/", "")
-            if (validText.length < item.requiredLength) {
+//            if (validText.length < item.requiredLength || validText == item.input.hint) {
+            if (validText.length < item.requiredLength || item.input.currentTextColor != item.input.textColors.defaultColor) {
                 item.input.setTextColor(Color.RED)
                 item.card.strokeColor = Color.RED
 //                item.input.error = getString(R.string.Global_field_not_vaild)
@@ -76,6 +77,21 @@ fun Fragment.isFormLengthValid(vararg inputLengthForm: InputFormLength): Boolean
         } ?: kotlin.run {
             item.input.error = getString(R.string.Global_field_empty)
             isValidate = false
+        }
+    }
+    return isValidate ?: true
+}
+
+fun Fragment.isFormCompleted(vararg inputLengthForm: InputFormLength): Boolean {
+    var isValidate: Boolean? = null
+    for (item in inputLengthForm) {
+        if (item.input.text.isNullOrEmpty()) {
+            item.input.setTextColor(Color.RED)
+            item.card.strokeColor = Color.RED
+            isValidate = false
+        } else {
+            if (isValidate != false)
+                isValidate = true
         }
     }
     return isValidate ?: true

@@ -91,8 +91,8 @@ class MainViewModel(application: Application)
             "05",
             "2019",
             "111",
-            firstName = paymentData.firstName,
-            lastName = paymentData.lastName,
+            firstName = paymentData.firstName?.takeIf { !it.isEmpty() }?: " ",
+            lastName = paymentData.lastName?.takeIf { !it.isEmpty() }?: " ",
             cardHolder = paymentData.cardHolder,
             address = paymentData.address,
             city = paymentData.city,
@@ -117,8 +117,13 @@ class MainViewModel(application: Application)
                         }
 
                     } else {
-                        errorMessage = "${it.message}"
-                        state.postValue(StateEnum.ERROR)
+                        when(authPayment.transactionType) {
+                            TransactionType.AUTH3D, TransactionType.SALE3D ->
+                                _viewState.authPaymentResponse.value = it
+                            else -> _viewState.salePaymentResponse.value = it
+                        }
+//                        errorMessage = "${it.message}"
+//                        state.postValue(StateEnum.ERROR)
                     }
                 },
                 onError = {
@@ -127,6 +132,25 @@ class MainViewModel(application: Application)
                 }
             ).addTo(disposables)
     }
+
+//    $resulting = strtolower('customproduct=[{"productId":"12345","productType":"fixedProduct","productName":"Product name","currency":"usd","amount":100}]|key=pkTest_c4tgzRjQBO4Fa4d7f2OoJkIutFMGiCCC|skTest_aKuKHhan1arfwrYBXSUja46ax4qrA111');
+//    $signature = hash("sha256", $resulting);
+//    strtolower('customproduct=[{"productId":"12345","productType":"fixedProduct","productName":"Product name","currency":"usd","amount":100}]|
+//    key=pkTest_c4tgzRjQBO4Fa4d7f2OoJkIutFMGiCCC|skTest_aKuKHhan1arfwrYBXSUja46ax4qrA111');
+
+//    <form method="post" action="https://hpp.maxpay.com/hpp">
+//    <input type='hidden' name="key" value="pkTest_c4tgzRjQBO4Fa4d7f2OoJkIutFMGiCCC">
+//    <input type='hidden' name="customproduct" value="[{'productId':'1','productType':'fixedProduct','productName':'Product name','currency':'USD','amount':100}]">
+//    <input type='hidden' name="signature" value="put_a_signature_value_here">
+//    <input type='submit' name="Pay" value="Pay">
+//    </form>
+
+//    ?php
+
+//key - it's Public key from merchant portal (my.maxpay.com -> Payment pages -> General -> API keys).
+//The last parameter is Private key from merchant portal (my.maxpay.com -> Payment pages -> General -> API keys).
+
+
 
     fun sendBroadcastResult(activity: Activity?, data: MaxpayResult?) {
         activity?.finish()

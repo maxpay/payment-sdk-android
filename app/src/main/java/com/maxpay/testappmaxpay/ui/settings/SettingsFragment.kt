@@ -2,6 +2,7 @@ package com.maxpay.testappmaxpay.ui.settings
 
 import android.app.AlertDialog
 import android.content.DialogInterface
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +11,7 @@ import android.widget.ArrayAdapter
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import com.maxpay.sdk.model.MaxPayTheme
 import com.maxpay.sdk.model.request.TransactionType
 import com.maxpay.testappmaxpay.R
 import com.maxpay.testappmaxpay.ui.MainViewModel
@@ -49,13 +51,24 @@ class SettingsFragment : Fragment() {
             }
         }
 
+        viewModel.viewState.maxPayTheme.value?.let {
+            segmentedControlTheme.setSelectedSegment(1)
+        }?: kotlin.run { segmentedControlTheme.setSelectedSegment(0) }
         segmentedControlTheme.addOnSegmentClickListener {
             when(it.column) {
-//                0 -> viewModel.viewState.settings.value.
+                0 -> viewModel.viewState.maxPayTheme.value = null
+                1 -> viewModel.viewState.maxPayTheme.value = MaxPayTheme(
+                    fieldTitleColor = Color.RED,
+                    fieldBackgroundColor =  Color.YELLOW,
+                    fieldTextColor = Color.CYAN,
+                    errorColor = Color.YELLOW,
+                    backgroundColor = Color.CYAN,
+                    checkboxCornerRadius = 3F)
+
             }
-            it.sectionData?.let {
-                viewModel.viewState.settings.value?.transactionType = TransactionType.valueOf(it.segmentData as String)
-            }
+//            it.sectionData?.let {
+//                viewModel.viewState.settings.value?.transactionType = TransactionType.valueOf(it.segmentData as String)
+//            }
         }
         tvChange.setOnClickListener {
             chooseCurrency()
