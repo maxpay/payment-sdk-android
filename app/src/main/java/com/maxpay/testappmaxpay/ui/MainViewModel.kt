@@ -1,14 +1,12 @@
 package com.maxpay.testappmaxpay.ui
 
 import android.app.Application
-import android.graphics.Color
 import com.maxpay.sdk.SDKFacade
 import com.maxpay.sdk.SdkFacadeImpl
 import com.maxpay.sdk.core.MyAndroidViewModel
 import com.maxpay.sdk.data.MaxpayCallback
 import com.maxpay.sdk.data.MaxpayResult
 import com.maxpay.sdk.model.MaxPayInitData
-import com.maxpay.sdk.model.MaxPayTheme
 import com.maxpay.sdk.model.MaxpayPaymentData
 import com.maxpay.testappmaxpay.model.ProductItemtUI
 import com.maxpay.testappmaxpay.ui.state.MainViewState
@@ -76,9 +74,10 @@ class MainViewModel(application: Application)
                 accountName = "Dinarys",
                 accountPassword = "h6Zq7dLPYMcve1F2",
                 apiVersion = 1,
-                theme = _viewState.maxPayTheme.value?: null
+                showBillingAddr = false,
+                theme = _viewState.maxPayTheme.value ?: null
             )
-            )
+        )
 
         _viewState.settings.value?.let {
             sdk.pay(it, object: MaxpayCallback {

@@ -16,6 +16,7 @@ import com.maxpay.sdk.core.FragmentWithToolbar
 import com.maxpay.sdk.data.MaxpayResult
 import com.maxpay.sdk.data.MaxpayResultStatus
 import com.maxpay.sdk.ui.MainViewModel
+import com.maxpay.sdk.ui.PaymentFragment
 import kotlinx.android.synthetic.main.fragment_three_d_s.*
 import java.net.URLEncoder
 
@@ -102,5 +103,8 @@ class ThreeDSFragment: FragmentWithToolbar(R.layout.fragment_three_d_s) {
 //                return false; // then it is not handled by default action
 //            }
         }
+    }
+    companion object {
+        fun newInstance() = ThreeDSFragment()
     }
 }

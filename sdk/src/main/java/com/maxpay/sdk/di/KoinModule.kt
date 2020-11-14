@@ -37,7 +37,7 @@ val utils = module {
     single { CustomTabsHelper() }
     single { ExpiryParser() }
     factory { (theme: MaxPayTheme?) -> EditTextValidator(theme) }
-    single { (theme: MaxPayTheme?) -> UIComponentThemeEditor(theme) }
+    factory { (theme: MaxPayTheme?) -> UIComponentThemeEditor(theme) }
 
 //    viewModel { (someValue : SomeValue) -> SomeViewModel(someValue ) }
 //    factory { WebViewUtil() }

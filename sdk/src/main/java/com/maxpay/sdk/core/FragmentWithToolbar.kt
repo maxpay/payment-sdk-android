@@ -9,7 +9,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
-import androidx.navigation.fragment.findNavController
 import com.maxpay.sdk.utils.StateEnum
 import com.maxpay.sdk.utils.extensions.dismissDialogs
 import com.maxpay.sdk.utils.extensions.showError
@@ -26,7 +25,7 @@ abstract class FragmentWithToolbar(@LayoutRes layoutId: Int) : Fragment(layoutId
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            android.R.id.home -> findNavController().popBackStack()
+            android.R.id.home -> activity?.onBackPressed()
         }
         return false
     }

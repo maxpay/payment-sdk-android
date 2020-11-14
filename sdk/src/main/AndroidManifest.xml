@@ -11,8 +11,7 @@
         <activity
             android:name=".SdkActivity"
             android:label="@string/title_activity_sdk"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".ui.MaxPayActivity"/>
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

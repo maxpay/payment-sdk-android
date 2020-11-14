@@ -1,7 +1,12 @@
 package com.maxpay.sdk.utils
 
+import android.graphics.Color
+import android.graphics.ColorFilter
+import android.graphics.PorterDuff
+import android.graphics.Typeface
 import android.view.View
 import com.maxpay.sdk.model.MaxPayTheme
+import kotlinx.android.synthetic.main.fragment_payment.*
 import kotlinx.android.synthetic.main.fragment_payment.view.*
 import kotlinx.android.synthetic.main.layout_billing_address.view.*
 
@@ -53,19 +58,74 @@ class UIComponentThemeEditor(val theme: MaxPayTheme?) {
     fun setMainPageStyle(view: View?) {
         view?.let {
             it.run {
-                theme?.headerAmountColor?.let { it ->
-                    tvFullPrice?.setTextColor(it)
-                }
-                theme?.headerTitleColor?.let {
-                    tvPA?.setTextColor(it)
-                }
-                theme?.backgroundColor?.let {
-                    clFullView.setBackgroundColor(it)
-                    layoutBillingAddress.setBackgroundColor(it)
+                theme?.let {theme ->
+                    theme.headerAmountColor?.let { it ->
+                        tvFullPrice?.setTextColor(it)
+                    }
+                    theme.headerTitleColor?.let {
+                        tvPA?.setTextColor(it)
+                    }
+                    theme.backgroundColor?.let {
+                        clFullView?.setBackgroundColor(it)
+                        layoutBillingAddress?.setBackgroundColor(it)
+                    }
+                    theme.headerAmountFont?.let {
+                        tvFullPrice?.typeface = Typeface.createFromAsset(resources.assets, it)
+                    }
+                    theme.headerLargeTitleFont?.let {
+                        val typeface = Typeface.createFromAsset(resources.assets, it)
+                        tvPA?.typeface = typeface
+                        tvBilling?.typeface = typeface
+                    }
+                    theme.headerStandardTitleFont?.let {
+                        val typeface = Typeface.createFromAsset(resources.assets, it)
+                        tvEA?.typeface = typeface
+                        tvCN?.typeface = typeface
+                        tvED?.typeface = typeface
+                        tvCVV?.typeface = typeface
+                        tvCHN?.typeface = typeface
+                        tvName?.typeface = typeface
+                        tvAddr?.typeface = typeface
+                        tvCity?.typeface = typeface
+                        tvZIP?.typeface = typeface
+                        tvCountry?.typeface = typeface
+                    }
+                    theme.headerAmountFont?.let {
+                        tvFullPrice?.typeface = Typeface.createFromAsset(resources.assets, it)
+                    }
+
+                    theme.headerSeparatorColor?.let {
+                        billingSeparator.setBackgroundColor(it)
+                        paymentSeparator.setBackgroundColor(it)
+                    }
+
+
                 }
             }
         }
+    }
 
+    fun changeButtonColorFilter(view: View?, enabled: Boolean) {
+        view?.let {
+            it.run {
+                if (enabled) {
+                    theme?.enabledButtonBackgroundColor?.let {
+                        payBtn.background.setColorFilter(it, PorterDuff.Mode.SRC_ATOP)
+                    }
+                    theme?.enabledButtonTitleColor?.let {
+                        payBtn.setTextColor(it)
+                    }
+                } else {
+                    theme?.disabledButtonBackgroundColor?.let {
+                        payBtn.background.setColorFilter(it, PorterDuff.Mode.SRC_ATOP)
+                    }
+                    theme?.disabledButtonTitleColor?.let {
+                        payBtn.setTextColor(it)
+                    }
+                }
+
+            }
+        }
     }
 }
 

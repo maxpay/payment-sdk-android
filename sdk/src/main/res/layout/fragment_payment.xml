@@ -37,6 +37,15 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
+            <View
+                android:id="@+id/paymentSeparator"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/divider_line"
+                android:layout_margin="@dimen/margin_medium"
+                android:alpha="0.5"
+                app:layout_constraintTop_toBottomOf="@+id/tvPA"/>
+
 
             <TextView
                 android:id="@+id/tvFullPrice"
@@ -277,7 +286,7 @@
                 app:layout_constraintTop_toBottomOf="@id/layoutBillingAddress" />
 
             <TextView
-                android:id="@+id/tvBilling"
+                android:id="@+id/tvDebt"
                 style="@style/TextSmallCheckBox"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -301,7 +310,7 @@
                 android:paddingEnd="0dp"
                 android:textSize="@dimen/text_size_medium"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvBilling" />
+                app:layout_constraintTop_toBottomOf="@id/tvDebt" />
 
             <TextView
                 android:id="@+id/tvTerms"
@@ -313,7 +322,7 @@
                 android:text="@string/payment_terms_and_privacy_confirmation"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/checkBoxTermsOfUse"
-                app:layout_constraintTop_toBottomOf="@id/tvBilling" />
+                app:layout_constraintTop_toBottomOf="@id/tvDebt" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/payBtn"

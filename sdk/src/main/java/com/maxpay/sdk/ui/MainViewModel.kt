@@ -2,11 +2,7 @@ package com.maxpay.sdk.ui
 
 import android.app.Activity
 import android.app.Application
-import android.content.Context.WIFI_SERVICE
 import android.content.Intent
-import android.net.wifi.WifiManager
-import android.text.format.Formatter
-import androidx.core.content.ContextCompat.getSystemService
 import com.maxpay.sdk.core.MyAndroidViewModel
 import com.maxpay.sdk.data.MaxpayResult
 import com.maxpay.sdk.model.MaxPayRepository
@@ -14,12 +10,11 @@ import com.maxpay.sdk.model.MaxpayPaymentData
 import com.maxpay.sdk.model.request.SalePayment
 import com.maxpay.sdk.model.request.TransactionType
 import com.maxpay.sdk.model.response.ResponseStatus
+import com.maxpay.sdk.ui.navigation.SDKNavigation
+import com.maxpay.sdk.ui.navigation.ThreeDSNavigation
 import com.maxpay.sdk.ui.state.PaymentViewState
 import com.maxpay.sdk.ui.state.PaymentViewStateImpl
-import com.maxpay.sdk.utils.Constants
-import com.maxpay.sdk.utils.DateInterface
-import com.maxpay.sdk.utils.IpHelper
-import com.maxpay.sdk.utils.StateEnum
+import com.maxpay.sdk.utils.*
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.rxkotlin.subscribeBy
@@ -39,19 +34,9 @@ class MainViewModel(application: Application)
     val viewState: PaymentViewState
         get() = _viewState
 
-
-//    fun pay(salePayment: SalePayment) {
-//        repository.paySale(salePayment)
-//            .subscribeOn(Schedulers.io())
-//            .observeOn(AndroidSchedulers.mainThread())
-//            .subscribeBy(
-//                onSuccess = {
-//                    _viewState.salePaymentResponse.value = it
-//                },
-//                onError = {
-//                }
-//            ).addTo(disposables)
-//    }
+    private val _mainNavigation = SingleLiveEvent<SDKNavigation>()
+    val mainNavigation: SingleLiveEvent<SDKNavigation>
+        get() = _mainNavigation
 
     fun payAuth3D(salePayment: SalePayment) {
         state.value = StateEnum.LOADING
@@ -122,8 +107,6 @@ class MainViewModel(application: Application)
                                 _viewState.authPaymentResponse.value = it
                             else -> _viewState.salePaymentResponse.value = it
                         }
-//                        errorMessage = "${it.message}"
-//                        state.postValue(StateEnum.ERROR)
                     }
                 },
                 onError = {
@@ -160,6 +143,10 @@ class MainViewModel(application: Application)
             intent.putExtra(Constants.Companion.Extra.MAXPAY_BROADCAST_DATA, data)
         }
         activity?.sendBroadcast(intent)
+    }
+
+    fun navigateThreeDS() {
+        _mainNavigation.value = ThreeDSNavigation
     }
 
 

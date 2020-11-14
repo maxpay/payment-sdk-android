@@ -1,6 +1,9 @@
 package com.maxpay.sdk.ui
 
 import android.graphics.Color
+import android.graphics.ColorFilter
+import android.graphics.PorterDuff
+import android.graphics.Typeface
 import android.net.Uri
 import android.os.Bundle
 import android.text.*
@@ -9,7 +12,6 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.fragment.findNavController
 import com.maxpay.sdk.R
 import com.maxpay.sdk.core.FragmentWithToolbar
 import com.maxpay.sdk.data.MaxpayResult
@@ -43,7 +45,6 @@ class PaymentFragment: FragmentWithToolbar(R.layout.fragment_payment) {
     private lateinit var maxPayInitData: MaxPayInitData
     private lateinit var maxpayPaymentData: MaxpayPaymentData
     private var maxpayTheme: MaxPayTheme? = null
-//    private val args: PaymentFragmentArgs by navArgs()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -61,7 +62,7 @@ class PaymentFragment: FragmentWithToolbar(R.layout.fragment_payment) {
 
         viewModel.run {
             observeCommandSafety(viewState.authPaymentResponse) {
-                viewState.isFromWebView.value?: kotlin.run { findNavController().navigate(R.id.action_firstFragment_to_threeDSFragment) }
+                viewState.isFromWebView.value?: kotlin.run { viewModel.navigateThreeDS() }
             }
 
             observeCommandSafety(viewState.salePaymentResponse) {
@@ -76,21 +77,20 @@ class PaymentFragment: FragmentWithToolbar(R.layout.fragment_payment) {
         }
 
         initToolbar()
-//        isFormLengthValid(InputFormLength(etCvv, cvCvv, Constants.Companion.RequiredLength.CVV_INPUT_LENGTH))
-
     }
 
     private fun initThemeIfNeeded() {
         themeEditor.setInputStyle(view)
         themeEditor.setMainPageStyle(view)
+        themeEditor.changeButtonColorFilter(view, false)
 
     }
 
     private fun initUIElements() {
+        if (maxPayInitData.showBillingAddr) layoutBillingAddress.visibility = View.VISIBLE
+        else layoutBillingAddress.visibility = View.GONE
+
         tvFullPrice.text = "${maxpayPaymentData.currency.symbol} ${maxpayPaymentData.amount}"
-        tvFullPrice.setOnClickListener{
-            isFormLengthValid(InputFormLength(etCvv, cvCvv, Constants.Companion.RequiredLength.CVV_INPUT_LENGTH))
-        }
 
         val customTabs = customTabsHelper
             .getTabs(ContextCompat.getColor(requireContext(), R.color.primary_green))
@@ -127,7 +127,7 @@ class PaymentFragment: FragmentWithToolbar(R.layout.fragment_payment) {
             }
 
         }
-        etCountry.filters = arrayOf(InputFilter.AllCaps(), InputFilter.LengthFilter(3))
+        etCountry?.filters = arrayOf(InputFilter.AllCaps(), InputFilter.LengthFilter(3))
         payBtn.setOnClickListener {
             if (isFormCompleted(InputFormLength(etEmail, cvEmail, 0),
                     InputFormLength(etCardHolderName, cvCardHolderName, 0))
@@ -152,28 +152,44 @@ class PaymentFragment: FragmentWithToolbar(R.layout.fragment_payment) {
             }
         }
 
-        etCountry.setText(maxpayPaymentData.country)
-        etCity.setText(maxpayPaymentData.city)
-        etZip.setText(maxpayPaymentData.zip)
-        etAddr.setText(maxpayPaymentData.address)
+        etCountry?.setText(maxpayPaymentData.country)
+        etCity?.setText(maxpayPaymentData.city)
+        etZip?.setText(maxpayPaymentData.zip)
+        etAddr?.setText(maxpayPaymentData.address)
         if (!maxpayPaymentData.firstName.isNullOrEmpty() || !maxpayPaymentData.lastName.isNullOrEmpty())
             etName.setText("${maxpayPaymentData.firstName} ${maxpayPaymentData.lastName}")
-        checkBoxAutoDebt.setOnClickListener {
-            payBtn.isEnabled = checkBoxTermsOfUse.isChecked && checkBoxAutoDebt.isChecked
-        }
+        checkBoxAutoDebt.setOnClickListener { checkEnableButton() }
 
-        checkBoxTermsOfUse.setOnClickListener {
-            payBtn.isEnabled = checkBoxTermsOfUse.isChecked && checkBoxAutoDebt.isChecked
-        }
+        checkBoxTermsOfUse.setOnClickListener { checkEnableButton() }
 
+    }
+
+    private fun checkEnableButton() {
+        val isEnabled = checkBoxTermsOfUse.isChecked && checkBoxAutoDebt.isChecked
+        payBtn.isEnabled = isEnabled
+        themeEditor.changeButtonColorFilter(view, isEnabled)
     }
 
     private fun initToolbar() {
         val toolbar = toolbar as Toolbar
         toolbar.title = resources.getString(R.string.payment_title)
+        maxpayTheme?.navigationBarColor?.let {
+            toolbar.setBackgroundColor(it)
+        }
+        maxpayTheme?.navigationBarTitleColor?.let {
+            toolbar.setTitleTextColor(it)
+        }
+        maxpayTheme?.navigationBarTitleColor?.let {
+            toolbar.navigationIcon?.setColorFilter(it, PorterDuff.Mode.SRC_ATOP)
+        }
+
         toolbar.setNavigationOnClickListener {
             activity?.onBackPressed()
         }
+    }
+
+    companion object {
+        fun newInstance() = PaymentFragment()
     }
 }
 

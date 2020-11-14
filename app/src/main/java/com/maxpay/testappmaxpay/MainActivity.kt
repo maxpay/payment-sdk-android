@@ -7,9 +7,6 @@ import androidx.navigation.findNavController
 import com.maxpay.sdk.SDKFacade
 import com.maxpay.sdk.SdkFacadeImpl
 import com.maxpay.sdk.model.MaxPayInitData
-import com.maxpay.sdk.model.MaxpayPaymentData
-import com.maxpay.sdk.model.request.TransactionType
-import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
@@ -23,7 +20,8 @@ class MainActivity : AppCompatActivity() {
             MaxPayInitData(
                 accountName = "Dinarys",
                 accountPassword = "h6Zq7dLPYMcve1F2",
-                apiVersion = 1
+                apiVersion = 1,
+                showBillingAddr = false
             )
         )
         navController = findNavController(R.id.nav_host_fragment_main)
