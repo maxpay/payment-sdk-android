@@ -219,7 +219,7 @@
                     style="@style/InputEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="123"
+                    android:hint="1 23"
                     android:inputType="number"
                     app:mask="@string/mask_cvc"
                     app:allowed_chars="1234567890"

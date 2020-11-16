@@ -26,6 +26,8 @@
     <string name="simple_form">Simple form</string>
     <string name="undefined_error" tools:ignore="ExtraTranslation">Undefined error</string>
     <string name="error_undef">Undef erro</string>
+    <string name="publicKey" tools:ignore="ExtraTranslation">Public key</string>
+
 
 
 </resources>

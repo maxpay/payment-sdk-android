@@ -20,7 +20,7 @@ Android 5.0, Android studio 4.0.1, kotlin_version = "1.3.72"+
 
 ### 2. Import downloaded project trough android studio
 
-<img src="ImportProject.png" alt="ImportProject" style="zoom:70%;" />
+<img src="readme/ImportProject.png" alt="ImportProject" style="zoom:70%;" />
 
 ### 3. Compile and start test project on emulator or Android device
 <img src="readme/RunAProject.png" alt="RunAProject" style="zoom:50%;" />

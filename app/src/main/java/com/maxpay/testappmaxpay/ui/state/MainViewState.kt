@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import com.maxpay.sdk.data.MaxpayResult
 import com.maxpay.sdk.model.MaxPayTheme
 import com.maxpay.sdk.model.MaxpayPaymentData
+import com.maxpay.sdk.utils.SingleLiveEvent
 import com.maxpay.testappmaxpay.model.ProductItemtUI
 
 interface MainViewState {
@@ -12,6 +13,7 @@ interface MainViewState {
      val fullPrice: MutableLiveData<Float>
 
      val settings: MutableLiveData<MaxpayPaymentData>
-     val maxpayResult: MutableLiveData<MaxpayResult>
+     val maxpayResult: SingleLiveEvent<MaxpayResult>
      val maxPayTheme: MutableLiveData<MaxPayTheme>
+     val pk: MutableLiveData<String>
 }

@@ -14,13 +14,13 @@ First of all [register](https://my.maxpay.com/#/signup) on site [Maxpay](https:/
 
 Click new -> new module...
 
-<img src="C:\Users\dev\Documents\CreateNewModule.png" style="zoom:73%;" />
+<img src="readme/CreateNewModule.png" style="zoom:73%;" />
 
 
 
 After clicking next you will see import module from library window. Find location of your .aar file, choose subproject name and click Finish button
 
-<img src="C:\Users\dev\Documents\ChooseSubProjectName.png" alt="ChooseSubProjectName" style="zoom:75%;" />
+<img src="readme/ChooseSubProjectName.png" alt="ChooseSubProjectName" style="zoom:75%;" />
 
 
 
@@ -28,7 +28,7 @@ After clicking next you will see import module from library window. Find locatio
 
 To use MaxpaySDK inside your app, you need to provide dependency to maxpay. Click File -> Project Structure -> Choose your app module, click + button -> module dependency here you can find "maxpay_sdk" module
 
-<img src="C:\Users\dev\Documents\add_dependency.png" style="zoom:75%;" />
+<img src="readme/add_dependency.png" style="zoom:75%;" />
 
 
 
@@ -292,7 +292,7 @@ Class **SDKFacade** provides information to create payment request to Maxpay ser
 
 
 
-## 6 Handle the user's billing address
+## 5. Handle the user's billing address
 
 **Out of scope**
 
@@ -301,7 +301,7 @@ Best practies how to prefill billing address if bank support AVS (address verifi
 
 
 
-## 8 Test the integration
+## 6. Test the integration
 
 [Test data from Maxpay.](https://maxpay.com/docs/#test-mode)
 
@@ -316,10 +316,8 @@ In this project you can use simple form, when you can fast create payment auth o
 
 **Warning. Billing address on payment screen is out of scope MVP. Not all functions will work correctly.**
 
-![Simple form](README/simple_form.png)
+
 
 **Warning. Shop is out of scope MVP. Not all functions will work correctly.**
 
 Also you can run shop imitation with cart and shipment form. Currency, transaction type and theme can change in Settings menu.
-
-![Shop](README/shop.png)

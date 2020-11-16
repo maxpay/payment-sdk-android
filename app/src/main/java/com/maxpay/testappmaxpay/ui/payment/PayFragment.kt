@@ -64,6 +64,9 @@ class PayFragment : Fragment() {
             ilZip.editText?.let {
                 viewModel.viewState.settings.value?.zip = it.text.toString()
             }
+            ilPK.editText?.let {
+                viewModel.viewState.pk.value = it.text.toString().takeIf { !it.isEmpty() }?: null
+            }
             viewModel.payWithSDK()
         }
     }

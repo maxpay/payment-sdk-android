@@ -1,12 +1,12 @@
 package com.maxpay.sdk.model
 
-import android.graphics.Typeface
 import java.io.Serializable
 
 data class MaxPayInitData(
     val accountName: String,
     val accountPassword: String,
     val apiVersion: Int,
+    val publicKey: String,
     val theme: MaxPayTheme? = null,
     val showBillingAddr: Boolean
 ): Serializable

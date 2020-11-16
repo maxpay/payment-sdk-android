@@ -13,6 +13,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.activityViewModels
 import com.maxpay.sdk.R
+import com.maxpay.sdk.SignatureHelper
 import com.maxpay.sdk.core.FragmentWithToolbar
 import com.maxpay.sdk.data.MaxpayResult
 import com.maxpay.sdk.data.MaxpayResultStatus
@@ -20,6 +21,7 @@ import com.maxpay.sdk.model.InputFormLength
 import com.maxpay.sdk.model.MaxPayInitData
 import com.maxpay.sdk.model.MaxPayTheme
 import com.maxpay.sdk.model.MaxpayPaymentData
+import com.maxpay.sdk.model.request.SalePayment
 import com.maxpay.sdk.model.response.ResponseStatus
 import com.maxpay.sdk.utils.*
 import com.maxpay.sdk.utils.extensions.*
@@ -90,6 +92,10 @@ class PaymentFragment: FragmentWithToolbar(R.layout.fragment_payment) {
         if (maxPayInitData.showBillingAddr) layoutBillingAddress.visibility = View.VISIBLE
         else layoutBillingAddress.visibility = View.GONE
 
+        etCardNumber.setText("5105105105105100")
+        etCvv.setText("321")
+        etExpirationDate.setText("1122")
+
         tvFullPrice.text = "${maxpayPaymentData.currency.symbol} ${maxpayPaymentData.amount}"
 
         val customTabs = customTabsHelper
@@ -131,19 +137,20 @@ class PaymentFragment: FragmentWithToolbar(R.layout.fragment_payment) {
         payBtn.setOnClickListener {
             if (isFormCompleted(InputFormLength(etEmail, cvEmail, 0),
                     InputFormLength(etCardHolderName, cvCardHolderName, 0))
-//                    InputFormLength(etName, cvName, 0),
-//                    InputFormLength(etAddr, cvAddress, 0),)
                 and
                 isFormLengthValid(InputFormLength(etCardNumber, cvCardNumber, Constants.Companion.RequiredLength.CARD_INPUT_LENGTH),
                     InputFormLength(etExpirationDate, cvExpirDate, Constants.Companion.RequiredLength.EXPIRY_INPUT_LENGTH),
-                    InputFormLength(etCvv, cvCvv, Constants.Companion.RequiredLength.CVV_INPUT_LENGTH),
-                    InputFormLength(etCountry, cvCountry, Constants.Companion.RequiredLength.COUNTRY_INPUT_LENGTH))
+                    InputFormLength(etCvv, cvCvv, Constants.Companion.RequiredLength.CVV_INPUT_LENGTH))
+                and
+                (!maxPayInitData.showBillingAddr
+                        || isFormLengthValid(InputFormLength(etCountry, cvCountry, Constants.Companion.RequiredLength.COUNTRY_INPUT_LENGTH)))
             )
             if (checkBoxAutoDebt.isChecked && checkBoxTermsOfUse.isChecked) {
                 maxpayPaymentData.userEmail = etEmail.text.toString()
                 maxpayPaymentData.cardNumber = etCardNumber.text.toString().replace(" ", "")
                 maxpayPaymentData.expMonth = expiryParser.getMonth(etExpirationDate.text.toString())
                 maxpayPaymentData.expYear = expiryParser.getYear(etExpirationDate.text.toString())
+                maxpayPaymentData.cvv = etCvv.text.toString()
                 maxpayPaymentData.country = etCountry.text.toString()
                 maxpayPaymentData.city = etCity.text.toString()
                 maxpayPaymentData.zip = etZip.text.toString()
@@ -192,58 +199,3 @@ class PaymentFragment: FragmentWithToolbar(R.layout.fragment_payment) {
         fun newInstance() = PaymentFragment()
     }
 }
-
-//val adapter = ArrayAdapter<String>(requireContext(),
-//    android.R.layout.simple_dropdown_item_1line, arrayListOf("Belgium", "France", "Italy", "Germany", "Spain", "Belarus"));
-//        etAu.setAdapter(adapter);
-
-//val authPayment = SalePayment(
-//    1,
-//    maxPayInitData.accountName,
-//    maxPayInitData.accountPassword,
-//    "AUTH3В${dateInterface.getCurrentTimeStamp()}",
-//    TransactionType.AUTH3D,
-//    9F,
-//    "EUR",
-//    "4012000300001003",
-//    "05",
-//    "2019",
-//    "111",
-//    "John",
-//    "Doe",
-//    "John Doe",
-//    "123 Street name.",
-//    "City Name",
-//    "NY",
-//    "12100",
-//    "USA",
-//    "+12025550000",
-//    "johndoe@test.com",
-//    "193.34.96.96"
-//)
-
-//val salePayment = SalePayment(
-//    1,
-//    "Dinarys",
-//    "h6Zq7dLPYMcve1F2",
-//    "sale_requesttimestamp",
-////                "sale_request{{$timestamp}}",// TODO
-//    TransactionType.SALE,
-//    11F,
-//    "USD",
-//    "4012001038443335",
-//    "04",
-//    "2021",
-//    "548",
-//    "John",
-//    "Doe",
-//    "John Doe",
-//    "123 Street name.",
-//    "New York",
-//    "NY",
-//    "12100",
-//    "USA",
-//    "+12025550000",
-//    "johndoe@test.com",
-//    "193.34.96.96"
-//)

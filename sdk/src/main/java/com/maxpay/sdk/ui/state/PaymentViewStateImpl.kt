@@ -7,7 +7,7 @@ import com.maxpay.sdk.model.response.BaseResponse
 import com.maxpay.sdk.utils.SingleLiveEvent
 
 class PaymentViewStateImpl : PaymentViewState {
-    override val salePaymentResponse: MutableLiveData<BaseResponse> = MutableLiveData()
+    override val salePaymentResponse: SingleLiveEvent<BaseResponse> = SingleLiveEvent()
     override val authPaymentResponse: SingleLiveEvent<BaseResponse> = SingleLiveEvent()
     override val savedSomething: MutableLiveData<String> = MutableLiveData()
     override val maxpayInitData: MutableLiveData<MaxPayInitData> = MutableLiveData()

@@ -7,7 +7,7 @@ import com.maxpay.sdk.model.response.BaseResponse
 import com.maxpay.sdk.utils.SingleLiveEvent
 
 interface PaymentViewState {
-     val salePaymentResponse: MutableLiveData<BaseResponse>
+     val salePaymentResponse: SingleLiveEvent<BaseResponse>
      val authPaymentResponse: SingleLiveEvent<BaseResponse>
      val savedSomething: MutableLiveData<String>
      val maxpayInitData: MutableLiveData<MaxPayInitData>

@@ -12,6 +12,7 @@ import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import com.maxpay.sdk.SignatureHelper
 import com.maxpay.sdk.model.MaxPayTheme
 import com.maxpay.sdk.model.request.TransactionType
 import com.maxpay.testappmaxpay.R
@@ -85,6 +86,7 @@ class SettingsFragment : Fragment() {
 //                viewModel.viewState.settings.value?.transactionType = TransactionType.valueOf(it.segmentData as String)
 //            }
         }
+//        SignatureHelper().getHashOfRequest()
         tvChange.setOnClickListener {
             chooseCurrency()
         }

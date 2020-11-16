@@ -75,6 +75,7 @@ class MainViewModel(application: Application)
                 accountPassword = "h6Zq7dLPYMcve1F2",
                 apiVersion = 1,
                 showBillingAddr = false,
+                publicKey = _viewState.pk.value ?: "pkLive_HzmqN88yqNwwzuCRBgboOIvVOiNAX09x",
                 theme = _viewState.maxPayTheme.value ?: null
             )
         )

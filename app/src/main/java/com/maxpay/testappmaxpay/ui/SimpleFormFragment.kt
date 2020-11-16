@@ -58,8 +58,10 @@ class SimpleFormFragment : Fragment() {
 
         btnPay.setOnClickListener {
             ilTotalAmount.editText?.let {
-                if (!it.text.isNullOrEmpty())
+                if (!it.text.isNullOrEmpty()) {
                     viewModel.viewState.settings.value?.amount = it.text.toString().toFloat()
+                    viewModel.viewState.fullPrice.value = it.text.toString().toFloat()
+                }
             }
 
             if (switcherEditCustomerData.isChecked)

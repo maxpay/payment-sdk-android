@@ -4,10 +4,10 @@ import com.google.gson.annotations.SerializedName
 data class SalePayment(
     @SerializedName("api_version")
     val apiVersion: Int?,
-    @SerializedName("merchant_account")
-    val merchantAccount: String?,
-    @SerializedName("merchant_password")
-    val merchantPassword: String?,
+//    @SerializedName("merchant_account")
+//    val merchantAccount: String?,
+//    @SerializedName("merchant_password")
+//    val merchantPassword: String?,
     @SerializedName("transaction_unique_id")
     val transactionId: String,
     @SerializedName("transaction_type")
@@ -29,7 +29,7 @@ data class SalePayment(
     val cardHolder: String,
     val address: String,
     val city: String,
-    val state: String,
+    val state: String? = null,
     val zip: String,
     val country: String,
     @SerializedName("user_phone")
@@ -41,5 +41,10 @@ data class SalePayment(
     @SerializedName("callback_url")
     val callBackUrl: String? = null,
     @SerializedName("redirect_url")
-    val redirectUrl: String? = null
+    val redirectUrl: String? = null,
+    @SerializedName("public_key")
+    val publicKey: String?,
+    var signature: String? = null,
+    val auth_type: String = "bySignature"
+
 )

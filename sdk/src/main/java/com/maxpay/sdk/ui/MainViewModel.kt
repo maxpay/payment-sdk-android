@@ -3,6 +3,10 @@ package com.maxpay.sdk.ui
 import android.app.Activity
 import android.app.Application
 import android.content.Intent
+import android.net.wifi.WifiManager
+import android.text.format.Formatter
+import androidx.core.content.ContextCompat.getSystemService
+import com.maxpay.sdk.SignatureHelper
 import com.maxpay.sdk.core.MyAndroidViewModel
 import com.maxpay.sdk.data.MaxpayResult
 import com.maxpay.sdk.model.MaxPayRepository
@@ -66,28 +70,28 @@ class MainViewModel(application: Application)
         state.value = StateEnum.LOADING
         val authPayment = SalePayment(
             _viewState.maxpayInitData.value?.apiVersion,
-            _viewState.maxpayInitData.value?.accountName,
-            _viewState.maxpayInitData.value?.accountPassword,
-            "AUTH3В${dateInterface.getCurrentTimeStamp()}",
-            paymentData.transactionType,
-            paymentData.amount,
-            paymentData.currency.currencyCode,
-            paymentData.cardNumber,
-            "05",
-            "2019",
-            "111",
+            transactionId = "payment${dateInterface.getCurrentTimeStamp()}",
+            transactionType = paymentData.transactionType,
+            amount = paymentData.amount,
+            currency = paymentData.currency.currencyCode,
+            cardNumber = paymentData.cardNumber,
+            cardExpMonth = paymentData.expMonth,
+            cardExpYear = paymentData.expYear,
+            cvv = paymentData.cvv,
             firstName = paymentData.firstName?.takeIf { !it.isEmpty() }?: " ",
             lastName = paymentData.lastName?.takeIf { !it.isEmpty() }?: " ",
             cardHolder = paymentData.cardHolder,
             address = paymentData.address,
             city = paymentData.city,
-            state = paymentData.state,
+//            state = paymentData.state, //TODO We didn`t have field for state
             zip = paymentData.zip,
             country = paymentData.country,
             userPhone = paymentData.userPhone,
             userEmail = paymentData.userEmail,
-            userIp = ipHelper.getUserIp()
+            userIp = ipHelper.getUserIp(),
+            publicKey = _viewState.maxpayInitData.value?.publicKey
         )
+        authPayment.signature = SignatureHelper().getHashOfRequest(authPayment)
         repository.payAuth3D(authPayment)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -115,25 +119,6 @@ class MainViewModel(application: Application)
                 }
             ).addTo(disposables)
     }
-
-//    $resulting = strtolower('customproduct=[{"productId":"12345","productType":"fixedProduct","productName":"Product name","currency":"usd","amount":100}]|key=pkTest_c4tgzRjQBO4Fa4d7f2OoJkIutFMGiCCC|skTest_aKuKHhan1arfwrYBXSUja46ax4qrA111');
-//    $signature = hash("sha256", $resulting);
-//    strtolower('customproduct=[{"productId":"12345","productType":"fixedProduct","productName":"Product name","currency":"usd","amount":100}]|
-//    key=pkTest_c4tgzRjQBO4Fa4d7f2OoJkIutFMGiCCC|skTest_aKuKHhan1arfwrYBXSUja46ax4qrA111');
-
-//    <form method="post" action="https://hpp.maxpay.com/hpp">
-//    <input type='hidden' name="key" value="pkTest_c4tgzRjQBO4Fa4d7f2OoJkIutFMGiCCC">
-//    <input type='hidden' name="customproduct" value="[{'productId':'1','productType':'fixedProduct','productName':'Product name','currency':'USD','amount':100}]">
-//    <input type='hidden' name="signature" value="put_a_signature_value_here">
-//    <input type='submit' name="Pay" value="Pay">
-//    </form>
-
-//    ?php
-
-//key - it's Public key from merchant portal (my.maxpay.com -> Payment pages -> General -> API keys).
-//The last parameter is Private key from merchant portal (my.maxpay.com -> Payment pages -> General -> API keys).
-
-
 
     fun sendBroadcastResult(activity: Activity?, data: MaxpayResult?) {
         activity?.finish()
