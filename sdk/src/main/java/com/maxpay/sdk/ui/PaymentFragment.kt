@@ -22,6 +22,7 @@ import com.maxpay.sdk.model.MaxPayInitData
 import com.maxpay.sdk.model.MaxPayTheme
 import com.maxpay.sdk.model.MaxpayPaymentData
 import com.maxpay.sdk.model.request.SalePayment
+import com.maxpay.sdk.model.request.TransactionType
 import com.maxpay.sdk.model.response.ResponseStatus
 import com.maxpay.sdk.utils.*
 import com.maxpay.sdk.utils.extensions.*
@@ -92,10 +93,6 @@ class PaymentFragment: FragmentWithToolbar(R.layout.fragment_payment) {
         if (maxPayInitData.showBillingAddr) layoutBillingAddress.visibility = View.VISIBLE
         else layoutBillingAddress.visibility = View.GONE
 
-        etCardNumber.setText("5105105105105100")
-        etCvv.setText("321")
-        etExpirationDate.setText("1122")
-
         tvFullPrice.text = "${maxpayPaymentData.currency.symbol} ${maxpayPaymentData.amount}"
 
         val customTabs = customTabsHelper
@@ -152,10 +149,10 @@ class PaymentFragment: FragmentWithToolbar(R.layout.fragment_payment) {
                 maxpayPaymentData.expYear = expiryParser.getYear(etExpirationDate.text.toString())
                 maxpayPaymentData.cvv = etCvv.text.toString()
                 maxpayPaymentData.country = etCountry.text.toString()
-                maxpayPaymentData.city = etCity.text.toString()
-                maxpayPaymentData.zip = etZip.text.toString()
+                maxpayPaymentData.city = etCity.text.toString().takeIf { !it.isEmpty() }?: null
+                maxpayPaymentData.zip = etZip.text.toString().takeIf { !it.isEmpty() }?: null
                 maxpayPaymentData.cardHolder = etCardHolderName.text.toString()
-                viewModel.payAuth3D(maxpayPaymentData)
+                viewModel.pay(maxpayPaymentData)
             }
         }
 

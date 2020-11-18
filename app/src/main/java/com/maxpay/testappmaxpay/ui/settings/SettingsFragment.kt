@@ -36,7 +36,6 @@ class SettingsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initToolbar()
         initUIelements()
-
     }
 
     private fun initUIelements() {
@@ -82,11 +81,7 @@ class SettingsFragment : Fragment() {
                 )
 
             }
-//            it.sectionData?.let {
-//                viewModel.viewState.settings.value?.transactionType = TransactionType.valueOf(it.segmentData as String)
-//            }
         }
-//        SignatureHelper().getHashOfRequest()
         tvChange.setOnClickListener {
             chooseCurrency()
         }

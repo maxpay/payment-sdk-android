@@ -20,6 +20,7 @@ import kotlinx.android.synthetic.main.fragment_settings.toolbar
 import kotlinx.android.synthetic.main.fragment_settings.tvChange
 import kotlinx.android.synthetic.main.fragment_settings.tvCurrency
 import kotlinx.android.synthetic.main.fragment_simple_form.*
+import kotlinx.android.synthetic.main.fragment_simple_form.btnPay
 import java.util.*
 
 

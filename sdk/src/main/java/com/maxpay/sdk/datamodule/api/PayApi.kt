@@ -1,31 +1,19 @@
 package com.maxpay.sdk.datamodule.api
 
 import com.maxpay.sdk.model.request.SalePayment
+import com.maxpay.sdk.model.request.ThreeDPayment
 import com.maxpay.sdk.model.response.BaseResponse
 import io.reactivex.Single
 import retrofit2.http.*
 
 interface PayApi {
 
-    @POST("api/auth/login")
-    fun pay(@Body data: Any): Single<Any>
-
+    @POST("cc")
+    fun pay3D(@Body data: ThreeDPayment): Single<BaseResponse>
 
     @POST("cc")
     fun paySale(@Body payment: SalePayment): Single<Any>
 
     @POST("cc")
-    fun payAuth(@Body payment: SalePayment): Single<BaseResponse>
-//
-//    @POST("api/auth/register")
-//    fun registration(@Body data: RegistrationModel): Single<LoginResponse>
-//
-//    @POST("api/auth/password/email")
-//    fun sendResetPasswordEmail(@Body data: ResetPasswordModel): Completable
-//
-//    @POST("api/auth/password/reset")
-//    fun sendNewPasswordAfterReset(@Query("expires") expiresDate: Long,
-//                                  @Query("signature") signature: String,
-//                                  @Body newPasswordModel: NewPasswordModel) : Single<LoginResponse>
-
+    fun pay(@Body payment: SalePayment): Single<BaseResponse>
 }

@@ -42,6 +42,13 @@ class ThreeDSFragment: FragmentWithToolbar(R.layout.fragment_three_d_s) {
         var reqData: String? = null
         val authResponse = viewModel.viewState.authPaymentResponse.value
         val url = authResponse?.accessUrl
+        if (authResponse?.pareq.isNullOrEmpty() || authResponse?.reference.isNullOrEmpty()) {
+            viewModel.sendBroadcastResult(
+                activity,
+                MaxpayResult(MaxpayResultStatus.UNDEF, "Error ${authResponse?.message}")
+            )
+            return
+        }
         var pareq = URLEncoder.encode(authResponse?.pareq)
         val md = URLEncoder.encode(authResponse?.reference)
         val termUrl = URLEncoder.encode("https://google.com")

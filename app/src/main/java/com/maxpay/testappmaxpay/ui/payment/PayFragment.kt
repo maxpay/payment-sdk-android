@@ -50,24 +50,24 @@ class PayFragment : Fragment() {
                 viewModel.viewState.settings.value?.lastName = it.text.toString()
             }
             ilPhone.editText?.let {
-                viewModel.viewState.settings.value?.userPhone = it.text.toString()
+                viewModel.viewState.settings.value?.userPhone = it.text.toString().takeIf { !it.isEmpty() }?: null
             }
             ilCountry.editText?.let {
                 viewModel.viewState.settings.value?.country = it.text.toString()
             }
             ilCity.editText?.let {
-                viewModel.viewState.settings.value?.city = it.text.toString()
+                viewModel.viewState.settings.value?.city = it.text.toString().takeIf { !it.isEmpty() }?: null
             }
             ilAddr.editText?.let {
-                viewModel.viewState.settings.value?.address = it.text.toString()
+                viewModel.viewState.settings.value?.address = it.text.toString().takeIf { !it.isEmpty() }?: null
             }
             ilZip.editText?.let {
-                viewModel.viewState.settings.value?.zip = it.text.toString()
+                viewModel.viewState.settings.value?.zip = it.text.toString().takeIf { !it.isEmpty() }?: null
             }
             ilPK.editText?.let {
                 viewModel.viewState.pk.value = it.text.toString().takeIf { !it.isEmpty() }?: null
             }
-            viewModel.payWithSDK()
+            viewModel.payWithSDK(switcherShowBilling?.isChecked)
         }
     }
 

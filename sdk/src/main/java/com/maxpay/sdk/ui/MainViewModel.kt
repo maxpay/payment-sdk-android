@@ -3,15 +3,13 @@ package com.maxpay.sdk.ui
 import android.app.Activity
 import android.app.Application
 import android.content.Intent
-import android.net.wifi.WifiManager
-import android.text.format.Formatter
-import androidx.core.content.ContextCompat.getSystemService
 import com.maxpay.sdk.SignatureHelper
 import com.maxpay.sdk.core.MyAndroidViewModel
 import com.maxpay.sdk.data.MaxpayResult
 import com.maxpay.sdk.model.MaxPayRepository
 import com.maxpay.sdk.model.MaxpayPaymentData
 import com.maxpay.sdk.model.request.SalePayment
+import com.maxpay.sdk.model.request.ThreeDPayment
 import com.maxpay.sdk.model.request.TransactionType
 import com.maxpay.sdk.model.response.ResponseStatus
 import com.maxpay.sdk.ui.navigation.SDKNavigation
@@ -42,38 +40,71 @@ class MainViewModel(application: Application)
     val mainNavigation: SingleLiveEvent<SDKNavigation>
         get() = _mainNavigation
 
-    fun payAuth3D(salePayment: SalePayment) {
-        state.value = StateEnum.LOADING
-        viewState.savedSomething.value = "Something savedPay auth3d ${salePayment.transactionId}"
-        repository.payAuth3D(salePayment)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeBy(
-                onSuccess = {
-                    if (it.status == ResponseStatus.success) {
-                        state.value = StateEnum.COMPLETE
-                        _viewState.authPaymentResponse.value = it
-                    } else {
-                        errorMessage = "${it.message}"
-                        state.postValue(StateEnum.ERROR)
-                    }
-                },
-                onError = {
-                    errorMessage = "${it.message}"
-                    state.postValue(StateEnum.ERROR)
-                }
-            ).addTo(disposables)
-    }
+//    fun pay3D(paymentData: MaxpayPaymentData) {
+//        state.value = StateEnum.LOADING
+//        val authPayment = ThreeDPayment(
+//            merchantAccount =_viewState.maxpayInitData.value?.accountName,
+//            merchantPassword = _viewState.maxpayInitData.value?.accountPassword,
+//            apiVersion = _viewState.maxpayInitData.value?.apiVersion,
+//            transactionId = "payment${dateInterface.getCurrentTimeStamp()}",
+//            transactionType = paymentData.transactionType,
+//            amount = paymentData.amount,
+//            currency = paymentData.currency.currencyCode,
+//            cardNumber = paymentData.cardNumber,
+//            cardExpMonth = paymentData.expMonth,
+//            cardExpYear = paymentData.expYear,
+//            cvv = paymentData.cvv,
+//            firstName = paymentData.firstName?.takeIf { !it.isEmpty() }?: " ",
+//            lastName = paymentData.lastName?.takeIf { !it.isEmpty() }?: " ",
+//            cardHolder = paymentData.cardHolder,
+//            address = paymentData.address,
+//            city = paymentData.city,
+////            state = paymentData.state, //TODO We didn`t have field for state
+//            zip = paymentData.zip,
+//            country = paymentData.country,
+//            userPhone = paymentData.userPhone,
+//            userEmail = paymentData.userEmail,
+//            userIp = ipHelper.getUserIp(),
+//            callBackUrl = paymentData.callBackUrl,
+//            redirectUrl = paymentData.redirectUrl
+//        )
+//        repository.pay3D(authPayment)
+//            .subscribeOn(Schedulers.io())
+//            .observeOn(AndroidSchedulers.mainThread())
+//            .subscribeBy(
+//                onSuccess = {
+//                    if (it.status == ResponseStatus.success) {
+//                        state.value = StateEnum.COMPLETE
+//                        when(authPayment.transactionType){
+//                            TransactionType.AUTH3D, TransactionType.SALE3D ->
+//                                _viewState.authPaymentResponse.value = it
+//                            else -> _viewState.salePaymentResponse.value = it
+//                        }
+//
+//                    } else {
+//                        when(authPayment.transactionType) {
+//                            TransactionType.AUTH3D, TransactionType.SALE3D ->
+//                                _viewState.authPaymentResponse.value = it
+//                            else -> _viewState.salePaymentResponse.value = it
+//                        }
+//                    }
+//                },
+//                onError = {
+//                    errorMessage = "${it.message}"
+//                    state.postValue(StateEnum.ERROR)
+//                }
+//            ).addTo(disposables)
+//    }
 
-    fun payAuth3D(paymentData: MaxpayPaymentData) {
-
+    fun pay(paymentData: MaxpayPaymentData) {
         state.value = StateEnum.LOADING
-        val authPayment = SalePayment(
+        val payment = SalePayment(
             _viewState.maxpayInitData.value?.apiVersion,
             transactionId = "payment${dateInterface.getCurrentTimeStamp()}",
             transactionType = paymentData.transactionType,
             amount = paymentData.amount,
             currency = paymentData.currency.currencyCode,
+//            cardNumber = "4012000300001003",//TODO paymentData.cardNumber,
             cardNumber = paymentData.cardNumber,
             cardExpMonth = paymentData.expMonth,
             cardExpYear = paymentData.expYear,
@@ -91,22 +122,26 @@ class MainViewModel(application: Application)
             userIp = ipHelper.getUserIp(),
             publicKey = _viewState.maxpayInitData.value?.publicKey
         )
-        authPayment.signature = SignatureHelper().getHashOfRequest(authPayment)
-        repository.payAuth3D(authPayment)
+        if (!paymentData.redirectUrl.isNullOrEmpty() && !paymentData.callBackUrl.isNullOrEmpty()) {
+            payment.redirectUrl = paymentData.redirectUrl
+            payment.callBackUrl = paymentData.callBackUrl
+        }
+        payment.signature = SignatureHelper().getHashOfRequest(payment)
+        repository.pay(payment)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeBy(
                 onSuccess = {
                     if (it.status == ResponseStatus.success) {
                         state.value = StateEnum.COMPLETE
-                        when(authPayment.transactionType){
+                        when(payment.transactionType){
                             TransactionType.AUTH3D, TransactionType.SALE3D ->
                                 _viewState.authPaymentResponse.value = it
                             else -> _viewState.salePaymentResponse.value = it
                         }
 
                     } else {
-                        when(authPayment.transactionType) {
+                        when(payment.transactionType) {
                             TransactionType.AUTH3D, TransactionType.SALE3D ->
                                 _viewState.authPaymentResponse.value = it
                             else -> _viewState.salePaymentResponse.value = it

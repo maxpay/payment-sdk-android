@@ -60,6 +60,21 @@
                 app:layout_constraintStart_toEndOf="@id/tvTA"
                 app:layout_constraintTop_toBottomOf="@id/tvOrderId" />
 
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/switcherShowBilling"
+                style="@style/ColorSwitchStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Show billing"
+                android:textSize="12sp"
+                android:shadowColor="@color/colorPrimary"
+                android:outlineAmbientShadowColor="@color/colorPrimary"
+                android:outlineSpotShadowColor="@color/colorPrimary"
+                app:layout_constraintTop_toTopOf="@id/tvTotalAmount"
+                app:layout_constraintBottom_toBottomOf="@id/tvTotalAmount"
+                app:layout_constraintEnd_toEndOf="parent"
+                />
+
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/ilFirstName"
                 style="@style/AppInputLayoutStyle"
@@ -196,6 +211,25 @@
                     android:inputType="number" />
             </com.google.android.material.textfield.TextInputLayout>
 
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/ilPK"
+                style="@style/AppInputLayoutStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_medium"
+                android:hint="@string/publicKey"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ilZip">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etPK"
+                    style="@style/AppInputEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
+
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnPay"
                 android:layout_width="match_parent"
@@ -205,13 +239,13 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.498"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ilZip" />
+                app:layout_constraintTop_toBottomOf="@+id/ilPK" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 
     <include
         android:id="@+id/toolbar"
-        layout="@layout/layout_simple_toolbar"
+        layout="@layout/layout_simple_toolbar1"
         app:layout_constraintTop_toTopOf="parent" />
 
 

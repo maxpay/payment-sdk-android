@@ -67,7 +67,7 @@
 
     <include
         android:id="@+id/toolbar"
-        layout="@layout/layout_simple_toolbar"
+        layout="@layout/layout_simple_toolbar1"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.Guideline

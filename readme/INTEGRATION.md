@@ -14,13 +14,13 @@ First of all [register](https://my.maxpay.com/#/signup) on site [Maxpay](https:/
 
 Click new -> new module...
 
-<img src="readme/CreateNewModule.png" style="zoom:73%;" />
+<img src="CreateNewModule.png" style="zoom:73%;" />
 
 
 
 After clicking next you will see import module from library window. Find location of your .aar file, choose subproject name and click Finish button
 
-<img src="readme/ChooseSubProjectName.png" alt="ChooseSubProjectName" style="zoom:75%;" />
+<img src="ChooseSubProjectName.png" alt="ChooseSubProjectName" style="zoom:75%;" />
 
 
 
@@ -28,7 +28,7 @@ After clicking next you will see import module from library window. Find locatio
 
 To use MaxpaySDK inside your app, you need to provide dependency to maxpay. Click File -> Project Structure -> Choose your app module, click + button -> module dependency here you can find "maxpay_sdk" module
 
-<img src="readme/add_dependency.png" style="zoom:75%;" />
+<img src="add_dependency.png" style="zoom:75%;" />
 
 
 
@@ -63,6 +63,7 @@ To use MaxpaySDK inside your app, you need to provide dependencies
     implementation 'com.google.code.gson:gson:2.8.5'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation "androidx.browser:browser:1.2.0"
+	implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
 }
 ```
 

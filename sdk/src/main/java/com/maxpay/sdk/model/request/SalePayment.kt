@@ -27,21 +27,21 @@ data class SalePayment(
     val lastName: String?,
     @SerializedName("card_holder")
     val cardHolder: String,
-    val address: String,
-    val city: String,
-    val state: String? = null,
-    val zip: String,
+    val address: String? = null,
+    val city: String? = null,
+//    val state: String,
+    val zip: String? = null,
     val country: String,
     @SerializedName("user_phone")
-    val userPhone: String,
+    val userPhone: String? = null,
     @SerializedName("user_email")
     val userEmail: String,
     @SerializedName("user_ip")
     val userIp: String,
     @SerializedName("callback_url")
-    val callBackUrl: String? = null,
+    var callBackUrl: String? = null,
     @SerializedName("redirect_url")
-    val redirectUrl: String? = null,
+    var redirectUrl: String? = null,
     @SerializedName("public_key")
     val publicKey: String?,
     var signature: String? = null,

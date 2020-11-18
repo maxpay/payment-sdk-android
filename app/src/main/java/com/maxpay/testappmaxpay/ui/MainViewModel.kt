@@ -8,6 +8,7 @@ import com.maxpay.sdk.data.MaxpayCallback
 import com.maxpay.sdk.data.MaxpayResult
 import com.maxpay.sdk.model.MaxPayInitData
 import com.maxpay.sdk.model.MaxpayPaymentData
+import com.maxpay.sdk.model.request.TransactionType
 import com.maxpay.testappmaxpay.model.ProductItemtUI
 import com.maxpay.testappmaxpay.ui.state.MainViewState
 import com.maxpay.testappmaxpay.ui.state.MainViewStateImpl
@@ -68,19 +69,25 @@ class MainViewModel(application: Application)
         _viewState.fullPrice.value = price
     }
 
-    fun payWithSDK() {
+    fun payWithSDK(showBilling: Boolean? = null) {
         val sdk: SDKFacade = SdkFacadeImpl(
             MaxPayInitData(
                 accountName = "Dinarys",
                 accountPassword = "h6Zq7dLPYMcve1F2",
                 apiVersion = 1,
-                showBillingAddr = false,
+                showBillingAddr = showBilling ?: false,
                 publicKey = _viewState.pk.value ?: "pkLive_HzmqN88yqNwwzuCRBgboOIvVOiNAX09x",
                 theme = _viewState.maxPayTheme.value ?: null
             )
         )
 
         _viewState.settings.value?.let {
+            when (it.transactionType) {
+                TransactionType.SALE3D -> {
+                    it.redirectUrl = "https://callbacks.envlog.net/shopEcho.php"
+                    it.callBackUrl = "https://callbacks.envlog.net/callback.php"
+                }
+            }
             sdk.pay(it, object: MaxpayCallback {
                 override fun onResponseSuccess(result: MaxpayResult?) {
                     _viewState.maxpayResult.value = result
