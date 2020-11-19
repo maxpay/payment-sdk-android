@@ -22,6 +22,7 @@ import java.net.URLEncoder
 
 class ThreeDSFragment: FragmentWithToolbar(R.layout.fragment_three_d_s) {
     private val resultLink: String = "google.com"
+    private val callBack = "https://callback.maxpay.com/callback/sale3dSecure" // TODO here must be valid callback
     private val viewModel: MainViewModel by activityViewModels()
     override fun getCurrentViewModel() = viewModel
 
@@ -41,21 +42,42 @@ class ThreeDSFragment: FragmentWithToolbar(R.layout.fragment_three_d_s) {
 
         var reqData: String? = null
         val authResponse = viewModel.viewState.authPaymentResponse.value
+        viewModel.viewState.savedSomething
         val url = authResponse?.accessUrl
-        if (authResponse?.pareq.isNullOrEmpty() || authResponse?.reference.isNullOrEmpty()) {
+        if (!url.isNullOrEmpty() ) {
+            if (authResponse.pareq.isNullOrEmpty())
+                maxpay_webview.loadUrl(url)
+            else {
+                val pareq = URLEncoder.encode(authResponse?.pareq)
+                val md = URLEncoder.encode(authResponse?.reference)
+                val termUrl = URLEncoder.encode("https://google.com")
+                reqData = "PaReq=$pareq&TermUrl=$termUrl&MD=$md"
+                url?.let {
+                    maxpay_webview?.postUrl(it, reqData.toByteArray())
+                }
+            }
+        } else {
             viewModel.sendBroadcastResult(
                 activity,
                 MaxpayResult(MaxpayResultStatus.UNDEF, "Error ${authResponse?.message}")
             )
             return
         }
-        var pareq = URLEncoder.encode(authResponse?.pareq)
-        val md = URLEncoder.encode(authResponse?.reference)
-        val termUrl = URLEncoder.encode("https://google.com")
-        reqData = "PaReq=$pareq&TermUrl=$termUrl&MD=$md"
-        url?.let {
-            maxpay_webview?.postUrl(it, reqData.toByteArray())
-        }
+
+//        if (authResponse?.pareq.isNullOrEmpty() || authResponse?.reference.isNullOrEmpty()) {
+//            viewModel.sendBroadcastResult(
+//                activity,
+//                MaxpayResult(MaxpayResultStatus.UNDEF, "Error ${authResponse?.message}")
+//            )
+//            return
+//        }
+//        var pareq = URLEncoder.encode(authResponse?.pareq)
+//        val md = URLEncoder.encode(authResponse?.reference)
+//        val termUrl = URLEncoder.encode("https://google.com")
+//        reqData = "PaReq=$pareq&TermUrl=$termUrl&MD=$md"
+//        url?.let {
+//            maxpay_webview?.postUrl(it, reqData.toByteArray())
+//        }
 
         maxpay_webview?.settings?.javaScriptEnabled = true
         maxpay_webview?.settings?.domStorageEnabled = true
@@ -79,23 +101,10 @@ class ThreeDSFragment: FragmentWithToolbar(R.layout.fragment_three_d_s) {
                 if (url.contains("checkout/info") && Build.VERSION.SDK_INT < 21 && progressDialog != null) {
                     progressDialog.cancel()
                 }
-                if (url.contains(resultLink)) {
-                    try {
-//                        if (parseUri(Uri.parse(url)))
-//                            sendBroadcastResult(MaxpayResult.SUCCESS)
-//                        else
-//                            sendBroadcastResult(null)
-                    } catch (var6: Exception) {
-                        var6.printStackTrace()
-//                        sendBroadcastResult(MaxpayResult.UNDEF)
-                    }
+                if (url.contains(resultLink) || url.contains(callBack)) {
+
                     viewModel.viewState.isFromWebView.value = true
-//                    findNavController().navigate(ThreeDSFragmentDirections.actionThreeDSFragmentToPaymentFragment())
                     viewModel.sendBroadcastResult(activity, MaxpayResult(MaxpayResultStatus.SUCCESS, "Success"))
-//                    activity?.runOnUiThread {
-//                        this@ThreeDSFragment.findNavController()
-//                            .navigate(ThreeDSFragmentDirections.actionThreeDSFragmentToPaymentFragment())
-//                    }
                 }
             }
 
