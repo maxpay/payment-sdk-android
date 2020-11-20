@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title_activity_sdk">SdkActivity</string>
+    <string name="payment_amount">Сумма</string>
+    <string name="payment_email_title">Email адресс</string>
+    <string name="payment_email_placeholder">вашemail@gmail.com</string>
+</resources>

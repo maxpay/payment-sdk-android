@@ -28,17 +28,17 @@ class UIComponentThemeEditor(val theme: MaxPayTheme?) {
                 etCardHolderName?.setTextColor(it)
             }
             theme?.fieldBackgroundColor?.let {
-                cvEmail?.setBackgroundColor(it)
-                cvCardNumber?.setBackgroundColor(it)
-                cvExpirDate?.setBackgroundColor(it)
-                cvCvv?.setBackgroundColor(it)
-                cvCardHolderName?.setBackgroundColor(it)
-                cvName?.setBackgroundColor(it)
-                cvAddress?.setBackgroundColor(it)
-                cvCity?.setBackgroundColor(it)
-                cvZip?.setBackgroundColor(it)
-                cvCountry?.setBackgroundColor(it)
-                cvCardHolderName?.setBackgroundColor(it)
+                cvEmail?.setCardBackgroundColor(it)
+                cvCardNumber?.setCardBackgroundColor(it)
+                cvExpirDate?.setCardBackgroundColor(it)
+                cvCvv?.setCardBackgroundColor(it)
+                cvCardHolderName?.setCardBackgroundColor(it)
+                cvName?.setCardBackgroundColor(it)
+                cvAddress?.setCardBackgroundColor(it)
+                cvCity?.setCardBackgroundColor(it)
+                cvZip?.setCardBackgroundColor(it)
+                cvCountry?.setCardBackgroundColor(it)
+                cvCardHolderName?.setCardBackgroundColor(it)
             }
             theme?.fieldTitleColor?.let {
                 tvEA?.setTextColor(it)

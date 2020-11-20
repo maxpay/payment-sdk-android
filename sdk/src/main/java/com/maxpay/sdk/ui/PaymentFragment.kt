@@ -93,6 +93,11 @@ class PaymentFragment: FragmentWithToolbar(R.layout.fragment_payment) {
         if (maxPayInitData.showBillingAddr) layoutBillingAddress.visibility = View.VISIBLE
         else layoutBillingAddress.visibility = View.GONE
 
+//        etEmail.setText("johndoe@gmail.com")
+//        etCardNumber.setText("4012000300001003")
+//        etCvv.setText("123")
+//        etCardHolderName.setText("JohnDoe")
+
         tvFullPrice.text = "${maxpayPaymentData.currency.symbol} ${maxpayPaymentData.amount}"
 
         val customTabs = customTabsHelper

@@ -10,6 +10,8 @@
         android:supportsRtl="true">
         <activity
             android:name=".SdkActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"
             android:label="@string/title_activity_sdk"
             android:theme="@style/AppTheme.NoActionBar" />
     </application>

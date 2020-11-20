@@ -88,6 +88,12 @@ class MainViewModel(application: Application)
                     it.callBackUrl = "https://callbacks.envlog.net/callback.php"
                 }
             }
+            if (it.firstName.isNullOrEmpty())
+                it.firstName = "John"
+            if (it.lastName.isNullOrEmpty())
+                it.lastName = "Doe"
+            if (it.country.isNullOrEmpty())
+                it.country = "USA"
             sdk.pay(it, object: MaxpayCallback {
                 override fun onResponseSuccess(result: MaxpayResult?) {
                     _viewState.maxpayResult.value = result

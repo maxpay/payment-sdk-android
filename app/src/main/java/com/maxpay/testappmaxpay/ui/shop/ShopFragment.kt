@@ -80,7 +80,7 @@ class ShopFragment : Fragment() {
                     500.99F,
                     1,
                     R.drawable.pxl2,
-                    Currency.getInstance(Locale.getDefault())
+                    viewModel.viewState.settings.value?.currency ?:  Currency.getInstance(Locale.getDefault())
                 ),
                 ProductItemtUI(
                     2,
@@ -88,14 +88,14 @@ class ShopFragment : Fragment() {
                     620.90F,
                     1,
                     R.drawable.pxl3,
-                    Currency.getInstance(Locale.getDefault())
+                    viewModel.viewState.settings.value?.currency ?:  Currency.getInstance(Locale.getDefault())
                 ),
                 ProductItemtUI(3,
                     "Pixel 4",
                     700F,
                     1,
                     R.drawable.pixel4,
-                    Currency.getInstance(Locale.getDefault())
+                    viewModel.viewState.settings.value?.currency ?:  Currency.getInstance(Locale.getDefault())
                 )
             )
         )
