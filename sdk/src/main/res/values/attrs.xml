@@ -11,5 +11,6 @@
         <attr name="denied_chars" format="string" />
         <attr name="char_representation" format="string" />
         <attr name="keep_hint" format="boolean" />
+        <attr name="hint_text_masked" format="boolean" />
     </declare-styleable>
 </resources>

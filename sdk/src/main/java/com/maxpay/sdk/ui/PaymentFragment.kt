@@ -60,6 +60,13 @@ class PaymentFragment: FragmentWithToolbar(R.layout.fragment_payment) {
             maxpayTheme =
                 (it.getSerializableExtra(Constants.Companion.Extra.MAXPAY_INIT_DATA) as MaxPayInitData).theme//it.getSerializableExtra(Constants.Companion.Extra.MAXPAY_CUSTOM_THEME_DATA) as? MaxPayTheme
         }
+        if (maxpayPaymentData.amount <= 0.0)
+            viewModel.sendBroadcastResult(
+                activity, MaxpayResult(
+                    MaxpayResultStatus.ERROR,
+                    resources.getString(R.string.error_zero_price)
+                )
+            )
         initUIElements()
         initThemeIfNeeded()
 
@@ -90,8 +97,7 @@ class PaymentFragment: FragmentWithToolbar(R.layout.fragment_payment) {
     }
 
     private fun initUIElements() {
-        if (maxPayInitData.showBillingAddr) layoutBillingAddress.visibility = View.VISIBLE
-        else layoutBillingAddress.visibility = View.GONE
+        initVisibiltyBillingLayout()
 
 //        etEmail.setText("johndoe@gmail.com")
 //        etCardNumber.setText("4012000300001003")
@@ -99,17 +105,18 @@ class PaymentFragment: FragmentWithToolbar(R.layout.fragment_payment) {
 //        etCardHolderName.setText("JohnDoe")
 
         tvFullPrice.text = "${maxpayPaymentData.currency.symbol} ${maxpayPaymentData.amount}"
+        payBtn.setText("${resources.getString(R.string.payment_pay_button_title)} ${maxpayPaymentData.amount} ${maxpayPaymentData.currency.symbol}")
 
         val customTabs = customTabsHelper
             .getTabs(ContextCompat.getColor(requireContext(), R.color.primary_green))
         tvTerms.makeLinks(
-            Pair("Terms of Use", View.OnClickListener {
+            Pair(resources.getString(R.string.terms_key), View.OnClickListener {
                 customTabs.launchUrl(requireContext(), Uri.parse(Constants.Companion.Links.MAXPAY_TERMS))
             }),
-            Pair("Privacy Policy", View.OnClickListener {
+            Pair(resources.getString(R.string.privacy_key), View.OnClickListener {
                 customTabs.launchUrl(requireContext(), Uri.parse(Constants.Companion.Links.MAXPAY_PRIVACY))
             }),
-            Pair("Maxpay", View.OnClickListener {
+            Pair(resources.getString(R.string.maxpay_key), View.OnClickListener {
                 customTabs.launchUrl(requireContext(), Uri.parse(Constants.Companion.Links.MAXPAY_CONTACT))
             }),
             theme = maxpayTheme
@@ -121,7 +128,6 @@ class PaymentFragment: FragmentWithToolbar(R.layout.fragment_payment) {
         editTextValidator.validateET(InputFormLength(etCvv, cvCvv, Constants.Companion.RequiredLength.CVV_INPUT_LENGTH))
         editTextValidator.validateExpirationDate(InputFormLength(etExpirationDate, cvExpirDate, Constants.Companion.RequiredLength.EXPIRY_INPUT_LENGTH))
         editTextValidator.validateETWithoutLength(InputFormLength(etCardHolderName, cvCardHolderName, 0))
-
 
         etCountry.addTextChangedListener{
             if(etCountry.currentTextColor == Color.RED) {
@@ -137,6 +143,7 @@ class PaymentFragment: FragmentWithToolbar(R.layout.fragment_payment) {
         }
         etCountry?.filters = arrayOf(InputFilter.AllCaps(), InputFilter.LengthFilter(3))
         payBtn.setOnClickListener {
+            val er = editTextValidator.isErrorInFields()
             if (isFormCompleted(InputFormLength(etEmail, cvEmail, 0),
                     InputFormLength(etCardHolderName, cvCardHolderName, 0))
                 and
@@ -144,7 +151,7 @@ class PaymentFragment: FragmentWithToolbar(R.layout.fragment_payment) {
                     InputFormLength(etExpirationDate, cvExpirDate, Constants.Companion.RequiredLength.EXPIRY_INPUT_LENGTH),
                     InputFormLength(etCvv, cvCvv, Constants.Companion.RequiredLength.CVV_INPUT_LENGTH))
                 and
-                (!maxPayInitData.showBillingAddr
+                (maxPayInitData.fieldsToShow?.showBillingAddressLayout == true
                         || isFormLengthValid(InputFormLength(etCountry, cvCountry, Constants.Companion.RequiredLength.COUNTRY_INPUT_LENGTH)))
             )
             if (checkBoxAutoDebt.isChecked && checkBoxTermsOfUse.isChecked) {
@@ -170,6 +177,43 @@ class PaymentFragment: FragmentWithToolbar(R.layout.fragment_payment) {
         checkBoxAutoDebt.setOnClickListener { checkEnableButton() }
 
         checkBoxTermsOfUse.setOnClickListener { checkEnableButton() }
+
+    }
+
+    private fun initVisibiltyBillingLayout() {
+        maxPayInitData.fieldsToShow?.let {
+            if (it.showBillingAddressLayout == true) layoutBillingAddress.visibility = View.VISIBLE
+            else {
+                layoutBillingAddress.visibility = View.GONE
+                return
+            }
+
+            if (it.showNameField == true) {
+                tvName.visibility = View.VISIBLE
+                cvName.visibility = View.VISIBLE
+            }
+
+            if (it.showAddressField == true) {
+                tvAddr.visibility = View.VISIBLE
+                cvAddress.visibility = View.VISIBLE
+            }
+            if (it.showCityField == true) {
+                tvCity.visibility = View.VISIBLE
+                cvCity.visibility = View.VISIBLE
+            }
+            if (it.showZipField == true) {
+                tvZIP.visibility = View.VISIBLE
+                cvZip.visibility = View.VISIBLE
+                if (it.showCityField == null || it.showCityField == false) {
+                    tvCity.visibility = View.INVISIBLE
+                    cvCity.visibility = View.INVISIBLE
+                }
+            }
+            if (it.showCountryField == true) {
+                tvCountry.visibility = View.VISIBLE
+                cvCountry.visibility = View.VISIBLE
+            }
+        }
 
     }
 

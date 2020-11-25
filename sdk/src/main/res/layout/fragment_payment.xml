@@ -133,9 +133,10 @@
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:hint="@string/payment_cardnumber_placeholder"
+                    android:hint="Card number"
                     android:padding="@dimen/margin_medium"
                     android:inputType="number"
+                    app:hint_text_masked="false"
                     app:allowed_chars="1234567890"
                     app:mask="@string/mask_credit_card_number" />
 

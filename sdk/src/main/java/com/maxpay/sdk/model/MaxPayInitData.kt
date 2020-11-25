@@ -8,7 +8,7 @@ data class MaxPayInitData(
     val apiVersion: Int,
     val publicKey: String,
     val theme: MaxPayTheme? = null,
-    val showBillingAddr: Boolean
+    val fieldsToShow: AvailableFields? = null
 ): Serializable
 
 data class MaxPayTheme(
@@ -40,5 +40,14 @@ data class MaxPayTheme(
    val  disabledButtonBackgroundColor: Int? = null,
    val  disabledButtonTitleColor: Int? = null,
    val  buttonCornerRadius: Float? = null
+): Serializable
+
+data class AvailableFields(
+    var showBillingAddressLayout: Boolean? = null,
+    var showNameField: Boolean? = null,
+    var showAddressField: Boolean? = null,
+    var showCityField: Boolean? = null,
+    var showZipField: Boolean? = null,
+    var showCountryField: Boolean? = null
 ): Serializable
 

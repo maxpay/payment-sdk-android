@@ -9,6 +9,7 @@ interface DateInterface {
     val ukLocale:Locale
     fun getCurrentTimeStamp(): String
     fun getYearTwoSymbols(dateMilliseconds: Long): String
+    fun getMonthTwoSymbols(currentTimeMillis: Long): String
 }
 
 class DateFormat : DateInterface {
@@ -19,6 +20,10 @@ class DateFormat : DateInterface {
     override fun getYearTwoSymbols(dateMilliseconds: Long): String {
         val s = SimpleDateFormat("yyyy").format(Date(dateMilliseconds))
         return s.substring(2)
+    }
+
+    override fun getMonthTwoSymbols(currentTimeMillis: Long): String {
+        return SimpleDateFormat("MM").format(Date(currentTimeMillis))
     }
 
     override val ukLocale = Locale("en", "US")

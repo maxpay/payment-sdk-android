@@ -57,5 +57,6 @@
     <string name="payment_terms_and_privacy_confirmation">By clicking Pay you agree to our Terms of Use and our Privacy Policy and confirm that you have read carefully and fully understand its provisions. You may receive email message notifications from Maxpay and can op at any time.</string>
     <string name="payment_pay_button_title">Pay now</string>
     <string name="payment_title">Payment</string>
+    <string name="error_zero_price">Amount must be bigger than 0.0"</string>
 
 </resources>

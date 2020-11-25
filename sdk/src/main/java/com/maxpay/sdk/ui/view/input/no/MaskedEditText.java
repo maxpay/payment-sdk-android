@@ -46,6 +46,7 @@ public class MaskedEditText extends TextInputEditText implements TextWatcher {
 	private int selection;
 	private boolean initialized;
 	private boolean ignore;
+	private boolean isHintTextMasked;
 	protected int maxRawLength;
 	private int lastValidMaskPosition;
 	private boolean selectionChanged;
@@ -71,6 +72,7 @@ public class MaskedEditText extends TextInputEditText implements TextWatcher {
         deniedChars = attributes.getString(R.styleable.MaskEditText_denied_chars);
         boolean enableImeAction = attributes.getBoolean(R.styleable.MaskEditText_enable_ime_action, false);
 
+		isHintTextMasked = attributes.getBoolean(R.styleable.MaskEditText_hint_text_masked, true);
 		String representation = attributes.getString(R.styleable.MaskEditText_char_representation);
 
 		if(representation == null) {
@@ -139,7 +141,7 @@ public class MaskedEditText extends TextInputEditText implements TextWatcher {
 		editingBefore = true;
 		editingOnChanged = true;
 		editingAfter = true;
-		if(hasHint() && rawText.length() == 0) {
+		if(hasHint() && rawText.length() == 0 && isHintTextMasked) {
             this.setText(makeMaskedTextWithHint());
 		} else {
             this.setText(makeMaskedText());
@@ -319,7 +321,10 @@ public class MaskedEditText extends TextInputEditText implements TextWatcher {
 		if(!editingAfter && editingBefore && editingOnChanged) {
 			editingAfter = true;
             if (hasHint() && (keepHint || rawText.length() == 0)) {
-                setText(makeMaskedTextWithHint());
+            	if (isHintTextMasked)
+                	setText(makeMaskedTextWithHint());
+            	else
+					setText(makeMaskedText());
 			} else {
                 setText(makeMaskedText());
             }
@@ -440,14 +445,24 @@ public class MaskedEditText extends TextInputEditText implements TextWatcher {
                 if (mtrv < rawText.length()) {
                     ssb.append(rawText.charAt(mtrv));
                 } else {
-                    ssb.append(getHint().charAt(maskToRaw[i]));
+                	int hintI = maskToRaw[i];
+                	if (hintI < getHint().length())
+	                    ssb.append(getHint().charAt(maskToRaw[i]));
                 }
             } else {
                 ssb.append(mask.charAt(i));
             }
             if ((keepHint && rawText.length() < rawToMask.length && i >= rawToMask[rawText.length()])
                     || (!keepHint && i >= maskFirstChunkEnd)) {
-                ssb.setSpan(new ForegroundColorSpan(getCurrentHintTextColor()), i, i + 1, 0);
+            	if (maskToRaw[i] < getHint().length()) {
+					try {
+						ssb.setSpan(new ForegroundColorSpan(getCurrentHintTextColor()), i, i + 1, 0);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				} else if (!isHintTextMasked) {
+
+				}
             }
         }
         return ssb;

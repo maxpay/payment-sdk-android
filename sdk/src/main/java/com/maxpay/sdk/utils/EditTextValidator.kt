@@ -16,6 +16,8 @@ class EditTextValidator(val theme: MaxPayTheme?) : KoinComponent {
 
     private val dateInterface: DateInterface by inject()
     private var errorColor: Int = Color.RED
+    internal var isError: Boolean = false
+    private val set: MutableSet<InputFormLength> = mutableSetOf()
 
     init {
         theme?.let {
@@ -23,7 +25,8 @@ class EditTextValidator(val theme: MaxPayTheme?) : KoinComponent {
         }
     }
 
-    fun validateET(inputForm: InputFormLength) {
+    internal fun validateET(inputForm: InputFormLength) {
+        set.add(inputForm)
         inputForm.input.addTextChangedListener {
             removeErrorFromField(inputForm)
         }
@@ -34,7 +37,8 @@ class EditTextValidator(val theme: MaxPayTheme?) : KoinComponent {
         }
     }
 
-    fun validateETWithoutLength(inputForm: InputFormLength) {
+    internal fun validateETWithoutLength(inputForm: InputFormLength) {
+        set.add(inputForm)
         inputForm.input.addTextChangedListener {
             removeErrorFromField(inputForm)
         }
@@ -45,113 +49,47 @@ class EditTextValidator(val theme: MaxPayTheme?) : KoinComponent {
 //        }
     }
 
-    fun validateExpirationDate(inputForm: InputFormLength) {
+    internal fun validateExpirationDate(inputForm: InputFormLength) {
+        set.add(inputForm)
         val currYear = dateInterface.getYearTwoSymbols(System.currentTimeMillis())
+        val currMonth = dateInterface.getMonthTwoSymbols(System.currentTimeMillis())
 
         inputForm.input.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {
-            }
-
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            }
+            override fun afterTextChanged(s: Editable?) {}
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 if (start == 0 && before == 0)
                     when(s?.getOrNull(0)) {
                         '0', '1' -> {
                             removeErrorFromField(inputForm)
-//                            return@let
                         }
                         else -> setError(inputForm)
                     }
 
                 if (start == 1 && before == 0) {
-                    when (s?.getOrNull(1)) {
-                        '0', '1', '2' -> {
-                            removeErrorFromField(inputForm)
-                        }
-                        else -> setError(inputForm)
-                    }
-                    if (s.toString().toInt() > 12)
+//                    when (s?.getOrNull(1)) {
+//                        '0', '1', '2' -> {
+//                            removeErrorFromField(inputForm)
+//                        }
+//                        else -> setError(inputForm)
+//                    }
+//                    if (s.toString().toInt() > 12 || s.toString().toInt() < 1)
+                    if(s?.subSequence(0, 2).toString().toInt() !in 1..12)
                         setError(inputForm)
+//                    if (s?.subSequence(0, 2).toString().toInt() > currMonth)
                 }
 
                 if (start == 4 && before == 0)
                     if (s?.subSequence(3, 5).toString().toInt() < currYear.toInt())
                         setError(inputForm)
-                    else if (s?.subSequence(0, 2).toString().toInt() <= 12)
+                    else if (s?.subSequence(3, 5).toString().toInt() == currYear.toInt()
+                        && s?.subSequence(0, 2).toString().toInt() !in currMonth.toInt()..12 )
+                        setError(inputForm)
+                    else if (s?.subSequence(0, 2).toString().toInt() in 1..12)
                         removeErrorFromField(inputForm)
-//
-//                it.getOrNull(3)?.let {
-//                    if (it.toInt() < currYear[0].toInt())
-//                        setError(inputForm)
-//                    else
-//                        removeErrorFromField(inputForm)
-//                }
-
-//                it.getOrNull(4)?.let { c ->
-//                    if (it.contains("y"))
-//                        return@let
-//                    if (it.subSequence(3, 4).toString().toInt() < currYear.toInt())
-//                        setError(inputForm)
-//                    else
-//                        removeErrorFromField(inputForm)
-//                }
             }
         })
-//        inputForm.input.addTextChangedListener {
-//            removeErrorFromField(inputForm)
-//            setError(inputForm)
-//            it?.let {
-//
-//                when(it.getOrNull(0)) {
-//                    '0', '1' -> {
-//                        removeErrorFromField(inputForm)
-//                        return@let
-//                    }
-//                    else -> setError(inputForm)
-//                }
-//
-//                when(it.getOrNull(1)) {
-//                    '1', '2' -> { removeErrorFromField(inputForm) }
-//                    else -> setError(inputForm)
-//                }
-//
-//                it.getOrNull(3)?.let {
-//                    if (it.toInt() < currYear[0].toInt())
-//                        setError(inputForm)
-//                    else
-//                        removeErrorFromField(inputForm)
-//                }
-//
-//                it.getOrNull(4)?.let { c ->
-//                    if (it.contains("y"))
-//                        return@let
-//                    if (it.subSequence(3, 4).toString().toInt() < currYear.toInt())
-//                        setError(inputForm)
-//                    else
-//                        removeErrorFromField(inputForm)
-//                }
-//
-//
-////                when(it.getOrNull(3)) {
-////                    '0', '1', '2' -> { removeErrorFromField(inputForm) }
-////                    else -> setError(inputForm)
-////                }
-//
-////                if (it.length > 0)
-////                    when (it.get(0)) {
-////                    '0', '1' -> {}
-////                    else -> {
-////                        inputForm.input.setTextColor(Color.RED)
-////                        inputForm.card.strokeColor = Color.RED
-////                    }
-////                }
-////                else if ( it.length == ) {
-//
-////            }
-//            }
-//        }
 
         inputForm.input.setOnFocusChangeListener { _, b ->
             if (!b)
@@ -160,7 +98,8 @@ class EditTextValidator(val theme: MaxPayTheme?) : KoinComponent {
     }
 
 
-    fun validateCardNumber(inputForm: InputFormLength, imageView: ImageView) {
+    internal fun validateCardNumber(inputForm: InputFormLength, imageView: ImageView) {
+        set.add(inputForm)
         inputForm.input.addTextChangedListener {
             removeErrorFromField(inputForm)
             it?.let {
@@ -180,21 +119,37 @@ class EditTextValidator(val theme: MaxPayTheme?) : KoinComponent {
                 }
                 img?.let { imageView.setImageDrawable(it) }
             }
+
+//            val luhn = LuhnAlgorithmHelper.checkLuhn(inputForm.input.text.toString().replace(" ", ""))
         }
 
+
+
         inputForm.input.setOnFocusChangeListener { _, b ->
-            if (!b)
+            if (!b) {
                 isFormLengthValid(inputForm)
+                if (!LuhnAlgorithmHelper.checkLuhn(inputForm.input.text.toString().replace(" ", "")))
+                    setError(inputForm)
+            }
 
 //            if (!b && editText.text!!.length > 0)
 //                cardView.strokeColor = Color.RED
         }
 
     }
+    internal fun isErrorInFields(): Boolean {
+        set.forEach {
+            if (it.input.currentTextColor == errorColor) {
+                return true
+            }
+        }
+        return false
+    }
 
     private fun setError(inputForm: InputFormLength) {
         inputForm.input.setTextColor(errorColor)
         inputForm.card.strokeColor = errorColor
+        isError = true
     }
 
     private fun removeErrorFromField(inputForm: InputFormLength) {
@@ -203,6 +158,7 @@ class EditTextValidator(val theme: MaxPayTheme?) : KoinComponent {
                 ContextCompat.getColor(inputForm.card.context, R.color.colorDarkText)
             )
             inputForm.card.strokeColor = Color.TRANSPARENT
+            isError = false
         }
     }
 
