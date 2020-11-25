@@ -17,6 +17,7 @@ import com.maxpay.sdk.model.MaxPayTheme
 import com.maxpay.sdk.model.request.TransactionType
 import com.maxpay.testappmaxpay.R
 import com.maxpay.testappmaxpay.ui.MainViewModel
+import com.maxpay.testappmaxpay.utils.Utils
 import kotlinx.android.synthetic.main.fragment_settings.*
 import java.util.*
 
@@ -55,6 +56,10 @@ class SettingsFragment : Fragment() {
         viewModel.viewState.maxPayTheme.value?.let {
             segmentedControlTheme.setSelectedSegment(1)
         }?: kotlin.run { segmentedControlTheme.setSelectedSegment(0) }
+        if (viewModel.viewState.maxPayAvailableFields.value?.showBillingAddressLayout == true)
+            setSwitchesState(true)
+        else
+            setSwitchesState(false)
         segmentedControlTheme.addOnSegmentClickListener {
             val  font = "fonts/GVB.otf"
             when(it.column) {
@@ -85,6 +90,47 @@ class SettingsFragment : Fragment() {
         tvChange.setOnClickListener {
             chooseCurrency()
         }
+        initSwitches()
+    }
+
+    private fun setSwitchesState(b: Boolean) {
+        switcherShowAddress.isEnabled = b
+        switcherShowCity.isEnabled = b
+        switcherShowNameField.isEnabled = b
+        switcherShowZIP.isEnabled = b
+        switcherShowCountry.isEnabled = b
+
+        val availableFields = viewModel.viewState.maxPayAvailableFields.value
+        switcherShowBilling.isChecked = availableFields?.showBillingAddressLayout ?: false
+        switcherShowAddress.isChecked = availableFields?.showAddressField ?: false
+        switcherShowCity.isChecked = availableFields?.showCityField ?: false
+        switcherShowNameField.isChecked = availableFields?.showNameField ?: false
+        switcherShowZIP.isChecked = availableFields?.showZipField ?: false
+        switcherShowCountry.isChecked = availableFields?.showCountryField ?: false
+
+
+    }
+
+    private fun initSwitches() {
+        switcherShowBilling.setOnCheckedChangeListener { _, isChecked ->
+            viewModel.viewState.maxPayAvailableFields.value?.showBillingAddressLayout = isChecked
+            setSwitchesState(isChecked)
+        }
+        switcherShowAddress.setOnCheckedChangeListener { _, isChecked ->
+            viewModel.viewState.maxPayAvailableFields.value?.showAddressField = isChecked
+        }
+        switcherShowCity.setOnCheckedChangeListener { _, isChecked ->
+            viewModel.viewState.maxPayAvailableFields.value?.showCityField = isChecked
+        }
+        switcherShowNameField.setOnCheckedChangeListener { _, isChecked ->
+            viewModel.viewState.maxPayAvailableFields.value?.showNameField = isChecked
+        }
+        switcherShowZIP.setOnCheckedChangeListener { _, isChecked ->
+            viewModel.viewState.maxPayAvailableFields.value?.showZipField = isChecked
+        }
+        switcherShowCountry.setOnCheckedChangeListener { _, isChecked ->
+            viewModel.viewState.maxPayAvailableFields.value?.showCountryField = isChecked
+        }
     }
 
     private fun chooseCurrency() {
@@ -95,16 +141,15 @@ class SettingsFragment : Fragment() {
             requireContext(),
             R.layout.support_simple_spinner_dropdown_item
         )
-        Currency.getAvailableCurrencies().forEach {
+        val currencyList = Utils.getCurrenciesList()
+        Utils.getCurrenciesList()
+        currencyList.forEach {
             arrayAdapter.add(it.currencyCode)
         }
         builder.setAdapter(
             arrayAdapter
         ) { _, l ->
-//            val currCode = Currency.getAvailableCurrencies().elementAt(l).currencyCode
-//            viewModel.viewState.settings.value?.currency = currCode
-//            tvCurrency.text = currCode
-            val curr = Currency.getAvailableCurrencies().elementAt(l)
+            val curr = currencyList.elementAt(l)
             viewModel.viewState.settings.value?.currency = curr
             tvCurrency.text = curr.currencyCode
         }

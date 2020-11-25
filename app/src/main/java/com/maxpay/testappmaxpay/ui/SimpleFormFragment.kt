@@ -15,6 +15,7 @@ import com.maxpay.sdk.utils.extensions.observeCommandSafety
 import com.maxpay.sdk.utils.extensions.showDialog
 import com.maxpay.sdk.utils.extensions.showInfo
 import com.maxpay.testappmaxpay.R
+import com.maxpay.testappmaxpay.utils.Utils
 import kotlinx.android.synthetic.main.fragment_settings.segmentControlTransaction
 import kotlinx.android.synthetic.main.fragment_settings.toolbar
 import kotlinx.android.synthetic.main.fragment_settings.tvChange
@@ -92,16 +93,15 @@ class SimpleFormFragment : Fragment() {
             requireContext(),
             R.layout.support_simple_spinner_dropdown_item
         )
-        Currency.getAvailableCurrencies().forEach {
+        val currencyList = Utils.getCurrenciesList()
+        Utils.getCurrenciesList()
+        currencyList.forEach {
             arrayAdapter.add(it.currencyCode)
         }
-        builder.setAdapter(arrayAdapter
+        builder.setAdapter(
+            arrayAdapter
         ) { _, l ->
-//            val currCode = Currency.getAvailableCurrencies().elementAt(l).currencyCode
-//            viewModel.viewState.settings.value?.currency = currCode
-//            tvCurrency.text = currCode
-
-            val curr = Currency.getAvailableCurrencies().elementAt(l)
+            val curr = currencyList.elementAt(l)
             viewModel.viewState.settings.value?.currency = curr
             tvCurrency.text = curr.currencyCode
         }

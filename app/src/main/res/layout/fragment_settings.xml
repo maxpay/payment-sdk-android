@@ -115,6 +115,95 @@
         app:layout_constraintTop_toBottomOf="@id/tvCur"
         android:text="@string/change" />
 
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/switcherShowBilling"
+        style="@style/ColorSwitchStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Show billing layout"
+        android:textSize="12sp"
+        android:shadowColor="@color/colorPrimary"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:outlineAmbientShadowColor="@color/colorPrimary"
+        android:outlineSpotShadowColor="@color/colorPrimary"
+        app:layout_constraintTop_toBottomOf="@id/tvChange"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/switcherShowAddress"
+        style="@style/ColorSwitchStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:outlineAmbientShadowColor="@color/colorPrimary"
+        android:outlineSpotShadowColor="@color/colorPrimary"
+        android:shadowColor="@color/colorPrimary"
+        android:text="Show Address field"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/switcherShowBilling" />
+
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/switcherShowCity"
+        style="@style/ColorSwitchStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:outlineAmbientShadowColor="@color/colorPrimary"
+        android:outlineSpotShadowColor="@color/colorPrimary"
+        android:shadowColor="@color/colorPrimary"
+        android:text="Show city field"
+        android:textSize="12sp"
+        app:switchPadding="11dp"
+        app:layout_constraintBottom_toBottomOf="@+id/switcherShowAddress"
+        app:layout_constraintEnd_toStartOf="@id/switcherShowAddress"
+        app:layout_constraintHorizontal_bias="0.101"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/switcherShowAddress"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/switcherShowCountry"
+        style="@style/ColorSwitchStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:outlineAmbientShadowColor="@color/colorPrimary"
+        android:outlineSpotShadowColor="@color/colorPrimary"
+        android:shadowColor="@color/colorPrimary"
+        android:text="Show country field"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/switcherShowCity" />
+
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/switcherShowNameField"
+        style="@style/ColorSwitchStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:outlineAmbientShadowColor="@color/colorPrimary"
+        android:outlineSpotShadowColor="@color/colorPrimary"
+        android:shadowColor="@color/colorPrimary"
+        android:text="Show name field"
+
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/switcherShowCountry"
+        app:layout_constraintEnd_toStartOf="@id/switcherShowCountry"
+        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/switcherShowCountry"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/switcherShowZIP"
+        style="@style/ColorSwitchStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Show zip field"
+        android:textSize="12sp"
+        android:shadowColor="@color/colorPrimary"
+        android:outlineAmbientShadowColor="@color/colorPrimary"
+        android:outlineSpotShadowColor="@color/colorPrimary"
+        app:layout_constraintTop_toBottomOf="@id/switcherShowNameField"
+        app:layout_constraintEnd_toEndOf="parent" />
+
 
     <include
         android:id="@+id/toolbar"

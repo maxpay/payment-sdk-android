@@ -6,6 +6,7 @@ import com.maxpay.sdk.SdkFacadeImpl
 import com.maxpay.sdk.core.MyAndroidViewModel
 import com.maxpay.sdk.data.MaxpayCallback
 import com.maxpay.sdk.data.MaxpayResult
+import com.maxpay.sdk.model.AvailableFields
 import com.maxpay.sdk.model.MaxPayInitData
 import com.maxpay.sdk.model.MaxpayPaymentData
 import com.maxpay.sdk.model.request.TransactionType
@@ -25,8 +26,10 @@ class MainViewModel(application: Application)
 
     init {
         if (_viewState.settings.value == null)
-            _viewState.settings.value = MaxpayPaymentData(currency = Currency.getInstance(Locale.getDefault()))
-//            _viewState.settings.value = MaxpayPaymentData(currency = "USD")
+            _viewState.settings.value = MaxpayPaymentData(currency = Currency.getInstance(Locale.getDefault()), amount = 0.0F)
+
+        if (_viewState.maxPayAvailableFields.value == null)
+            _viewState.maxPayAvailableFields.value = AvailableFields(showBillingAddressLayout = false)
     }
 
     fun addToBasket(item: ProductItemtUI) {
@@ -69,13 +72,13 @@ class MainViewModel(application: Application)
         _viewState.fullPrice.value = price
     }
 
-    fun payWithSDK(showBilling: Boolean? = null) {
+    fun payWithSDK() {
         val sdk: SDKFacade = SdkFacadeImpl(
             MaxPayInitData(
                 accountName = "Dinarys",
                 accountPassword = "h6Zq7dLPYMcve1F2",
                 apiVersion = 1,
-                showBillingAddr = showBilling ?: false,
+                fieldsToShow = _viewState.maxPayAvailableFields.value,
                 publicKey = _viewState.pk.value ?: "pkLive_HzmqN88yqNwwzuCRBgboOIvVOiNAX09x",
                 theme = _viewState.maxPayTheme.value ?: null
             )

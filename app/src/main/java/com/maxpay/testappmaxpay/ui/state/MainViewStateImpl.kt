@@ -2,6 +2,7 @@ package com.maxpay.testappmaxpay.ui.state
 
 import androidx.lifecycle.MutableLiveData
 import com.maxpay.sdk.data.MaxpayResult
+import com.maxpay.sdk.model.AvailableFields
 import com.maxpay.sdk.model.MaxPayInitData
 import com.maxpay.sdk.model.MaxPayTheme
 import com.maxpay.sdk.model.MaxpayPaymentData
@@ -17,6 +18,7 @@ class MainViewStateImpl : MainViewState {
 
     override val maxpayResult: SingleLiveEvent<MaxpayResult> = SingleLiveEvent()
     override val maxPayTheme: MutableLiveData<MaxPayTheme> = MutableLiveData()
+    override val maxPayAvailableFields: MutableLiveData<AvailableFields> = MutableLiveData()
 
     override val pk: MutableLiveData<String> = MutableLiveData()
 }

@@ -13,6 +13,8 @@ import com.maxpay.testappmaxpay.R
 import com.maxpay.testappmaxpay.core.getPriceString
 import com.maxpay.testappmaxpay.ui.MainViewModel
 import kotlinx.android.synthetic.main.fragment_pay.*
+import kotlinx.android.synthetic.main.fragment_pay.switcherShowBilling
+import kotlinx.android.synthetic.main.fragment_settings.*
 import kotlinx.android.synthetic.main.fragment_settings.toolbar
 
 
@@ -67,7 +69,10 @@ class PayFragment : Fragment() {
             ilPK.editText?.let {
                 viewModel.viewState.pk.value = it.text.toString().takeIf { !it.isEmpty() }?: null
             }
-            viewModel.payWithSDK(switcherShowBilling?.isChecked)
+            switcherShowBilling.setOnCheckedChangeListener { _, isChecked ->
+                viewModel.viewState.maxPayAvailableFields.value?.showBillingAddressLayout = isChecked
+            }
+            viewModel.payWithSDK()
         }
     }
 
