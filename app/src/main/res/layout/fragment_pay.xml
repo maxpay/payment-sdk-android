@@ -89,6 +89,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etPassportNumber"
                     style="@style/AppInputEditText"
+                    android:text="John"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:inputType="textPersonName" />
@@ -109,6 +110,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etPassportNumber1"
                     style="@style/AppInputEditText"
+                    android:text="Doe"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:inputType="textPersonName" />
@@ -128,6 +130,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etPassportNumber2"
                     style="@style/AppInputEditText"
+                    android:text="+380509256633"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:inputType="phone" />
@@ -151,6 +154,7 @@
                     android:layout_height="match_parent"
                     android:inputType="textCapCharacters"
                     android:maxLength="3"
+                    android:text="USA"
                     app:edit_text_mask="@string/mask_cvc" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -168,6 +172,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etPassportNumber4"
                     style="@style/AppInputEditText"
+                    android:text="Washington"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:inputType="text" />
@@ -187,6 +192,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etPassportNumber5"
                     style="@style/AppInputEditText"
+                    android:text="Constitution ave"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:inputType="text" />
@@ -207,6 +213,7 @@
                     android:id="@+id/etPassportNumber6"
                     style="@style/AppInputEditText"
                     android:layout_width="match_parent"
+                    android:text="49000"
                     android:layout_height="match_parent"
                     android:inputType="number" />
             </com.google.android.material.textfield.TextInputLayout>
