@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title_activity_sdk">SdkActivity</string>
+    <string name="payment_amount">Summa att betala:</string>
+    <string name="payment_email_placeholder">вашemail@gmail.com</string>
+    <string name="payment_cardnumber_title">Kortnummer</string>
+    <string name="payment_cardnumber_placeholder">1234567891234567</string>
+    <string name="payment_expired_title">Expiration Date</string>
+    <string name="payment_expired_placeholder">mmåå</string>
+    <string name="payment_cvv_title">CVV</string>
+    <string name="payment_cvv_placeholder"> 123</string>
+    <string name="payment_cardholder_title">Card holder’s name</string>
+    <string name="payment_cardholder_placeholder">Full Name</string>
+    <string name="payment_billing_header_title">Billing Address</string>
+    <string name="payment_billing_name_title">Name</string>
+    <string name="payment_billing_name_placeholder">Full Name</string>
+    <string name="payment_billing_address_title">Address</string>
+    <string name="payment_billing_address_placeholder">Placeholder</string>
+    <string name="payment_billing_city_title">Stad</string>
+    <string name="payment_billing_city_placeholder">Placeholder</string>
+    <string name="payment_billing_zip_title">Postnummer</string>
+    <string name="payment_billing_zip_placeholder">55001</string>
+    <string name="payment_billing_country_title">Land</string>
+    <string name="payment_billing_country_placeholder">Placeholder</string>
+    <string name="payment_email_title">E-postadress</string>
+    <string name="payment_pay_button_title">Betala nu</string>
+    <string name="payment_terms_and_privacy_confirmation">Genom att klicka Betala, samtycker du till våra Användarregler och vår Sekretesspolicy och bekräftar att du har läst dessa noggrant och förstår dess bestämmelser fullt ut. Du kan komma att få e-postaviseringar från Maxpay och kan avbryta när du vill</string>
+    <string name="maxpay_key">Maxpay</string>
+    <string name="privacy_key">Sekretesspolicy</string>
+    <string name="terms_key">Användarregler</string>
+    <string name="payment_autodebit_confirmation">Jag bekräftar att mitt kort kan komma att debiteras automatiskt om jag köper en ny produkt eller en prenumerationsbetalning är begärd</string>
+</resources>

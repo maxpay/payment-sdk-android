@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="title_activity_sdk">SdkActivity</string>
+    <string name="payment_amount">Maksettavaa:</string>
+    <string name="payment_email_title">Sähköpostiosoite</string>
+    <string name="payment_email_placeholder">youremail@gmail.com</string>
+    <string name="payment_cardnumber_title">Kortin numero</string>
+    <string name="payment_cardnumber_placeholder">1234567891234567</string>
+    <string name="payment_expired_title">Expiration Date</string>
+    <string name="payment_expired_placeholder">kkvv</string>
+    <string name="payment_cvv_title">CVV</string>
+    <string name="payment_cvv_placeholder"> 123</string>
+    <string name="payment_cardholder_title">Card holder’s name</string>
+    <string name="payment_cardholder_placeholder">Full Name</string>
+    <string name="payment_billing_header_title">Billing Address</string>
+    <string name="payment_billing_name_title">Name</string>
+    <string name="payment_billing_name_placeholder">Full Name</string>
+    <string name="payment_billing_address_title">Address</string>
+    <string name="payment_billing_address_placeholder">Placeholder</string>
+    <string name="payment_billing_city_title">Kaupunki</string>
+    <string name="payment_billing_city_placeholder">Placeholder</string>
+    <string name="payment_billing_zip_title">Postinumero</string>
+    <string name="payment_billing_zip_placeholder">55001</string>
+    <string name="payment_billing_country_title">Maa</string>
+    <string name="payment_billing_country_placeholder">Placeholder</string>
+    <string name="payment_pay_button_title">Maksa nyt</string>
+    <string name="payment_terms_and_privacy_confirmation">Napauttamalla Maksa hyväksyt käyttöehtomme ja yksityisyydensuojakäytäntömme ja vahvistat, että olet lukenut ne huolellisesti ja ymmärrät täysin niiden ehdot. Voit saada sähköposti-ilmoituksia osoitteesta Maxpay, ja voit lopettaa niiden vastaanottamisen milloin haluat.</string>
+    <string name="maxpay_key">Maxpay</string>
+    <string name="privacy_key">yksityisyydensuojakäytäntömme</string>
+    <string name="terms_key">käyttöehtomme</string>
+    <string name="payment_autodebit_confirmation">Vahvistan, että kortiltani voidaan veloittaa automaattinen suoritus, mikäli ostan uuden tuotteen tai mikäli tilaus tulee vastaan</string>
+</resources>

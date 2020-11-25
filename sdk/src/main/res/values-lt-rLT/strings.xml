@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title_activity_sdk">SdkActivity</string>
+    <string name="payment_amount">Mokėjimo suma:</string>
+    <string name="payment_email_title">El. paštas</string>
+    <string name="payment_cardnumber_title">Kortelės numeris</string>
+    <string name="payment_cardnumber_placeholder">1234567891234567</string>
+    <string name="payment_expired_title">Galiojmo laikas</string>
+    <string name="payment_expired_placeholder">MMYY</string>
+    <string name="payment_cvv_title">CVV</string>
+    <string name="payment_cvv_placeholder"> 123</string>
+    <string name="payment_cardholder_title">Card holder’s name</string>
+    <string name="payment_cardholder_placeholder">Full Name</string>
+    <string name="payment_billing_header_title">Billing Address</string>
+    <string name="payment_billing_name_title">Name</string>
+    <string name="payment_billing_name_placeholder">Full Name</string>
+    <string name="payment_billing_address_title">Address</string>
+    <string name="payment_billing_address_placeholder">Placeholder</string>
+    <string name="payment_billing_city_title">Miestas</string>
+    <string name="payment_billing_city_placeholder">Placeholder</string>
+    <string name="payment_billing_zip_title">Pašto kodas</string>
+    <string name="payment_billing_zip_placeholder">55001</string>
+    <string name="payment_billing_country_title">Šalis</string>
+    <string name="payment_billing_country_placeholder">Placeholder</string>
+    <string name="payment_pay_button_title">Sumokėti dabar</string>
+    <string name="payment_terms_and_privacy_confirmation">Spausdami Apmokėti, Jūs sutinkate su mūsų Naudojimosi sąlygomis ir Privatumo politika ir patvirtinate, kad atidžiai perskaitėte ir visiškai supratote visas nuostatas. Jūs galite gauti nuo pranešimus el. Maxpay paštu ir galite bet kada jų atsisakyti.</string>
+    <string name="maxpay_key">Maxpay</string>
+    <string name="privacy_key">Privatumo politika</string>
+    <string name="terms_key">Naudojimosi sąlygomis</string>
+    <string name="payment_autodebit_confirmation">Aš sutinku, kad nuo mano kortelės gali būtų nuskaičiuojamas automatinis mokestis, jei perku naują paslaugą/produktą ar reikia sumokėti abonentinį mokestį.</string>
+</resources>
