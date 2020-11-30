@@ -4,7 +4,7 @@
 
     <string name="payment_amount">Amount to pay:</string>
     <string name="payment_email_title">Email address</string>
-    <string name="payment_email_placeholder">вашemail@gmail.com</string>
+    <string name="payment_email_placeholder">youremail@gmail.com</string>
     <string name="payment_cardnumber_title">Сard Number</string>
     <string name="payment_cardnumber_placeholder">1234567891234567</string>
     <string name="payment_expired_title">Expiration Date</string>

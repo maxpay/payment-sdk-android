@@ -10,12 +10,12 @@
     <string name="payment_expired_placeholder">mmyy</string>
     <string name="payment_cvv_title">CVV</string>
     <string name="payment_cvv_placeholder"> 123</string>
-    <string name="payment_cardholder_title">Card holder’s name</string>
+    <string name="payment_cardholder_title">Nome del titolare</string>
     <string name="payment_cardholder_placeholder">Full Name</string>
     <string name="payment_billing_header_title">Billing Address</string>
     <string name="payment_billing_name_title">Name</string>
     <string name="payment_billing_name_placeholder">Full Name</string>
-    <string name="payment_billing_address_title">Address</string>
+    <string name="payment_billing_address_title">Indirizzo</string>
     <string name="payment_billing_address_placeholder">Placeholder</string>
     <string name="payment_billing_city_title">Città</string>
     <string name="payment_billing_city_placeholder">Placeholder</string>
@@ -23,7 +23,6 @@
     <string name="payment_billing_zip_placeholder">55001</string>
     <string name="payment_billing_country_title">Paese</string>
     <string name="payment_billing_country_placeholder">Placeholder</string>
-    <string name="payment_title">Сум ма:</string>
     <string name="payment_pay_button_title">Paga ora</string>
     <string name="payment_terms_and_privacy_confirmation">Cliccando su Paga, accetti i nostri Termini di utilizzo e la nostra Politica sulla Privacy e confermi di aver letto attentamente e di aver compreso appieno le sue disposizioni. Potresti ricevere notifiche via email da Maxpay, che puoi annullare in qualsiasi momento</string>
     <string name="maxpay_key">Maxpay</string>

@@ -151,6 +151,8 @@ class PaymentFragment: FragmentWithToolbar(R.layout.fragment_payment) {
                     InputFormLength(etExpirationDate, cvExpirDate, Constants.Companion.RequiredLength.EXPIRY_INPUT_LENGTH),
                     InputFormLength(etCvv, cvCvv, Constants.Companion.RequiredLength.CVV_INPUT_LENGTH))
                 and
+                editTextValidator.checkLuhn(InputFormLength(etCardNumber, cvCardNumber, Constants.Companion.RequiredLength.CARD_INPUT_LENGTH))
+                and
                 (maxPayInitData.fieldsToShow?.showBillingAddressLayout == true
                         || isFormLengthValid(InputFormLength(etCountry, cvCountry, Constants.Companion.RequiredLength.COUNTRY_INPUT_LENGTH)))
             )

@@ -128,15 +128,21 @@ class EditTextValidator(val theme: MaxPayTheme?) : KoinComponent {
         inputForm.input.setOnFocusChangeListener { _, b ->
             if (!b) {
                 isFormLengthValid(inputForm)
-                if (!LuhnAlgorithmHelper.checkLuhn(inputForm.input.text.toString().replace(" ", "")))
-                    setError(inputForm)
+                checkLuhn(inputForm)
+//                if (!LuhnAlgorithmHelper.checkLuhn(inputForm.input.text.toString().replace(" ", "")))
+//                    setError(inputForm)
             }
-
-//            if (!b && editText.text!!.length > 0)
-//                cardView.strokeColor = Color.RED
         }
-
     }
+
+    internal fun checkLuhn(inputForm: InputFormLength): Boolean {
+        if (!LuhnAlgorithmHelper.checkLuhn(inputForm.input.text.toString().replace(" ", ""))) {
+            setError(inputForm)
+            return false
+        }
+        return true
+    }
+
     internal fun isErrorInFields(): Boolean {
         set.forEach {
             if (it.input.currentTextColor == errorColor) {

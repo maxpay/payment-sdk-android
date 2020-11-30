@@ -133,7 +133,7 @@
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:hint="Card number"
+                    android:hint="1234 5678 9123 4567"
                     android:padding="@dimen/margin_medium"
                     android:inputType="number"
                     app:hint_text_masked="false"

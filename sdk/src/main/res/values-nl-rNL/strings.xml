@@ -10,12 +10,12 @@
     <string name="payment_expired_placeholder">mmjj</string>
     <string name="payment_cvv_title">CVV</string>
     <string name="payment_cvv_placeholder"> 123</string>
-    <string name="payment_cardholder_title">Card holder’s name</string>
+    <string name="payment_cardholder_title">Naam kaarthouder</string>
     <string name="payment_cardholder_placeholder">Full Name</string>
     <string name="payment_billing_header_title">Billing Address</string>
     <string name="payment_billing_name_title">Name</string>
     <string name="payment_billing_name_placeholder">Full Name</string>
-    <string name="payment_billing_address_title">Address</string>
+    <string name="payment_billing_address_title">Adres</string>
     <string name="payment_billing_address_placeholder">Placeholder</string>
     <string name="payment_billing_city_title">Stad</string>
     <string name="payment_billing_city_placeholder">Placeholder</string>
