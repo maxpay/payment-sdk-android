@@ -13,9 +13,8 @@ import com.maxpay.testappmaxpay.R
 import com.maxpay.testappmaxpay.core.getPriceString
 import com.maxpay.testappmaxpay.ui.MainViewModel
 import kotlinx.android.synthetic.main.fragment_pay.*
-import kotlinx.android.synthetic.main.fragment_pay.switcherShowBilling
-import kotlinx.android.synthetic.main.fragment_settings.*
 import kotlinx.android.synthetic.main.fragment_settings.toolbar
+import java.lang.RuntimeException
 
 
 class PayFragment : Fragment() {
@@ -43,6 +42,12 @@ class PayFragment : Fragment() {
 
     private fun initUIelements() {
         tvTotalAmount.text ="${viewModel.viewState.fullPrice.value?.getPriceString()} ${viewModel.viewState.settings.value?.currency}"
+        viewModel.viewState.maxPayAvailableFields.value?.showBillingAddressLayout?.let {
+            switcherShowBillingP.isChecked = it
+        }
+        switcherShowBillingP.setOnCheckedChangeListener { _, isChecked ->
+            viewModel.viewState.maxPayAvailableFields.value?.showBillingAddressLayout = isChecked
+        }
         btnPay.setOnClickListener {
             ilFirstName.editText?.let {
                 viewModel.viewState.settings.value?.firstName = it.text.toString()
@@ -69,9 +74,7 @@ class PayFragment : Fragment() {
             ilPK.editText?.let {
                 viewModel.viewState.pk.value = it.text.toString().takeIf { !it.isEmpty() }?: null
             }
-            switcherShowBilling.setOnCheckedChangeListener { _, isChecked ->
-                viewModel.viewState.maxPayAvailableFields.value?.showBillingAddressLayout = isChecked
-            }
+
             viewModel.payWithSDK()
         }
     }
