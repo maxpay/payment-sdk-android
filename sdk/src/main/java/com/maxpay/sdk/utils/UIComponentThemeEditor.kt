@@ -75,7 +75,7 @@ class UIComponentThemeEditor(val theme: MaxPayTheme?) {
                     theme.headerLargeTitleFont?.let {
                         val typeface = Typeface.createFromAsset(resources.assets, it)
                         tvPA?.typeface = typeface
-                        tvBilling?.typeface = typeface
+//                        tvBilling?.typeface = typeface // TODO Removed by customer`s purpose
                     }
                     theme.headerStandardTitleFont?.let {
                         val typeface = Typeface.createFromAsset(resources.assets, it)
@@ -95,7 +95,7 @@ class UIComponentThemeEditor(val theme: MaxPayTheme?) {
                     }
 
                     theme.headerSeparatorColor?.let {
-                        billingSeparator.setBackgroundColor(it)
+//                        billingSeparator.setBackgroundColor(it)  // TODO Removed by customer`s purpose
                         paymentSeparator.setBackgroundColor(it)
                     }
 

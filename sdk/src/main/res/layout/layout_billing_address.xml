@@ -8,25 +8,25 @@
     android:layout_height="wrap_content"
     android:background="@color/colorWhite">
 
-    <TextView
-        android:id="@+id/tvBilling"
-        style="@style/TextLargeBold"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_margin="@dimen/margin_medium"
-        android:text="@string/payment_billing_header_title"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+<!--    <TextView-->
+<!--        android:id="@+id/tvBilling"-->
+<!--        style="@style/TextLargeBold"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_gravity="center"-->
+<!--        android:layout_margin="@dimen/margin_medium"-->
+<!--        android:text="@string/payment_billing_header_title"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
 
-    <View
-        android:id="@+id/billingSeparator"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/divider_line"
-        android:layout_margin="@dimen/margin_medium"
-        android:alpha="0.5"
-        app:layout_constraintTop_toBottomOf="@+id/tvBilling"/>
+<!--    <View-->
+<!--        android:id="@+id/billingSeparator"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="1dp"-->
+<!--        android:background="@color/divider_line"-->
+<!--        android:layout_margin="@dimen/margin_medium"-->
+<!--        android:alpha="0.5"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/tvBilling"/>-->
 
     <TextView
         android:id="@+id/tvName"
@@ -39,7 +39,8 @@
         android:textStyle="bold"
         android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvBilling" />
+        app:layout_constraintTop_toTopOf="parent"/>
+<!--        app:layout_constraintTop_toBottomOf="@id/tvBilling" />-->
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cvName"
@@ -95,7 +96,7 @@
             style="@style/InputEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/payment_billing_address_placeholder"
+            android:hint="@string/payment_billing_address_title"
             android:inputType="textPersonName"
             android:padding="@dimen/margin_medium" />
     </androidx.cardview.widget.CardView>
@@ -141,7 +142,7 @@
             android:layout_height="wrap_content"
             android:padding="@dimen/margin_medium"
             android:inputType="text"
-            android:hint="@string/payment_billing_city_placeholder" />
+            android:hint="@string/payment_billing_city_title" />
     </androidx.cardview.widget.CardView>
 
     <TextView
@@ -212,7 +213,7 @@
             style="@style/InputEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/payment_billing_country_placeholder"
+            android:hint="@string/payment_billing_country_title"
             android:inputType="textCapCharacters"
             android:maxLength="3"
             android:padding="@dimen/margin_medium" />

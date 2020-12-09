@@ -90,7 +90,7 @@
                     style="@style/InputEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/payment_email_placeholder"
+                    android:hint="@string/payment_email_title"
                     android:padding="@dimen/margin_medium" />
 
             </com.google.android.material.card.MaterialCardView>
@@ -258,7 +258,7 @@
                     style="@style/InputEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/payment_cardholder_placeholder"
+                    android:hint="@string/payment_cardholder_title"
                     android:inputType="textPersonName"
                     android:padding="@dimen/margin_medium" />
             </com.google.android.material.card.MaterialCardView>
