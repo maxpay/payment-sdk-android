@@ -9,7 +9,6 @@ import com.maxpay.sdk.data.MaxpayResult
 import com.maxpay.sdk.model.MaxPayRepository
 import com.maxpay.sdk.model.MaxpayPaymentData
 import com.maxpay.sdk.model.request.SalePayment
-import com.maxpay.sdk.model.request.ThreeDPayment
 import com.maxpay.sdk.model.request.TransactionType
 import com.maxpay.sdk.model.response.ResponseStatus
 import com.maxpay.sdk.ui.navigation.SDKNavigation

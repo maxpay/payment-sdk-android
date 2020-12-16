@@ -21,11 +21,13 @@ class UIComponentThemeEditor(val theme: MaxPayTheme?) {
                 etCvv?.setTextColor(it)
                 etCardHolderName?.setTextColor(it)
                 etName?.setTextColor(it)
+                etLastName?.setTextColor(it)
+
+
                 etAddr?.setTextColor(it)
                 etCity?.setTextColor(it)
                 etZip?.setTextColor(it)
                 etCountry?.setTextColor(it)
-                etCardHolderName?.setTextColor(it)
             }
             theme?.fieldBackgroundColor?.let {
                 cvEmail?.setCardBackgroundColor(it)
@@ -34,6 +36,7 @@ class UIComponentThemeEditor(val theme: MaxPayTheme?) {
                 cvCvv?.setCardBackgroundColor(it)
                 cvCardHolderName?.setCardBackgroundColor(it)
                 cvName?.setCardBackgroundColor(it)
+                cvLastName?.setCardBackgroundColor(it)
                 cvAddress?.setCardBackgroundColor(it)
                 cvCity?.setCardBackgroundColor(it)
                 cvZip?.setCardBackgroundColor(it)
@@ -47,6 +50,7 @@ class UIComponentThemeEditor(val theme: MaxPayTheme?) {
                 tvCVV?.setTextColor(it)
                 tvCHN?.setTextColor(it)
                 tvName?.setTextColor(it)
+                tvLastName?.setTextColor(it)
                 tvAddr?.setTextColor(it)
                 tvCity?.setTextColor(it)
                 tvZIP?.setTextColor(it)
@@ -85,6 +89,7 @@ class UIComponentThemeEditor(val theme: MaxPayTheme?) {
                         tvCVV?.typeface = typeface
                         tvCHN?.typeface = typeface
                         tvName?.typeface = typeface
+                        tvLastName?.typeface = typeface
                         tvAddr?.typeface = typeface
                         tvCity?.typeface = typeface
                         tvZIP?.typeface = typeface

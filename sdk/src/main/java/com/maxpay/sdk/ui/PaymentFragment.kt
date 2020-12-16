@@ -13,7 +13,6 @@ import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.activityViewModels
 import com.maxpay.sdk.R
-import com.maxpay.sdk.SignatureHelper
 import com.maxpay.sdk.core.FragmentWithToolbar
 import com.maxpay.sdk.data.MaxpayResult
 import com.maxpay.sdk.data.MaxpayResultStatus
@@ -21,8 +20,6 @@ import com.maxpay.sdk.model.InputFormLength
 import com.maxpay.sdk.model.MaxPayInitData
 import com.maxpay.sdk.model.MaxPayTheme
 import com.maxpay.sdk.model.MaxpayPaymentData
-import com.maxpay.sdk.model.request.SalePayment
-import com.maxpay.sdk.model.request.TransactionType
 import com.maxpay.sdk.model.response.ResponseStatus
 import com.maxpay.sdk.utils.*
 import com.maxpay.sdk.utils.extensions.*
@@ -166,6 +163,8 @@ class PaymentFragment: FragmentWithToolbar(R.layout.fragment_payment) {
                 maxpayPaymentData.city = etCity.text.toString().takeIf { !it.isEmpty() }?: null
                 maxpayPaymentData.zip = etZip.text.toString().takeIf { !it.isEmpty() }?: null
                 maxpayPaymentData.cardHolder = etCardHolderName.text.toString()
+                maxpayPaymentData.firstName = etName.text.toString().takeIf { !it.isEmpty() }?: null
+                maxpayPaymentData.lastName = etLastName.text.toString().takeIf { !it.isEmpty() }?: null
                 viewModel.pay(maxpayPaymentData)
             }
         }
@@ -174,8 +173,10 @@ class PaymentFragment: FragmentWithToolbar(R.layout.fragment_payment) {
         etCity?.setText(maxpayPaymentData.city)
         etZip?.setText(maxpayPaymentData.zip)
         etAddr?.setText(maxpayPaymentData.address)
-        if (!maxpayPaymentData.firstName.isNullOrEmpty() || !maxpayPaymentData.lastName.isNullOrEmpty())
-            etName.setText("${maxpayPaymentData.firstName} ${maxpayPaymentData.lastName}")
+        if (!maxpayPaymentData.firstName.isNullOrEmpty())
+            etName.setText(maxpayPaymentData.firstName)
+        if (!maxpayPaymentData.lastName.isNullOrEmpty())
+            etLastName.setText(maxpayPaymentData.lastName)
         checkBoxAutoDebt.setOnClickListener { checkEnableButton() }
 
         checkBoxTermsOfUse.setOnClickListener { checkEnableButton() }
@@ -193,6 +194,8 @@ class PaymentFragment: FragmentWithToolbar(R.layout.fragment_payment) {
             if (it.showNameField == true) {
                 tvName.visibility = View.VISIBLE
                 cvName.visibility = View.VISIBLE
+                tvLastName.visibility = View.VISIBLE
+                cvLastName.visibility = View.VISIBLE
             }
 
             if (it.showAddressField == true) {

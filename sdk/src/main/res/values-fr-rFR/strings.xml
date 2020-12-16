@@ -13,7 +13,7 @@
     <string name="payment_cardholder_title">Nom du titulaire</string>
     <string name="payment_cardholder_placeholder">Full Name</string>
     <string name="payment_billing_header_title">Billing Address</string>
-    <string name="payment_billing_name_title">Name</string>
+    <string name="payment_billing_name_title">First name</string>
     <string name="payment_billing_name_placeholder">Full Name</string>
     <string name="payment_billing_address_title">Adresse</string>
     <string name="payment_billing_address_placeholder">Placeholder</string>

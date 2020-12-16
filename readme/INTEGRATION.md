@@ -170,12 +170,29 @@ On the basis of the information obtained create **MaxPayInitData**, **MaxpayPaym
 
 **MXPMerchant** provides information about merchant.
 
-| Property        | Type        | Description                                   | Note     |
-| --------------- | ----------- | --------------------------------------------- | -------- |
-| apiVersion      | Int         | Maxpay API version                            | required |
-| accountName     | String      | Merchant account                              | required |
-| accountPassword | String      | Merchant password                             | required |
-| theme           | MaxPayTheme | Custom theme, to change payment screen colors | optional |
+| Property        | Type            | Description                                       | Note                        |
+| --------------- | --------------- | ------------------------------------------------- | --------------------------- |
+| apiVersion      | Int             | Maxpay API version                                | required                    |
+| accountName     | String          | Merchant account(ONLY IF YOU USING account auth)  | ~~required~~ (Account auth) |
+| accountPassword | String          | Merchant password(ONLY IF YOU USING account auth) | ~~required~~ (Account auth) |
+| publicKey       | String          | Merchant public key                               | required                    |
+| fieldsToShow    | AvailableFields | Fields that need to show in billing address       | optional                    |
+| theme           | MaxPayTheme     | Custom theme, to change payment screen colors     | optional                    |
+
+
+
+**AvailableFields** Object what fields to show on payment screen
+
+| Property                 | Type    | Description                                                  | Note     |
+| ------------------------ | ------- | ------------------------------------------------------------ | -------- |
+| showBillingAddressLayout | Boolean | Is need to show billing address layout. If set to false, all fields of billing address will be hidden | required |
+| showNameField            | Boolean | Set this flag if you need to name field be shown in the payment screen | optional |
+| showAddressField         | Boolean | Set this flag if you need to address field be shown in the payment screen | optional |
+| showCityField            | Boolean | Set this flag if you need to city field be shown in the payment screen | optional |
+| showZipField             | Boolean | Set this flag if you need to zip field be shown in the payment screen | optional |
+| showCountryField         | Boolean | Set this flag if you need to country field be shown in the payment screen | optional |
+
+
 
 **Sale3DRedirect** is just a wrapper for two redirection links.
 

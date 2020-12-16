@@ -12,7 +12,7 @@
     <string name="payment_cardholder_title">Kortelės savininko vardas</string>
     <string name="payment_cardholder_placeholder">Full Name</string>
     <string name="payment_billing_header_title">Billing Address</string>
-    <string name="payment_billing_name_title">Name</string>
+    <string name="payment_billing_name_title">Pirmas vardas</string>
     <string name="payment_billing_name_placeholder">Full Name</string>
     <string name="payment_billing_address_title">Adresas</string>
     <string name="payment_billing_address_placeholder">Placeholder</string>
@@ -29,4 +29,5 @@
     <string name="terms_key">Naudojimosi sąlygomis</string>
     <string name="payment_autodebit_confirmation">Aš sutinku, kad nuo mano kortelės gali būtų nuskaičiuojamas automatinis mokestis, jei perku naują paslaugą/produktą ar reikia sumokėti abonentinį mokestį.</string>
     <string name="payment_email_placeholder">youremail@gmail.com</string>
+    <string name="payment_billing_last_name_title">Pavardė</string>
 </resources>
