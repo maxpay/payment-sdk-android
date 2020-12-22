@@ -6,9 +6,9 @@ import com.maxpay.sdk.model.request.TransactionType
 import java.security.MessageDigest
 import kotlin.reflect.full.memberProperties
 
-class SignatureHelper {
-
-    private val privateKey = "sklive_wbkz4pc670ajfywc9st0ioajc07cesok"
+class SignatureHelper(
+    private val privateKey: String
+    ) {
 
     fun getHashOfRequest(
         api_version: Int?,

@@ -125,7 +125,7 @@ class MainViewModel(application: Application)
             payment.redirectUrl = paymentData.redirectUrl
             payment.callBackUrl = paymentData.callBackUrl
         }
-        payment.signature = SignatureHelper().getHashOfRequest(payment)
+        payment.signature = SignatureHelper(_viewState.maxpayInitData.value?.privateKey!!).getHashOfRequest(payment)
         repository.pay(payment)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())

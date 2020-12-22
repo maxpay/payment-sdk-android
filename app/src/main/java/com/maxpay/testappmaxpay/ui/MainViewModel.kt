@@ -80,6 +80,7 @@ class MainViewModel(application: Application)
                 apiVersion = 1,
                 fieldsToShow = _viewState.maxPayAvailableFields.value,
                 publicKey = _viewState.pk.value ?: "pkLive_HzmqN88yqNwwzuCRBgboOIvVOiNAX09x",
+                privateKey = "sklive_wbkz4pc670ajfywc9st0ioajc07cesok",
                 theme = _viewState.maxPayTheme.value ?: null
             )
         )

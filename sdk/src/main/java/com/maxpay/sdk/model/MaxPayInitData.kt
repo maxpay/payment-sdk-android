@@ -7,6 +7,7 @@ data class MaxPayInitData(
     val accountPassword: String,
     val apiVersion: Int,
     val publicKey: String,
+    val privateKey: String,
     val theme: MaxPayTheme? = null,
     val fieldsToShow: AvailableFields? = null
 ): Serializable
