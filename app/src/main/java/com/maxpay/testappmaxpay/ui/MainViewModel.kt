@@ -75,8 +75,8 @@ class MainViewModel(application: Application)
     fun payWithSDK() {
         val sdk: SDKFacade = SdkFacadeImpl(
             MaxPayInitData(
-                accountName = "Dinarys",
-                accountPassword = "h6Zq7dLPYMcve1F2",
+//                accountName = "Dinarys",
+//                accountPassword = "h6Zq7dLPYMcve1F2",
                 apiVersion = 1,
                 fieldsToShow = _viewState.maxPayAvailableFields.value,
                 publicKey = _viewState.pk.value ?: "pkLive_HzmqN88yqNwwzuCRBgboOIvVOiNAX09x",

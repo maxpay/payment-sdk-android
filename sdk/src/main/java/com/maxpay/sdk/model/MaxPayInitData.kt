@@ -3,8 +3,6 @@ package com.maxpay.sdk.model
 import java.io.Serializable
 
 data class MaxPayInitData(
-    val accountName: String,
-    val accountPassword: String,
     val apiVersion: Int,
     val publicKey: String,
     val privateKey: String,
