@@ -170,14 +170,12 @@ On the basis of the information obtained create **MaxPayInitData**, **MaxpayPaym
 
 **MXPMerchant** provides information about merchant.
 
-| Property        | Type            | Description                                       | Note                        |
-| --------------- | --------------- | ------------------------------------------------- | --------------------------- |
-| apiVersion      | Int             | Maxpay API version                                | required                    |
-| accountName     | String          | Merchant account(ONLY IF YOU USING account auth)  | ~~required~~ (Account auth) |
-| accountPassword | String          | Merchant password(ONLY IF YOU USING account auth) | ~~required~~ (Account auth) |
-| publicKey       | String          | Merchant public key                               | required                    |
-| fieldsToShow    | AvailableFields | Fields that need to show in billing address       | optional                    |
-| theme           | MaxPayTheme     | Custom theme, to change payment screen colors     | optional                    |
+| Property     | Type            | Description                                   | Note     |
+| ------------ | --------------- | --------------------------------------------- | -------- |
+| apiVersion   | Int             | Maxpay API version                            | required |
+| publicKey    | String          | Merchant public key                           | required |
+| fieldsToShow | AvailableFields | Fields that need to show in billing address   | optional |
+| theme        | MaxPayTheme     | Custom theme, to change payment screen colors | optional |
 
 
 
@@ -203,40 +201,26 @@ On the basis of the information obtained create **MaxPayInitData**, **MaxpayPaym
 
 ### 2.2 Prepare customer data
 
-**MXPCustomer** provides information about customer.
+**MaxpayPaymentData** provides information about customer.
 
-| Property  | Type              | Description                                                  | Note     |
-| --------- | ----------------- | ------------------------------------------------------------ | -------- |
-| firstName | String            | The first name of the customer                               | required |
-| lastName  | String            | The last name of the customer                                | required |
-| phone     | String            | Customer's phone number.                                     | optional |
-| email     | String            | Customer's email address                                     | required |
-| ip        | String            | Customer's IP address. Not all acquirers support IPv6 format | required |
-| birthday  | String            | Date of birth of the customer                                | optional |
-
-
-
-
-| Property | Type   | Description                                                  | Note     |
-| -------- | ------ | ------------------------------------------------------------ | -------- |
-| country  | String | Customer's country, ISO 3166-1, alpha-3                      | required |
-| state    | String | Customer's state                                             | optional |
-| city     | String | Customer's city                                              | optional |
-| address  | String | Customer's zip code                                          | optional |
-| zip      | String | Customer's IP address. Not all acquirers support IPv6 format | optional |
-
-### 2.3 Prepare order data
-
-**MXPOrder** provides information about order.
-
-| Property            | Type            | Description                 | Note     |
-| ------------------- | --------------- | --------------------------- | -------- |
-| transactionUniqueID | String          | Unique transaction Id       | required |
-| transactionType     | TransactionType | Type of the transaction     | required |
-| amount              | Float           | Amount of the transaction   | required |
-| currency            | Currency        | Currency of the transaction | required |
-
-Additional sutypes for **MXPCustomer**:
+| Property        | Type            | Description                                                  | Note     |
+| --------------- | --------------- | ------------------------------------------------------------ | -------- |
+| firstName       | String          | The first name of the customer                               | required |
+| lastName        | String          | The last name of the customer                                | required |
+| userPhone       | String          | Customer's phone number.                                     | optional |
+| email           | String          | Customer's email address                                     | required |
+| ip              | String          | Customer's IP address. Not all acquirers support IPv6 format | required |
+| city            | String          |                                                              | optional |
+| transactionType | TransactionType | Type of transaction Sale, sale3d                             | required |
+| transactionId   | Int             | Unique id                                                    | required |
+| zip             | String          |                                                              | optional |
+| address         | String          |                                                              | optional |
+| state           | String          |                                                              | optional |
+| country         | String          |                                                              | optional |
+| userEmail       | String          |                                                              | optional |
+| callBackUrl     | String          | This is needed for 3D secure                                 | optional |
+| redirectUrl     | String          | This is needed for 3D secure                                 | optional |
+| currency        | Currency        | Currency of order                                            | required |
 
 **TransactionType** is transaction types supported by Maxpay.
 
@@ -254,9 +238,9 @@ Class **SDKFacade** provides information to create payment request to Maxpay ser
 ```kotlin
         val sdk: SDKFacade = SdkFacadeImpl(
             MaxPayInitData(
-                accountName = "acc_name",
-                accountPassword = "password",
                 apiVersion = 1,
+                fieldsToShow = AvailableFields() // Fill data class to show fields that you want to show
+                publicKey = "YourPublicKey"
                 theme = null// Or you can add your theme manually by filling MaxpayTheme data class
             )
             )
@@ -270,7 +254,16 @@ Class **SDKFacade** provides information to create payment request to Maxpay ser
                 override fun onResponceError(result: MaxpayResult?) {
                     _viewState.maxpayResult.value = result
                 }
-
+                
+                override fun onNeedCalculateSignature(dataForSignature: MaxpaySignatureData?,
+                                                      signatureCalback: (String)-> Unit) {
+					// Here using data from sdk, you need to generate signature
+                    val signature = SignatureHelper().getSignature(dataForSignature)
+                    
+                    // After it, you need to provide signature to SDK with this callback
+                    signatureCalback.invoke(signature)
+                 }
+                }
             })
 
 ```

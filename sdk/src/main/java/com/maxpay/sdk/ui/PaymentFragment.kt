@@ -1,9 +1,11 @@
 package com.maxpay.sdk.ui
 
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.graphics.Color
-import android.graphics.ColorFilter
 import android.graphics.PorterDuff
-import android.graphics.Typeface
 import android.net.Uri
 import android.os.Bundle
 import android.text.*
@@ -16,10 +18,7 @@ import com.maxpay.sdk.R
 import com.maxpay.sdk.core.FragmentWithToolbar
 import com.maxpay.sdk.data.MaxpayResult
 import com.maxpay.sdk.data.MaxpayResultStatus
-import com.maxpay.sdk.model.InputFormLength
-import com.maxpay.sdk.model.MaxPayInitData
-import com.maxpay.sdk.model.MaxPayTheme
-import com.maxpay.sdk.model.MaxpayPaymentData
+import com.maxpay.sdk.model.*
 import com.maxpay.sdk.model.response.ResponseStatus
 import com.maxpay.sdk.utils.*
 import com.maxpay.sdk.utils.extensions.*
@@ -46,8 +45,25 @@ class PaymentFragment: FragmentWithToolbar(R.layout.fragment_payment) {
     private lateinit var maxpayPaymentData: MaxpayPaymentData
     private var maxpayTheme: MaxPayTheme? = null
 
+    private val mReceiver: BroadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent) {
+            when (intent.action) {
+                Constants.MAXPAY_BROAD_SIGNATURE_RES -> {
+                    intent.getSerializableExtra(Constants.Companion.Extra.MAXPAY_BROADCAST_SIGNATURE_DATA)
+                        ?.let {
+                            viewModel.pay(it as String)
+                            val s = it
+                        } ?: kotlin.run {
+                            viewModel.sendBroadcastResult(activity, MaxpayResult(MaxpayResultStatus.UNDEF, "UNDEF"))
+                    }
+                }
+            }
+        }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
 
         activity?.intent?.let {
             maxPayInitData = it.getSerializableExtra(Constants.Companion.Extra.MAXPAY_INIT_DATA) as MaxPayInitData
@@ -55,8 +71,9 @@ class PaymentFragment: FragmentWithToolbar(R.layout.fragment_payment) {
             maxpayPaymentData = it.getSerializableExtra(Constants.Companion.Extra.MAXPAY_PAYMENT_DATA) as MaxpayPaymentData
 
             maxpayTheme =
-                (it.getSerializableExtra(Constants.Companion.Extra.MAXPAY_INIT_DATA) as MaxPayInitData).theme//it.getSerializableExtra(Constants.Companion.Extra.MAXPAY_CUSTOM_THEME_DATA) as? MaxPayTheme
+                (it.getSerializableExtra(Constants.Companion.Extra.MAXPAY_INIT_DATA) as MaxPayInitData).theme
         }
+        registerReceiver()
         if (maxpayPaymentData.amount <= 0.0)
             viewModel.sendBroadcastResult(
                 activity, MaxpayResult(
@@ -86,20 +103,26 @@ class PaymentFragment: FragmentWithToolbar(R.layout.fragment_payment) {
         initToolbar()
     }
 
+    private fun registerReceiver() {
+        val intentFilter = IntentFilter()
+        intentFilter.addAction(Constants.MAXPAY_BROAD_SIGNATURE_RES)
+        context?.registerReceiver(mReceiver, intentFilter)
+    }
+
     private fun initThemeIfNeeded() {
         themeEditor.setInputStyle(view)
         themeEditor.setMainPageStyle(view)
         themeEditor.changeButtonColorFilter(view, false)
+        themeEditor.changeProgressBar(activity)
+    }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        context?.unregisterReceiver(mReceiver)
     }
 
     private fun initUIElements() {
         initVisibiltyBillingLayout()
-
-//        etEmail.setText("johndoe@gmail.com")
-//        etCardNumber.setText("4012000300001003")
-//        etCvv.setText("123")
-//        etCardHolderName.setText("JohnDoe")
 
         tvFullPrice.text = "${maxpayPaymentData.currency.symbol} ${maxpayPaymentData.amount}"
         payBtn.setText("${resources.getString(R.string.payment_pay_button_title)} ${maxpayPaymentData.amount} ${maxpayPaymentData.currency.symbol}")
@@ -140,6 +163,7 @@ class PaymentFragment: FragmentWithToolbar(R.layout.fragment_payment) {
         }
         etCountry?.filters = arrayOf(InputFilter.AllCaps(), InputFilter.LengthFilter(3))
         payBtn.setOnClickListener {
+
             val er = editTextValidator.isErrorInFields()
             if (isFormCompleted(InputFormLength(etEmail, cvEmail, 0),
                     InputFormLength(etCardHolderName, cvCardHolderName, 0))
@@ -155,17 +179,23 @@ class PaymentFragment: FragmentWithToolbar(R.layout.fragment_payment) {
             )
             if (checkBoxAutoDebt.isChecked && checkBoxTermsOfUse.isChecked) {
                 maxpayPaymentData.userEmail = etEmail.text.toString()
-                maxpayPaymentData.cardNumber = etCardNumber.text.toString().replace(" ", "")
-                maxpayPaymentData.expMonth = expiryParser.getMonth(etExpirationDate.text.toString())
-                maxpayPaymentData.expYear = expiryParser.getYear(etExpirationDate.text.toString())
-                maxpayPaymentData.cvv = etCvv.text.toString()
+                val cardNumber = etCardNumber.text.toString().replace(" ", "")
+                val expMonth = expiryParser.getMonth(etExpirationDate.text.toString())
+                val expYear = expiryParser.getYear(etExpirationDate.text.toString())
+                val cvv = etCvv.text.toString()
                 maxpayPaymentData.country = etCountry.text.toString()
                 maxpayPaymentData.city = etCity.text.toString().takeIf { !it.isEmpty() }?: null
                 maxpayPaymentData.zip = etZip.text.toString().takeIf { !it.isEmpty() }?: null
-                maxpayPaymentData.cardHolder = etCardHolderName.text.toString()
+                val cardHolder = etCardHolderName.text.toString()
                 maxpayPaymentData.firstName = etName.text.toString().takeIf { !it.isEmpty() }?: null
                 maxpayPaymentData.lastName = etLastName.text.toString().takeIf { !it.isEmpty() }?: null
-                viewModel.pay(maxpayPaymentData)
+                viewModel.prepareForPayment(activity,
+                    paymentData = maxpayPaymentData,
+                    cardHolder = cardHolder,
+                    cardNumber = cardNumber,
+                    cvv = cvv,
+                    expMonth = expMonth,
+                    expYear = expYear)
             }
         }
 

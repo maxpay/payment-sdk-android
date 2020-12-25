@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.widget.ProgressBar
 import androidx.activity.viewModels
 import com.maxpay.sdk.core.ProgressActivity
+import com.maxpay.sdk.model.MaxpaySignatureData
 import com.maxpay.sdk.ui.MainViewModel
 import com.maxpay.sdk.ui.PaymentFragment
 import com.maxpay.sdk.utils.extensions.addFragmentToContainerWithoutBackStack
@@ -23,6 +24,7 @@ class SdkActivity : ProgressActivity(R.layout.activity_sdk) {
         savedInstanceState ?: addFragmentToContainerWithoutBackStack(
             PaymentFragment.newInstance()
         )
+
 
         viewModel.run {
             observeCommandSafety(mainNavigation) {

@@ -1,6 +1,9 @@
 package com.maxpay.sdk.model.request
 
 import com.google.gson.annotations.SerializedName
+import com.maxpay.sdk.core.removeZero
+import com.maxpay.sdk.model.MaxpaySignatureData
+
 data class SalePayment(
     @SerializedName("api_version")
     val apiVersion: Int?,
@@ -46,5 +49,24 @@ data class SalePayment(
     val publicKey: String?,
     var signature: String? = null,
     val auth_type: String = "bySignature"
+)
 
+fun SalePayment.toMaxpaySignatureData() = MaxpaySignatureData(
+    api_version = apiVersion,
+    currency = currency,
+    amount = amount.removeZero(),
+    transaction_unique_id = transactionId,
+    transaction_type = transactionType.toString(),
+    country = country,
+    zip = zip,
+    city = city,
+    address = address,
+    state = null,
+    callback_url = callBackUrl,
+    first_name = firstName,
+    last_name = lastName,
+    redirect_url = redirectUrl,
+    user_email = userEmail,
+    user_ip = userIp,
+    user_phone = userPhone
 )

@@ -1,12 +1,12 @@
 package com.maxpay.sdk.utils
 
 import android.graphics.Color
-import android.graphics.ColorFilter
 import android.graphics.PorterDuff
 import android.graphics.Typeface
 import android.view.View
+import androidx.fragment.app.FragmentActivity
+import com.maxpay.sdk.core.ProgressActivity
 import com.maxpay.sdk.model.MaxPayTheme
-import kotlinx.android.synthetic.main.fragment_payment.*
 import kotlinx.android.synthetic.main.fragment_payment.view.*
 import kotlinx.android.synthetic.main.layout_billing_address.view.*
 
@@ -130,6 +130,13 @@ class UIComponentThemeEditor(val theme: MaxPayTheme?) {
                 }
 
             }
+        }
+    }
+
+    fun changeProgressBar(activity: FragmentActivity?) {
+        theme?.progressBarColor?.let {
+            (activity as? ProgressActivity)?.getProgressBar()?.getIndeterminateDrawable()
+                ?.setColorFilter(it, PorterDuff.Mode.MULTIPLY )
         }
     }
 }

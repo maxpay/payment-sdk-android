@@ -4,13 +4,12 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.graphics.Color
 import com.maxpay.sdk.data.MaxpayCallback
 import com.maxpay.sdk.data.MaxpayResult
 import com.maxpay.sdk.data.MaxpayResultStatus
 import com.maxpay.sdk.model.MaxPayInitData
-import com.maxpay.sdk.model.MaxPayTheme
 import com.maxpay.sdk.model.MaxpayPaymentData
+import com.maxpay.sdk.model.MaxpaySignatureData
 import com.maxpay.sdk.utils.Constants
 import org.koin.core.KoinComponent
 import org.koin.core.inject
@@ -22,15 +21,49 @@ class SdkHelper: KoinComponent {
 
     private val mReceiver: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
-            if (intent.action == Constants.MAXPAY_CALLBACK_BROADCAST && this@SdkHelper.checkoutCallBack != null) {
-                intent.getSerializableExtra(Constants.Companion.Extra.MAXPAY_BROADCAST_DATA)?.let {
-                    this@SdkHelper.checkoutCallBack?.onResponseSuccess(it as? MaxpayResult)
-                }?: kotlin.run {
-                    this@SdkHelper.checkoutCallBack?.onResponceError(MaxpayResult(MaxpayResultStatus.REJECTED, "Unknown error"))
+            if (this@SdkHelper.checkoutCallBack != null) {
+                when (intent.action) {
+                    Constants.MAXPAY_CALLBACK_BROADCAST -> {
+                        intent.getSerializableExtra(Constants.Companion.Extra.MAXPAY_BROADCAST_DATA)
+                            ?.let {
+                                this@SdkHelper.checkoutCallBack?.onResponseSuccess(it as? MaxpayResult)
+                            } ?: kotlin.run {
+                            this@SdkHelper.checkoutCallBack?.onResponceError(
+                                MaxpayResult(
+                                    MaxpayResultStatus.REJECTED,
+                                    "Unknown error"
+                                )
+                            )
+                        }
+                        context.unregisterReceiver(this)
+                    }
+                    Constants.MAXPAY_CALLBACK_BROADCAST_SIGNATURE -> {
+                        intent.getSerializableExtra(Constants.Companion.Extra.MAXPAY_BROADCAST_SIGNATURE_DATA)
+                            ?.let {
+                                this@SdkHelper.checkoutCallBack?.onNeedCalculateSignature(it as? MaxpaySignatureData) {
+                                    sendBroadcastData(context, it)
+                                }
+                            } ?: kotlin.run {
+                            this@SdkHelper.checkoutCallBack?.onResponceError(
+                                MaxpayResult(
+                                    MaxpayResultStatus.UNDEF,
+                                    "Unknown error"
+                                )
+                            )
+                        }
+                    }
                 }
-                context.unregisterReceiver(this)
             }
         }
+    }
+
+    fun sendBroadcastData(context: Context?, data: String?) {
+        val intent = Intent(Constants.MAXPAY_BROAD_SIGNATURE_RES)
+        data?.let {
+            intent.setPackage(context?.packageName)
+            intent.putExtra(Constants.Companion.Extra.MAXPAY_BROADCAST_SIGNATURE_DATA, data)
+        }
+        context?.sendBroadcast(intent)
     }
 
     fun startSdkActivity(
@@ -39,12 +72,11 @@ class SdkHelper: KoinComponent {
         callBack: MaxpayCallback
     ) {
         this.checkoutCallBack = callBack
-        context.registerReceiver(mReceiver,
-            IntentFilter(Constants.MAXPAY_CALLBACK_BROADCAST)
-        )
-        context.registerReceiver(mReceiver,
-            IntentFilter(Constants.MAXPAY_CALLBACK_BROADCAST)
-        )
+        val intentFilter = IntentFilter()
+        intentFilter.addAction(Constants.MAXPAY_CALLBACK_BROADCAST_SIGNATURE)
+        intentFilter.addAction(Constants.MAXPAY_CALLBACK_BROADCAST)
+        context.registerReceiver(mReceiver, intentFilter)
+
         context.startActivity(Intent(context, SdkActivity::class.java).apply {
             putExtra(Constants.Companion.Extra.MAXPAY_INIT_DATA, initData)
             putExtra(Constants.Companion.Extra.MAXPAY_PAYMENT_DATA, payData)

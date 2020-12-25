@@ -7,6 +7,8 @@ class Constants{
     companion object {
 
         const val MAXPAY_CALLBACK_BROADCAST = "maxpay_callback_BROADCAST"
+        const val MAXPAY_CALLBACK_BROADCAST_SIGNATURE = "maxpay_signature_broadcast"
+        const val MAXPAY_BROAD_SIGNATURE_RES = "maxpay_signature_RES"
         const val PERMISSION = 999
 
         @StringDef(Extra.MAXPAY_DATA, Extra.RETURN_URL, Extra.MAXPAY_TERM_URL,
@@ -24,6 +26,9 @@ class Constants{
                 const val MAXPAY_CUSTOM_THEME_DATA = "maxpay_custom_theme_data"
 
                 const val MAXPAY_BROADCAST_DATA = "broadcast_data"
+                const val MAXPAY_BROADCAST_SIGNATURE_DATA = "broadcast_signature_data"
+
+                const val CALLBACK_SIGNATURE = "callback_SIGNATURE"
             }
         }
 

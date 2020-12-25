@@ -2,24 +2,20 @@ package com.maxpay.testappmaxpay.ui.settings
 
 import android.app.AlertDialog
 import android.graphics.Color
-import android.graphics.Typeface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import com.maxpay.sdk.SignatureHelper
 import com.maxpay.sdk.model.MaxPayTheme
 import com.maxpay.sdk.model.request.TransactionType
 import com.maxpay.testappmaxpay.R
 import com.maxpay.testappmaxpay.ui.MainViewModel
 import com.maxpay.testappmaxpay.utils.Utils
 import kotlinx.android.synthetic.main.fragment_settings.*
-import java.util.*
 
 
 class SettingsFragment : Fragment() {
@@ -64,7 +60,8 @@ class SettingsFragment : Fragment() {
             val  font = "fonts/GVB.otf"
             when(it.column) {
                 0 -> viewModel.viewState.maxPayTheme.value = null
-                1 -> viewModel.viewState.maxPayTheme.value = MaxPayTheme(
+                1 -> viewModel.viewState.maxPayTheme.value =
+                MaxPayTheme(
                     fieldTitleColor = Color.RED,
                     fieldBackgroundColor = Color.YELLOW,
                     fieldTextColor = Color.CYAN,
@@ -82,7 +79,8 @@ class SettingsFragment : Fragment() {
                     disabledButtonBackgroundColor = Color.BLACK,
                     disabledButtonTitleColor = Color.WHITE,
                     enabledButtonBackgroundColor =  Color.RED,
-                    enabledButtonTitleColor =  Color.BLACK
+                    enabledButtonTitleColor =  Color.BLACK,
+                    progressBarColor = Color.RED
                 )
 
             }

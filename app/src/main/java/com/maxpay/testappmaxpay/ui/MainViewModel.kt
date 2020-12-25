@@ -9,11 +9,13 @@ import com.maxpay.sdk.data.MaxpayResult
 import com.maxpay.sdk.model.AvailableFields
 import com.maxpay.sdk.model.MaxPayInitData
 import com.maxpay.sdk.model.MaxpayPaymentData
+import com.maxpay.sdk.model.MaxpaySignatureData
 import com.maxpay.sdk.model.request.TransactionType
 import com.maxpay.sdk.utils.DateInterface
 import com.maxpay.testappmaxpay.model.ProductItemtUI
 import com.maxpay.testappmaxpay.ui.state.MainViewState
 import com.maxpay.testappmaxpay.ui.state.MainViewStateImpl
+import com.maxpay.testappmaxpay.utils.SignatureHelper
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 import java.util.*
@@ -78,12 +80,9 @@ class MainViewModel(application: Application)
     fun payWithSDK() {
         val sdk: SDKFacade = SdkFacadeImpl(
             MaxPayInitData(
-//                accountName = "Dinarys",
-//                accountPassword = "h6Zq7dLPYMcve1F2",
                 apiVersion = 1,
                 fieldsToShow = _viewState.maxPayAvailableFields.value,
                 publicKey = _viewState.pk.value ?: "pkLive_HzmqN88yqNwwzuCRBgboOIvVOiNAX09x",
-                privateKey = "sklive_wbkz4pc670ajfywc9st0ioajc07cesok",
                 theme = _viewState.maxPayTheme.value ?: null
             )
         )
@@ -109,6 +108,22 @@ class MainViewModel(application: Application)
 
                 override fun onResponceError(result: MaxpayResult?) {
                     _viewState.maxpayResult.value = result
+                }
+
+                override fun onNeedCalculateSignature(dataForSignature: MaxpaySignatureData?,
+                                                      signatureCalback: (String)-> Unit) {
+                    Thread {
+                        Thread.sleep(5000)
+                        dataForSignature?.let { it1 ->
+                            val signature =
+                                SignatureHelper("sklive_wbkz4pc670ajfywc9st0ioajc07cesok").getHashOfRequest(
+                                    it1
+                                )
+                            signatureCalback.invoke(signature)
+                        }
+                    }.start()
+
+
                 }
 
             })

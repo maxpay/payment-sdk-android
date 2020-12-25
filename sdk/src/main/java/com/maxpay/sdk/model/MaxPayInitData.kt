@@ -5,7 +5,6 @@ import java.io.Serializable
 data class MaxPayInitData(
     val apiVersion: Int,
     val publicKey: String,
-    val privateKey: String,
     val theme: MaxPayTheme? = null,
     val fieldsToShow: AvailableFields? = null
 ): Serializable
@@ -25,6 +24,7 @@ data class MaxPayTheme(
    val  fieldBackgroundColor: Int? = null,
    val  fieldTitleColor: Int? = null,
    val  fieldTextColor: Int? = null,
+   val progressBarColor: Int? = null,
    val  fieldTitleFont: String? = null,
    val  fieldTextFont: String? = null,
    val  fieldBackgroundCornerRadius: Float? = null,
@@ -39,7 +39,10 @@ data class MaxPayTheme(
    val  disabledButtonBackgroundColor: Int? = null,
    val  disabledButtonTitleColor: Int? = null,
    val  buttonCornerRadius: Float? = null
-): Serializable
+
+): Serializable {
+
+}
 
 data class AvailableFields(
     var showBillingAddressLayout: Boolean? = null,
