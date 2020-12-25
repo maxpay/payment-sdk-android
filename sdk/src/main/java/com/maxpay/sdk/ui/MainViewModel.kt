@@ -99,7 +99,8 @@ class MainViewModel(application: Application)
         state.value = StateEnum.UNITERUPTEDLOADING
         val payment = SalePayment(
             _viewState.maxpayInitData.value?.apiVersion,
-            transactionId = "payment${dateInterface.getCurrentTimeStamp()}",
+//            transactionId = "payment${dateInterface.getCurrentTimeStamp()}",
+            transactionId = paymentData.transactionId,
             transactionType = paymentData.transactionType,
             amount = paymentData.amount,
             currency = paymentData.currency.currencyCode,

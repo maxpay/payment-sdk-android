@@ -6,6 +6,7 @@ import java.util.*
 
 data class MaxpayPaymentData(
     var transactionType: TransactionType = TransactionType.AUTH,
+    var transactionId: String,
     var amount: Float,
     var firstName: String? = null,
     var lastName: String? = null,

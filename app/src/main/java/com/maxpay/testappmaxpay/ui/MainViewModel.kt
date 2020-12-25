@@ -10,15 +10,18 @@ import com.maxpay.sdk.model.AvailableFields
 import com.maxpay.sdk.model.MaxPayInitData
 import com.maxpay.sdk.model.MaxpayPaymentData
 import com.maxpay.sdk.model.request.TransactionType
+import com.maxpay.sdk.utils.DateInterface
 import com.maxpay.testappmaxpay.model.ProductItemtUI
 import com.maxpay.testappmaxpay.ui.state.MainViewState
 import com.maxpay.testappmaxpay.ui.state.MainViewStateImpl
 import org.koin.core.KoinComponent
+import org.koin.core.inject
 import java.util.*
 
 class MainViewModel(application: Application)
     : MyAndroidViewModel(application), KoinComponent {
 
+    private val dateInterface: DateInterface by inject()
 
     private val _viewState = MainViewStateImpl()
     val viewState: MainViewState
@@ -26,7 +29,7 @@ class MainViewModel(application: Application)
 
     init {
         if (_viewState.settings.value == null)
-            _viewState.settings.value = MaxpayPaymentData(currency = Currency.getInstance(Locale.getDefault()), amount = 0.0F)
+            _viewState.settings.value = MaxpayPaymentData(currency = Currency.getInstance(Locale.getDefault()), amount = 0.0F, transactionId = "Pay${dateInterface.getCurrentTimeStamp()}")
 
         if (_viewState.maxPayAvailableFields.value == null)
             _viewState.maxPayAvailableFields.value = AvailableFields(showBillingAddressLayout = false)
@@ -86,6 +89,7 @@ class MainViewModel(application: Application)
         )
 
         _viewState.settings.value?.let {
+            it.transactionId = "Pay${dateInterface.getCurrentTimeStamp()}"
             when (it.transactionType) {
                 TransactionType.SALE3D -> {
                     it.redirectUrl = "https://callbacks.envlog.net/shopEcho.php"
