@@ -70,7 +70,7 @@
                 android:textColor="@color/colorDarkText"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvFullPrice" />
+                app:layout_constraintTop_toBottomOf="@id/paymentSeparator" />
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cvEmail"
@@ -221,7 +221,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="XXX"
-                    android:inputType="number"
+                    android:inputType="numberPassword"
                     app:mask="@string/mask_cvc"
                     app:allowed_chars="1234567890"
                     android:padding="@dimen/margin_medium" />
@@ -256,10 +256,11 @@
                 <EditText
                     android:id="@+id/etCardHolderName"
                     style="@style/InputEditText"
+                    android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/payment_cardholder_title"
-                    android:inputType="textPersonName"
+                    android:inputType="textFilter"
                     android:padding="@dimen/margin_medium" />
             </com.google.android.material.card.MaterialCardView>
 

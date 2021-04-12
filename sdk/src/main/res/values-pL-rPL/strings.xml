@@ -8,7 +8,7 @@
     <string name="payment_cardnumber_placeholder">1234567891234567</string>
     <string name="payment_expired_title">Expiration Date</string>
     <string name="payment_expired_placeholder">mmrr</string>
-    <string name="payment_cvv_title">CVV</string>
+    <string name="payment_cvv_title">CVV/CVC</string>
     <string name="payment_cvv_placeholder"> 123</string>
     <string name="payment_cardholder_title">Imię właściciela karty</string>
     <string name="payment_cardholder_placeholder">Full Name</string>
