@@ -142,7 +142,7 @@ class PaymentFragment: FragmentWithToolbar(R.layout.fragment_payment) {
             theme = maxpayTheme
         )
 
-        editTextValidator.validateETWithoutLength(InputFormLength(etEmail, cvEmail, 0))
+        editTextValidator.validateETEmail(InputFormLength(etEmail, cvEmail, 0))
         editTextValidator.validateCardNumber(
             InputFormLength(etCardNumber, cvCardNumber, Constants.Companion.RequiredLength.CARD_INPUT_LENGTH), ivCard)
         editTextValidator.validateET(InputFormLength(etCvv, cvCvv, Constants.Companion.RequiredLength.CVV_INPUT_LENGTH))

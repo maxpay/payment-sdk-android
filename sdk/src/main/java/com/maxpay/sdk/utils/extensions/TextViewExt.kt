@@ -1,5 +1,6 @@
 package com.maxpay.sdk.utils.extensions
 
+import android.graphics.Color
 import android.graphics.Typeface
 import android.text.*
 import android.text.method.LinkMovementMethod

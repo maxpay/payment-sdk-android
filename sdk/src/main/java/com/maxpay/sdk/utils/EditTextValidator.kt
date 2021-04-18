@@ -10,7 +10,6 @@ import com.maxpay.sdk.model.InputFormLength
 import com.maxpay.sdk.model.MaxPayTheme
 import org.koin.core.KoinComponent
 import org.koin.core.inject
-import java.util.regex.Matcher
 import java.util.regex.Pattern
 
 
@@ -43,9 +42,30 @@ class EditTextValidator(val theme: MaxPayTheme?) : KoinComponent {
     internal fun validateETWithoutLength(inputForm: InputFormLength) {
         set.add(inputForm)
         inputForm.input.addTextChangedListener {
-
             removeErrorFromField(inputForm)
         }
+    }
+
+    internal fun validateETEmail(inputForm: InputFormLength) {
+        set.add(inputForm)
+        inputForm.input.addTextChangedListener {
+            removeErrorFromField(inputForm)
+        }
+        inputForm.input.setOnFocusChangeListener { _, b ->
+            if (!b){
+                if (!isValidEmailAddress(inputForm.input.text.toString()))
+                    setError(inputForm)
+            }
+        }
+
+    }
+
+    private fun isValidEmailAddress(email: String?): Boolean {
+        val ePattern =
+            "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$"
+        val p = Pattern.compile(ePattern)
+        val m = p.matcher(email)
+        return m.matches()
     }
 
     internal fun validateETCardHolder(inputForm: InputFormLength) {
