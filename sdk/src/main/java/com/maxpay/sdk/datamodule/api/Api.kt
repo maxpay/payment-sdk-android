@@ -5,7 +5,6 @@ import com.google.gson.GsonBuilder
 import com.maxpay.sdk.BuildConfig
 import com.maxpay.sdk.utils.Constants
 import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
@@ -34,16 +33,10 @@ class Api(private val pref: SharedPreferences, key: String?) {
     }
 
     init {
-
-        val loggingInterceptor = HttpLoggingInterceptor()
-        loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
-
         val okHttpClient = OkHttpClient.Builder()
             .connectTimeout(60, TimeUnit.SECONDS)
             .readTimeout(60, TimeUnit.SECONDS)
             .writeTimeout(60, TimeUnit.SECONDS)
-//            .addInterceptor(AuthInterceptor(key))// TODO
-            .addInterceptor(loggingInterceptor)
             .build()
         okHttpClient.dispatcher().maxRequestsPerHost = 20
 

@@ -46,12 +46,15 @@ class EditTextValidator(val theme: MaxPayTheme?) : KoinComponent {
 
             removeErrorFromField(inputForm)
         }
-        inputForm.input.filters = arrayOf(getEditTextFilter())
+    }
 
-//        inputForm.input.setOnFocusChangeListener { _, b ->
-//            if (!b)
-//                isFormLengthValid(inputForm)
-//        }
+    internal fun validateETCardHolder(inputForm: InputFormLength) {
+        set.add(inputForm)
+        inputForm.input.addTextChangedListener {
+
+            removeErrorFromField(inputForm)
+        }
+        inputForm.input.filters = arrayOf(getEditTextFilter())
     }
 
     fun getEditTextFilter(): InputFilter? {

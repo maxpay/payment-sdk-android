@@ -3,20 +3,17 @@ package com.maxpay.sdk.ui.threeds
 import android.app.ProgressDialog
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.fragment.findNavController
 import com.maxpay.sdk.R
 import com.maxpay.sdk.core.FragmentWithToolbar
 import com.maxpay.sdk.data.MaxpayResult
 import com.maxpay.sdk.data.MaxpayResultStatus
 import com.maxpay.sdk.ui.MainViewModel
-import com.maxpay.sdk.ui.PaymentFragment
 import kotlinx.android.synthetic.main.fragment_three_d_s.*
 import java.net.URLEncoder
 
@@ -83,7 +80,6 @@ class ThreeDSFragment: FragmentWithToolbar(R.layout.fragment_three_d_s) {
         maxpay_webview?.settings?.domStorageEnabled = true
         maxpay_webview?.webViewClient = object : WebViewClient() {
             override fun onPageFinished(view: WebView, url: String) {
-                Log.d("Jackk", "OnPageFinished $url")
                 progressDialog.cancel()
 //                if (url.contains(resultLink)) {
 //                    if (parseUri(Uri.parse(url)))
@@ -96,7 +92,6 @@ class ThreeDSFragment: FragmentWithToolbar(R.layout.fragment_three_d_s) {
             }
 
             override fun onLoadResource(view: WebView, url: String) {
-                Log.d("Jackkk", "OnLoadResource $url")
                 super.onLoadResource(view, url)
                 if (url.contains("checkout/info") && Build.VERSION.SDK_INT < 21 && progressDialog != null) {
                     progressDialog.cancel()

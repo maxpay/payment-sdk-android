@@ -8,26 +8,6 @@
     android:layout_height="wrap_content"
     android:background="@color/colorWhite">
 
-<!--    <TextView-->
-<!--        android:id="@+id/tvBilling"-->
-<!--        style="@style/TextLargeBold"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_gravity="center"-->
-<!--        android:layout_margin="@dimen/margin_medium"-->
-<!--        android:text="@string/payment_billing_header_title"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent" />-->
-
-<!--    <View-->
-<!--        android:id="@+id/billingSeparator"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="1dp"-->
-<!--        android:background="@color/divider_line"-->
-<!--        android:layout_margin="@dimen/margin_medium"-->
-<!--        android:alpha="0.5"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/tvBilling"/>-->
-
     <TextView
         android:id="@+id/tvName"
         android:layout_width="wrap_content"

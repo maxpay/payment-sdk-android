@@ -53,7 +53,6 @@ class PaymentFragment: FragmentWithToolbar(R.layout.fragment_payment) {
                     intent.getSerializableExtra(Constants.Companion.Extra.MAXPAY_BROADCAST_SIGNATURE_DATA)
                         ?.let {
                             viewModel.pay(it as String)
-                            val s = it
                         } ?: kotlin.run {
                             viewModel.sendBroadcastResult(activity, MaxpayResult(MaxpayResultStatus.UNDEF, "UNDEF"))
                     }
@@ -149,7 +148,7 @@ class PaymentFragment: FragmentWithToolbar(R.layout.fragment_payment) {
         editTextValidator.validateET(InputFormLength(etCvv, cvCvv, Constants.Companion.RequiredLength.CVV_INPUT_LENGTH))
         editTextValidator.validateExpirationDate(InputFormLength(etExpirationDate, cvExpirDate, Constants.Companion.RequiredLength.EXPIRY_INPUT_LENGTH))
         editTextValidator.validateETISOCountry(InputFormLength(etCountry, cvCountry, 3))
-        editTextValidator.validateETWithoutLength(InputFormLength(etCardHolderName, cvCardHolderName, 0))
+        editTextValidator.validateETCardHolder(InputFormLength(etCardHolderName, cvCardHolderName, 0))
 
         etCountry.addTextChangedListener{
             if(etCountry.currentTextColor == Color.RED) {
@@ -165,8 +164,10 @@ class PaymentFragment: FragmentWithToolbar(R.layout.fragment_payment) {
         }
         etCountry?.filters = arrayOf(InputFilter.AllCaps(), InputFilter.LengthFilter(3))
         payBtn.setOnClickListener {
-
-            val er = editTextValidator.isErrorInFields()
+            val isAuthTransaction = (maxpayPaymentData.transactionType == TransactionType.AUTH
+                    || maxpayPaymentData.transactionType == TransactionType.AUTH3D)
+            val showNameFields = (maxpayPaymentData.firstName.isNullOrEmpty() && isAuthTransaction)
+            val showCountryFields = (maxpayPaymentData.country.isNullOrEmpty() && isAuthTransaction)
             if (isFormCompleted(InputFormLength(etEmail, cvEmail, 0),
                     InputFormLength(etCardHolderName, cvCardHolderName, 0))
                 and
@@ -175,9 +176,9 @@ class PaymentFragment: FragmentWithToolbar(R.layout.fragment_payment) {
                     InputFormLength(etCvv, cvCvv, Constants.Companion.RequiredLength.CVV_INPUT_LENGTH))
                 and
                 editTextValidator.checkLuhn(InputFormLength(etCardNumber, cvCardNumber, Constants.Companion.RequiredLength.CARD_INPUT_LENGTH))
-                and
-                (maxPayInitData.fieldsToShow?.showBillingAddressLayout == true
-                        || isFormLengthValid(InputFormLength(etCountry, cvCountry, Constants.Companion.RequiredLength.COUNTRY_INPUT_LENGTH)))
+//                and
+//                (showCountryFields
+//                        || isFormLengthValid(InputFormLength(etCountry, cvCountry, Constants.Companion.RequiredLength.COUNTRY_INPUT_LENGTH)))
             )
             if (checkBoxAutoDebt.isChecked && checkBoxTermsOfUse.isChecked) {
                 maxpayPaymentData.userEmail = etEmail.text.toString()

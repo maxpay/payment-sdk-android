@@ -112,7 +112,6 @@ public class MaskedEditText extends TextInputEditText implements TextWatcher {
 		final String text = bundle.getString("text");
 
 		setText(text);
-		Log.d(TAG, "onRestoreInstanceState: " + text);
 	}
 
 	@Override
