@@ -19,6 +19,7 @@ import com.maxpay.sdk.core.FragmentWithToolbar
 import com.maxpay.sdk.data.MaxpayResult
 import com.maxpay.sdk.data.MaxpayResultStatus
 import com.maxpay.sdk.model.*
+import com.maxpay.sdk.model.request.TransactionType
 import com.maxpay.sdk.model.response.ResponseStatus
 import com.maxpay.sdk.utils.*
 import com.maxpay.sdk.utils.extensions.*
@@ -215,42 +216,43 @@ class PaymentFragment: FragmentWithToolbar(R.layout.fragment_payment) {
     }
 
     private fun initVisibiltyBillingLayout() {
-        maxPayInitData.fieldsToShow?.let {
-            if (it.showBillingAddressLayout == true) layoutBillingAddress.visibility = View.VISIBLE
-            else {
-                layoutBillingAddress.visibility = View.GONE
-                return
-            }
-
-            if (it.showNameField == true) {
-                tvName.visibility = View.VISIBLE
-                cvName.visibility = View.VISIBLE
-                tvLastName.visibility = View.VISIBLE
-                cvLastName.visibility = View.VISIBLE
-            }
-
-            if (it.showAddressField == true) {
-                tvAddr.visibility = View.VISIBLE
-                cvAddress.visibility = View.VISIBLE
-            }
-            if (it.showCityField == true) {
-                tvCity.visibility = View.VISIBLE
-                cvCity.visibility = View.VISIBLE
-            }
-            if (it.showZipField == true) {
-                tvZIP.visibility = View.VISIBLE
-                cvZip.visibility = View.VISIBLE
-                if (it.showCityField == null || it.showCityField == false) {
-                    tvCity.visibility = View.INVISIBLE
-                    cvCity.visibility = View.INVISIBLE
-                }
-            }
-            if (it.showCountryField == true) {
-                tvCountry.visibility = View.VISIBLE
-                cvCountry.visibility = View.VISIBLE
-            }
+        val isAuthTransaction = (maxpayPaymentData.transactionType == TransactionType.AUTH
+                || maxpayPaymentData.transactionType == TransactionType.AUTH3D)
+        val showNameFields = (maxpayPaymentData.firstName.isNullOrEmpty() && isAuthTransaction)
+        val showCountryFields = (maxpayPaymentData.country.isNullOrEmpty() && isAuthTransaction)
+        if (maxPayInitData.fieldsToShow?.showBillingAddressLayout == true || showCountryFields || showCountryFields) layoutBillingAddress.visibility =
+            View.VISIBLE
+        else {
+            layoutBillingAddress.visibility = View.GONE
+            return
+        }
+        if (maxPayInitData.fieldsToShow?.showNameField == true || showNameFields) {
+            tvName.visibility = View.VISIBLE
+            cvName.visibility = View.VISIBLE
+            tvLastName.visibility = View.VISIBLE
+            cvLastName.visibility = View.VISIBLE
         }
 
+        if (maxPayInitData.fieldsToShow?.showAddressField == true) {
+            tvAddr.visibility = View.VISIBLE
+            cvAddress.visibility = View.VISIBLE
+        }
+        if (maxPayInitData.fieldsToShow?.showCityField == true) {
+            tvCity.visibility = View.VISIBLE
+            cvCity.visibility = View.VISIBLE
+        }
+        if (maxPayInitData.fieldsToShow?.showZipField == true) {
+            tvZIP.visibility = View.VISIBLE
+            cvZip.visibility = View.VISIBLE
+            if (maxPayInitData.fieldsToShow?.showCityField == null || maxPayInitData.fieldsToShow?.showCityField == false) {
+                tvCity.visibility = View.INVISIBLE
+                cvCity.visibility = View.INVISIBLE
+            }
+        }
+        if (maxPayInitData.fieldsToShow?.showCountryField == true || showCountryFields) {
+            tvCountry.visibility = View.VISIBLE
+            cvCountry.visibility = View.VISIBLE
+        }
     }
 
     private fun checkEnableButton() {

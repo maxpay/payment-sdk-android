@@ -215,15 +215,14 @@
                 app:layout_constraintStart_toStartOf="@id/guideline13"
                 app:layout_constraintTop_toBottomOf="@+id/tvED">
 
-                <com.maxpay.sdk.ui.view.input.no.MaskedEditText
+                <EditText
                     android:id="@+id/etCvv"
                     style="@style/InputEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="XXX"
+                    android:maxLength="4"
                     android:inputType="numberPassword"
-                    app:mask="@string/mask_cvc"
-                    app:allowed_chars="1234567890"
                     android:padding="@dimen/margin_medium" />
             </com.google.android.material.card.MaterialCardView>
 
@@ -256,7 +255,6 @@
                 <EditText
                     android:id="@+id/etCardHolderName"
                     style="@style/InputEditText"
-                    android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/payment_cardholder_title"
