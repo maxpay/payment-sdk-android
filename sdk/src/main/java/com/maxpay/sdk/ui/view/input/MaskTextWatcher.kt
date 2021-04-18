@@ -4,7 +4,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import com.google.android.material.textfield.TextInputEditText
 
-class MaskTextWatcher(
+internal class MaskTextWatcher(
     private val editText: TextInputEditText,
     private val mask: String,
     private val prefix: String = ""

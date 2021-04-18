@@ -1,4 +1,4 @@
-package com.maxpay.sdk.utils
+package com.maxpay.testappmaxpay.core
 
 import android.content.Context
 import android.graphics.Typeface

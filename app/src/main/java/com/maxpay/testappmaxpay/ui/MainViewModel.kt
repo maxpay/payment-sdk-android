@@ -3,7 +3,6 @@ package com.maxpay.testappmaxpay.ui
 import android.app.Application
 import com.maxpay.sdk.SDKFacade
 import com.maxpay.sdk.SdkFacadeImpl
-import com.maxpay.sdk.core.MyAndroidViewModel
 import com.maxpay.sdk.data.MaxpayCallback
 import com.maxpay.sdk.data.MaxpayResult
 import com.maxpay.sdk.model.AvailableFields
@@ -12,6 +11,7 @@ import com.maxpay.sdk.model.MaxpayPaymentData
 import com.maxpay.sdk.model.MaxpaySignatureData
 import com.maxpay.sdk.model.request.TransactionType
 import com.maxpay.sdk.utils.DateInterface
+import com.maxpay.testappmaxpay.core.MyAndroidViewModel
 import com.maxpay.testappmaxpay.model.ProductItemtUI
 import com.maxpay.testappmaxpay.ui.state.MainViewState
 import com.maxpay.testappmaxpay.ui.state.MainViewStateImpl
@@ -95,12 +95,12 @@ class MainViewModel(application: Application)
                     it.callBackUrl = "https://callbacks.envlog.net/callback.php"
                 }
             }
-            if (it.firstName.isNullOrEmpty())
-                it.firstName = "John"
-            if (it.lastName.isNullOrEmpty())
-                it.lastName = "Doe"
-            if (it.country.isNullOrEmpty())
-                it.country = "USA"
+//            if (it.firstName.isNullOrEmpty())
+//                it.firstName = "John"
+//            if (it.lastName.isNullOrEmpty())
+//                it.lastName = "Doe"
+//            if (it.country.isNullOrEmpty())
+//                it.country = "USA"
             sdk.pay(it, object: MaxpayCallback {
                 override fun onResponseSuccess(result: MaxpayResult?) {
                     _viewState.maxpayResult.value = result

@@ -1,7 +1,8 @@
 package com.maxpay.sdk.model.request
 
 import com.google.gson.annotations.SerializedName
-data class ThreeDPayment(
+
+internal data class ThreeDPayment(
     @SerializedName("api_version")
     val apiVersion: Int?,
     @SerializedName("merchant_account")

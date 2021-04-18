@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 import com.maxpay.sdk.core.removeZero
 import com.maxpay.sdk.model.MaxpaySignatureData
 
-data class SalePayment(
+internal data class SalePayment(
     @SerializedName("api_version")
     val apiVersion: Int?,
 //    @SerializedName("merchant_account")
@@ -51,7 +51,7 @@ data class SalePayment(
     val auth_type: String = "bySignature"
 )
 
-fun SalePayment.toMaxpaySignatureData() = MaxpaySignatureData(
+internal fun SalePayment.toMaxpaySignatureData() = MaxpaySignatureData(
     api_version = apiVersion,
     currency = currency,
     amount = amount.removeZero(),

@@ -3,7 +3,7 @@ package com.maxpay.sdk.utils
 import androidx.annotation.IntDef
 import androidx.annotation.StringDef
 
-class Constants{
+internal class Constants{
     companion object {
 
         const val MAXPAY_CALLBACK_BROADCAST = "maxpay_callback_BROADCAST"

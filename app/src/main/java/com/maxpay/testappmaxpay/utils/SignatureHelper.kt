@@ -2,8 +2,6 @@ package com.maxpay.testappmaxpay.utils
 
 import com.maxpay.sdk.core.removeZero
 import com.maxpay.sdk.model.MaxpaySignatureData
-import com.maxpay.sdk.model.request.SalePayment
-import com.maxpay.sdk.model.request.TransactionType
 import java.security.MessageDigest
 import kotlin.reflect.full.memberProperties
 

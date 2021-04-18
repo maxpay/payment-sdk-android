@@ -9,8 +9,8 @@ import androidx.appcompat.view.menu.MenuBuilder
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.maxpay.testappmaxpay.core.ext.observeCommandSafety
 import com.maxpay.sdk.model.request.TransactionType
-import com.maxpay.sdk.utils.extensions.observeCommandSafety
 import com.maxpay.testappmaxpay.R
 import com.maxpay.testappmaxpay.model.ProductItemtUI
 import com.maxpay.testappmaxpay.ui.MainViewModel

@@ -12,23 +12,23 @@ import com.maxpay.sdk.core.ProgressActivity
 import com.maxpay.sdk.model.InputFormLength
 import com.maxpay.sdk.utils.AlternativeDialogFactory
 
-fun Fragment.closeKeyboard() = context?.let {
+internal fun Fragment.closeKeyboard() = context?.let {
     (it.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).apply {
         toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0)
     }
 }
 
-fun Fragment.showProgressDialog() {
+internal fun Fragment.showProgressDialog() {
     if (activity != null && activity is ProgressActivity)
         (activity as ProgressActivity).getProgressBar().visibility = View.VISIBLE
 }
 
-fun Fragment.dismissDialogs() {
+internal fun Fragment.dismissDialogs() {
     if (activity != null && activity is ProgressActivity)
         (activity as ProgressActivity).getProgressBar().visibility = View.GONE
 }
 
-fun Fragment.showError(errorText: String) {
+internal fun Fragment.showError(errorText: String) {
     if (activity != null && activity is AppCompatActivity) {
         context?.let {
             AlternativeDialogFactory.showAlertWithOneButton(
@@ -41,7 +41,7 @@ fun Fragment.showError(errorText: String) {
     }
 }
 
-fun Fragment.isFormCompleted(vararg input: TextInputLayout): Boolean {
+internal fun Fragment.isFormCompleted(vararg input: TextInputLayout): Boolean {
     var isValidate: Boolean? = null
     for (item in input) {
         if (item.editText?.text.isNullOrEmpty()) {
@@ -56,7 +56,7 @@ fun Fragment.isFormCompleted(vararg input: TextInputLayout): Boolean {
     return isValidate ?: true
 }
 
-fun Fragment.isFormLengthValid(vararg inputLengthForm: InputFormLength): Boolean {
+internal fun Fragment.isFormLengthValid(vararg inputLengthForm: InputFormLength): Boolean {
     var isValidate: Boolean? = null
     for (item in inputLengthForm) {
         item.input.text?.let {
@@ -83,7 +83,7 @@ fun Fragment.isFormLengthValid(vararg inputLengthForm: InputFormLength): Boolean
     return isValidate ?: true
 }
 
-fun Fragment.isFormCompleted(vararg inputLengthForm: InputFormLength): Boolean {
+internal fun Fragment.isFormCompleted(vararg inputLengthForm: InputFormLength): Boolean {
     var isValidate: Boolean? = null
     for (item in inputLengthForm) {
         if (item.input.text.isNullOrEmpty()) {
@@ -99,7 +99,7 @@ fun Fragment.isFormCompleted(vararg inputLengthForm: InputFormLength): Boolean {
 }
 
 
-fun Fragment.showInfo(errorText: String, onOk: (() -> Unit)? = null ) {
+internal fun Fragment.showInfo(errorText: String, onOk: (() -> Unit)? = null ) {
     if (activity != null && activity is AppCompatActivity) {
         context?.let {
             AlternativeDialogFactory.showAlertWithOneButton(
@@ -112,7 +112,7 @@ fun Fragment.showInfo(errorText: String, onOk: (() -> Unit)? = null ) {
     }
 }
 
-fun Fragment.showDialog(title: String, text: String, onOk: (() -> Unit)? = null ) {
+internal fun Fragment.showDialog(title: String, text: String, onOk: (() -> Unit)? = null ) {
     if (activity != null && activity is AppCompatActivity) {
         context?.let {
             AlternativeDialogFactory.showAlertWithOneButton(

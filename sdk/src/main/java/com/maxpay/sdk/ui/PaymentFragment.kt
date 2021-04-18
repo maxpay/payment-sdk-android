@@ -29,7 +29,7 @@ import org.koin.android.ext.android.inject
 import org.koin.core.parameter.parametersOf
 
 
-class PaymentFragment: FragmentWithToolbar(R.layout.fragment_payment) {
+internal class PaymentFragment: FragmentWithToolbar(R.layout.fragment_payment) {
 
     private val viewModel: MainViewModel by activityViewModels()
     override fun getCurrentViewModel() = viewModel

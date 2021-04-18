@@ -25,7 +25,7 @@ import org.koin.core.KoinComponent
 import org.koin.core.inject
 
 
-class MainViewModel(application: Application)
+internal class MainViewModel(application: Application)
     : MyAndroidViewModel(application), KoinComponent {
 
     private val repository: MaxPayRepository by inject()

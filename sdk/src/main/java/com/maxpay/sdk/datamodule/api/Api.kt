@@ -11,7 +11,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 import kotlin.properties.Delegates
 
-class Api(private val pref: SharedPreferences, key: String?) {
+internal class Api(private val pref: SharedPreferences, key: String?) {
 
     private val baseUrl = BuildConfig.BASE_URL
     private var retrofitClient by Delegates.notNull<Retrofit>()

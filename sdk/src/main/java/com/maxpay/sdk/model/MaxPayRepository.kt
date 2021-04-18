@@ -5,7 +5,7 @@ import com.maxpay.sdk.model.request.ThreeDPayment
 import com.maxpay.sdk.model.response.BaseResponse
 import io.reactivex.Single
 
-interface MaxPayRepository {
+internal interface MaxPayRepository {
     fun pay3D(salePayment: ThreeDPayment): Single<BaseResponse>
     fun pay(authPayment: SalePayment): Single<BaseResponse>
 }

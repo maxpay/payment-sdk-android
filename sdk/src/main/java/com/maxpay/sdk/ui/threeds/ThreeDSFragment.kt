@@ -17,7 +17,7 @@ import com.maxpay.sdk.ui.MainViewModel
 import kotlinx.android.synthetic.main.fragment_three_d_s.*
 import java.net.URLEncoder
 
-class ThreeDSFragment: FragmentWithToolbar(R.layout.fragment_three_d_s) {
+internal class ThreeDSFragment: FragmentWithToolbar(R.layout.fragment_three_d_s) {
     private val resultLink: String = "google.com"
     private val callBack = "https://callback.maxpay.com/callback/sale3dSecure" // TODO here must be valid callback
     private val viewModel: MainViewModel by activityViewModels()
@@ -35,7 +35,7 @@ class ThreeDSFragment: FragmentWithToolbar(R.layout.fragment_three_d_s) {
         super.onCreate(savedInstanceState)
         val progressDialog = ProgressDialog(context)
         progressDialog.setMessage("Loading...")
-        progressDialog.show()
+//        progressDialog.show()
 
         var reqData: String? = null
         val authResponse = viewModel.viewState.authPaymentResponse.value

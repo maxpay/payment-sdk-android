@@ -14,7 +14,7 @@ import com.maxpay.sdk.utils.Constants
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 
-class SdkHelper: KoinComponent {
+internal class SdkHelper: KoinComponent {
     private val context: Context by inject()
 
     private var checkoutCallBack: MaxpayCallback? = null
@@ -84,5 +84,4 @@ class SdkHelper: KoinComponent {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK
         })
     }
-
 }

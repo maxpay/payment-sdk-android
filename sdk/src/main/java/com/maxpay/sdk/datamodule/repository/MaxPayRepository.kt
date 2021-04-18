@@ -9,7 +9,7 @@ import com.maxpay.sdk.model.response.BaseResponse
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 
-class MaxPayRepositoryImpl(
+internal class MaxPayRepositoryImpl(
     private val api: Api
 ): MaxPayRepository {
     override fun pay3D(salePayment: ThreeDPayment): Single<BaseResponse> {

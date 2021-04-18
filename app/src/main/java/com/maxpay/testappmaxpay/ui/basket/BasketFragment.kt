@@ -8,12 +8,7 @@ import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import com.maxpay.sdk.SDKFacade
-import com.maxpay.sdk.SdkFacadeImpl
-import com.maxpay.sdk.model.MaxPayInitData
-import com.maxpay.sdk.model.MaxpayPaymentData
-import com.maxpay.sdk.model.request.TransactionType
-import com.maxpay.sdk.utils.extensions.observeCommandSafety
+import com.maxpay.testappmaxpay.core.ext.observeCommandSafety
 import com.maxpay.testappmaxpay.R
 import com.maxpay.testappmaxpay.core.getPriceString
 import com.maxpay.testappmaxpay.model.ProductItemtUI

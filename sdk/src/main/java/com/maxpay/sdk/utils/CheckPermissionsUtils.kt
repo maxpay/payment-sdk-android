@@ -4,7 +4,7 @@ import android.content.pm.PackageManager
 import androidx.core.app.ActivityCompat
 import java.util.*
 
-object CheckPermissionsUtils {
+internal object CheckPermissionsUtils {
 
     fun checkPermission(activity: Activity, permissions: Array<out String>): Boolean {
         val requestPermissionList = ArrayList<String>()

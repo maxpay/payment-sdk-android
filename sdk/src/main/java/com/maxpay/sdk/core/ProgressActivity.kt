@@ -6,7 +6,7 @@ import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import com.maxpay.sdk.utils.CheckPermissionsUtils
 
-abstract class ProgressActivity(@LayoutRes layoutId: Int) : AppCompatActivity(layoutId) {
+internal abstract class ProgressActivity(@LayoutRes layoutId: Int) : AppCompatActivity(layoutId) {
 
     abstract fun getProgressBar(): ProgressBar
 

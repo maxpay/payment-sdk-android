@@ -9,7 +9,7 @@ import android.widget.EditText
 import com.google.android.material.textfield.TextInputEditText
 import com.maxpay.sdk.R
 
-class MaskEditText : TextInputEditText {
+internal class MaskEditText : TextInputEditText {
 
     private var maskTextWatcher: MaskTextWatcher? = null
 

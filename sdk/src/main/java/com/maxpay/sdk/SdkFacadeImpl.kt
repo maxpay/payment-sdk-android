@@ -1,11 +1,8 @@
 package com.maxpay.sdk
 
-import android.content.IntentFilter
 import com.maxpay.sdk.data.MaxpayCallback
-import com.maxpay.sdk.data.MaxpayResult
 import com.maxpay.sdk.model.MaxPayInitData
 import com.maxpay.sdk.model.MaxpayPaymentData
-import com.maxpay.sdk.utils.Constants
 
 class SdkFacadeImpl(
     private val data: MaxPayInitData

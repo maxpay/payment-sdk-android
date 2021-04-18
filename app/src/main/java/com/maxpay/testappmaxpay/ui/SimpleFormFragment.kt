@@ -10,10 +10,9 @@ import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.maxpay.testappmaxpay.core.ext.observeCommandSafety
+import com.maxpay.testappmaxpay.core.ext.showDialog
 import com.maxpay.sdk.model.request.TransactionType
-import com.maxpay.sdk.utils.extensions.observeCommandSafety
-import com.maxpay.sdk.utils.extensions.showDialog
-import com.maxpay.sdk.utils.extensions.showInfo
 import com.maxpay.testappmaxpay.R
 import com.maxpay.testappmaxpay.utils.Utils
 import kotlinx.android.synthetic.main.fragment_settings.segmentControlTransaction
@@ -22,7 +21,6 @@ import kotlinx.android.synthetic.main.fragment_settings.tvChange
 import kotlinx.android.synthetic.main.fragment_settings.tvCurrency
 import kotlinx.android.synthetic.main.fragment_simple_form.*
 import kotlinx.android.synthetic.main.fragment_simple_form.btnPay
-import java.util.*
 
 
 class SimpleFormFragment : Fragment() {
@@ -59,7 +57,7 @@ class SimpleFormFragment : Fragment() {
         }
 
         btnPay.setOnClickListener {
-            ilTotalAmount.editText?.let {
+            ilTotalAmount?.let {
                 if (!it.text.isNullOrEmpty()) {
                     viewModel.viewState.settings.value?.amount = it.text.toString().toFloat()
                     viewModel.viewState.fullPrice.value = it.text.toString().toFloat()

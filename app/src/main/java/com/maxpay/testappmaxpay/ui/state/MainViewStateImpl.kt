@@ -6,7 +6,6 @@ import com.maxpay.sdk.model.AvailableFields
 import com.maxpay.sdk.model.MaxPayInitData
 import com.maxpay.sdk.model.MaxPayTheme
 import com.maxpay.sdk.model.MaxpayPaymentData
-import com.maxpay.sdk.model.response.BaseResponse
 import com.maxpay.sdk.utils.SingleLiveEvent
 import com.maxpay.testappmaxpay.model.ProductItemtUI
 

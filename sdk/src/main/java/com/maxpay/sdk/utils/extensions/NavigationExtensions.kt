@@ -8,36 +8,36 @@ import androidx.fragment.app.FragmentManager
 import com.maxpay.sdk.R
 import kotlin.reflect.KClass
 
-fun AppCompatActivity.addFragmentToContainer(
+internal fun AppCompatActivity.addFragmentToContainer(
     fragment: Fragment,
     @IdRes container: Int = R.id.frameLayoutContainer
 ) {
     supportFragmentManager.addFragmentToContainer(fragment, container)
 }
 
-fun AppCompatActivity.showFragment(
+internal fun AppCompatActivity.showFragment(
     fragment: Fragment,
     @IdRes container: Int = R.id.frameLayoutContainer
 ) {
     supportFragmentManager.showFragmentToContainer(fragment, container)
 }
 
-fun AppCompatActivity.addFragmentToContainerWithoutBackStack(
+internal fun AppCompatActivity.addFragmentToContainerWithoutBackStack(
     fragment: Fragment,
     @IdRes container: Int = R.id.frameLayoutContainer
 ) {
     supportFragmentManager.addFragmentToContainerWithoutBackStack(fragment, container)
 }
 
-fun AppCompatActivity.clearBackStack(kClass: KClass<out Fragment>? = null) {
+internal fun AppCompatActivity.clearBackStack(kClass: KClass<out Fragment>? = null) {
     supportFragmentManager.clearBackStack(kClass)
 }
 
-fun FragmentActivity.clearBackStack(kClass: KClass<out Fragment>? = null) {
+internal fun FragmentActivity.clearBackStack(kClass: KClass<out Fragment>? = null) {
     supportFragmentManager.clearBackStack(kClass)
 }
 
-fun Fragment.addFragmentToContainer(
+internal fun Fragment.addFragmentToContainer(
     fragment: Fragment,
     @IdRes container: Int,
     fragmentManager: FragmentManager? = null
@@ -46,7 +46,7 @@ fun Fragment.addFragmentToContainer(
         ?: this.fragmentManager?.addFragmentToContainer(fragment, container)
 }
 
-fun Fragment.addFragmentToContainerWithoutBackStack(
+internal fun Fragment.addFragmentToContainerWithoutBackStack(
     fragment: Fragment,
     @IdRes container: Int,
     fragmentManager: FragmentManager? = null
@@ -55,7 +55,7 @@ fun Fragment.addFragmentToContainerWithoutBackStack(
         ?: this.fragmentManager?.addFragmentToContainerWithoutBackStack(fragment, container)
 }
 
-fun Fragment.clearBackStack(
+internal fun Fragment.clearBackStack(
     kClass: KClass<out Fragment>? = null,
     fragmentManager: FragmentManager? = null
 ) {
@@ -63,21 +63,21 @@ fun Fragment.clearBackStack(
         ?: this.fragmentManager?.clearBackStack(kClass)
 }
 
-fun FragmentManager.addFragmentToContainer(fragment: Fragment, @IdRes container: Int) {
+internal fun FragmentManager.addFragmentToContainer(fragment: Fragment, @IdRes container: Int) {
     this.beginTransaction()
         .replace(container, fragment, fragment::class.java.name)
         .addToBackStack(fragment::class.java.name)
         .commit()
 }
 
-fun FragmentManager.showFragmentToContainer(fragment: Fragment, @IdRes container: Int) {
+internal fun FragmentManager.showFragmentToContainer(fragment: Fragment, @IdRes container: Int) {
     this.beginTransaction()
         .add(container, fragment, fragment::class.java.name)
         .addToBackStack(fragment::class.java.name)
         .commit()
 }
 
-fun FragmentManager.addFragmentToContainerWithoutBackStack(
+internal fun FragmentManager.addFragmentToContainerWithoutBackStack(
     fragment: Fragment,
     @IdRes container: Int
 ) {
@@ -86,6 +86,6 @@ fun FragmentManager.addFragmentToContainerWithoutBackStack(
         .commit()
 }
 
-fun FragmentManager.clearBackStack(kClass: KClass<out Fragment>? = null) {
+internal fun FragmentManager.clearBackStack(kClass: KClass<out Fragment>? = null) {
     this.popBackStack(kClass?.java?.name, FragmentManager.POP_BACK_STACK_INCLUSIVE)
 }

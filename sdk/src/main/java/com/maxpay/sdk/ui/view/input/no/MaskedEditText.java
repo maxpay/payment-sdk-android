@@ -9,15 +9,12 @@ import android.text.SpannableStringBuilder;
 import android.text.TextWatcher;
 import android.text.style.ForegroundColorSpan;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.TextView;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.maxpay.sdk.R;
-
-import static android.content.ContentValues.TAG;
 
 public class MaskedEditText extends TextInputEditText implements TextWatcher {
 

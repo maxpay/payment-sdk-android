@@ -7,14 +7,13 @@ import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import com.maxpay.sdk.utils.extensions.observeCommandSafety
-import com.maxpay.sdk.utils.extensions.showDialog
+import com.maxpay.testappmaxpay.core.ext.observeCommandSafety
+import com.maxpay.testappmaxpay.core.ext.showDialog
 import com.maxpay.testappmaxpay.R
 import com.maxpay.testappmaxpay.core.getPriceString
 import com.maxpay.testappmaxpay.ui.MainViewModel
 import kotlinx.android.synthetic.main.fragment_pay.*
 import kotlinx.android.synthetic.main.fragment_settings.toolbar
-import java.lang.RuntimeException
 
 
 class PayFragment : Fragment() {

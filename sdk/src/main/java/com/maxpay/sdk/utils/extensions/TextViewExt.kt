@@ -1,6 +1,5 @@
 package com.maxpay.sdk.utils.extensions
 
-import android.graphics.Color
 import android.graphics.Typeface
 import android.text.*
 import android.text.method.LinkMovementMethod
@@ -11,7 +10,7 @@ import androidx.core.content.ContextCompat
 import com.maxpay.sdk.R
 import com.maxpay.sdk.model.MaxPayTheme
 
-fun TextView.makeLinks(vararg links: Pair<String, View.OnClickListener>, theme: MaxPayTheme?) {
+internal fun TextView.makeLinks(vararg links: Pair<String, View.OnClickListener>, theme: MaxPayTheme?) {
     val linkColor = theme?.let { it.hyperlinkColor?: ContextCompat.getColor(context, R.color.primary_green) }?: ContextCompat.getColor(context, R.color.primary_green)
     val spannableString = SpannableString(this.text)
     for (link in links) {

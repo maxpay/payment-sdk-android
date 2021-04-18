@@ -6,7 +6,7 @@ import com.maxpay.sdk.model.response.BaseResponse
 import io.reactivex.Single
 import retrofit2.http.*
 
-interface PayApi {
+internal interface PayApi {
 
     @POST("cc")
     fun pay3D(@Body data: ThreeDPayment): Single<BaseResponse>
