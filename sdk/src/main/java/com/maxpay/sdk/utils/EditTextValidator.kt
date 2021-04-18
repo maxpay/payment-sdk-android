@@ -1,8 +1,7 @@
 package com.maxpay.sdk.utils
 
 import android.graphics.Color
-import android.text.Editable
-import android.text.TextWatcher
+import android.text.*
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
@@ -11,10 +10,14 @@ import com.maxpay.sdk.model.InputFormLength
 import com.maxpay.sdk.model.MaxPayTheme
 import org.koin.core.KoinComponent
 import org.koin.core.inject
+import java.util.regex.Matcher
+import java.util.regex.Pattern
+
 
 class EditTextValidator(val theme: MaxPayTheme?) : KoinComponent {
 
     private val dateInterface: DateInterface by inject()
+    private val isoCountryISOHelper: CountryISOHelper by inject()
     private var errorColor: Int = Color.RED
     internal var isError: Boolean = false
     private val set: MutableSet<InputFormLength> = mutableSetOf()
@@ -40,13 +43,60 @@ class EditTextValidator(val theme: MaxPayTheme?) : KoinComponent {
     internal fun validateETWithoutLength(inputForm: InputFormLength) {
         set.add(inputForm)
         inputForm.input.addTextChangedListener {
+
             removeErrorFromField(inputForm)
         }
+        inputForm.input.filters = arrayOf(getEditTextFilter())
 
 //        inputForm.input.setOnFocusChangeListener { _, b ->
 //            if (!b)
 //                isFormLengthValid(inputForm)
 //        }
+    }
+
+    fun getEditTextFilter(): InputFilter? {
+        return object : InputFilter {
+            override fun filter(
+                source: CharSequence,
+                start: Int,
+                end: Int,
+                dest: Spanned,
+                dstart: Int,
+                dend: Int
+            ): CharSequence? {
+                var keepOriginal = true
+                val sb = StringBuilder(end - start)
+                for (i in start until end) {
+                    val c = source[i]
+                    if (c.isLetter()) // put your condition here
+                        sb.append(c) else keepOriginal = false
+                }
+                if (keepOriginal)
+                    return null
+                else {
+                    if (source is Spanned) {
+                        val sp = SpannableString(sb)
+                        TextUtils.copySpansFrom(source, start, sb.length, null, sp, 0)
+                        return sp
+                    } else {
+                        return sb
+                    }
+                }
+            }
+        }
+    }
+
+    internal fun validateETISOCountry(inputForm: InputFormLength) {
+        set.add(inputForm)
+        inputForm.input.addTextChangedListener {
+            removeErrorFromField(inputForm)
+        }
+        inputForm.input.setOnFocusChangeListener { _, b ->
+            if (!b){
+                if (isoCountryISOHelper.getISOCountries()?.contains(inputForm.input.text.toString()) == false)
+                    setError(inputForm)
+            }
+        }
     }
 
     internal fun validateExpirationDate(inputForm: InputFormLength) {
@@ -60,7 +110,7 @@ class EditTextValidator(val theme: MaxPayTheme?) : KoinComponent {
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 if (start == 0 && before == 0)
-                    when(s?.getOrNull(0)) {
+                    when (s?.getOrNull(0)) {
                         '0', '1' -> {
                             removeErrorFromField(inputForm)
                         }
@@ -75,7 +125,7 @@ class EditTextValidator(val theme: MaxPayTheme?) : KoinComponent {
 //                        else -> setError(inputForm)
 //                    }
 //                    if (s.toString().toInt() > 12 || s.toString().toInt() < 1)
-                    if(s?.subSequence(0, 2).toString().toInt() !in 1..12)
+                    if (s?.subSequence(0, 2).toString().toInt() !in 1..12)
                         setError(inputForm)
 //                    if (s?.subSequence(0, 2).toString().toInt() > currMonth)
                 }
@@ -84,7 +134,8 @@ class EditTextValidator(val theme: MaxPayTheme?) : KoinComponent {
                     if (s?.subSequence(3, 5).toString().toInt() < currYear.toInt())
                         setError(inputForm)
                     else if (s?.subSequence(3, 5).toString().toInt() == currYear.toInt()
-                        && s?.subSequence(0, 2).toString().toInt() !in currMonth.toInt()..12 )
+                        && s?.subSequence(0, 2).toString().toInt() !in currMonth.toInt()..12
+                    )
                         setError(inputForm)
                     else if (s?.subSequence(0, 2).toString().toInt() in 1..12)
                         removeErrorFromField(inputForm)

@@ -34,12 +34,12 @@ val utils = module {
     }
     single { PrefsUtils(get()) }
     single<IpHelper> { IpHelperImpl() }
+    single<CountryISOHelper> { CountryISOHelperImpl() }
     single { CustomTabsHelper() }
     single { ExpiryParser() }
     factory { (theme: MaxPayTheme?) -> EditTextValidator(theme) }
     factory { (theme: MaxPayTheme?) -> UIComponentThemeEditor(theme) }
 
-//    viewModel { (someValue : SomeValue) -> SomeViewModel(someValue ) }
 //    factory { WebViewUtil() }
 //
 //    single { FileUtil(get()) }

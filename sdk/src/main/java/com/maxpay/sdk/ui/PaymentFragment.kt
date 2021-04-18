@@ -147,6 +147,7 @@ class PaymentFragment: FragmentWithToolbar(R.layout.fragment_payment) {
             InputFormLength(etCardNumber, cvCardNumber, Constants.Companion.RequiredLength.CARD_INPUT_LENGTH), ivCard)
         editTextValidator.validateET(InputFormLength(etCvv, cvCvv, Constants.Companion.RequiredLength.CVV_INPUT_LENGTH))
         editTextValidator.validateExpirationDate(InputFormLength(etExpirationDate, cvExpirDate, Constants.Companion.RequiredLength.EXPIRY_INPUT_LENGTH))
+        editTextValidator.validateETISOCountry(InputFormLength(etCountry, cvCountry, 3))
         editTextValidator.validateETWithoutLength(InputFormLength(etCardHolderName, cvCardHolderName, 0))
 
         etCountry.addTextChangedListener{
