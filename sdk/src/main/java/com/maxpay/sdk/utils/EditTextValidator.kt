@@ -8,18 +8,27 @@ import androidx.core.widget.addTextChangedListener
 import com.maxpay.sdk.R
 import com.maxpay.sdk.model.InputFormLength
 import com.maxpay.sdk.model.MaxPayTheme
+import io.reactivex.Observable
+import io.reactivex.schedulers.Schedulers
+import io.reactivex.subjects.ReplaySubject
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 import java.util.regex.Pattern
-
 
 class EditTextValidator(val theme: MaxPayTheme?) : KoinComponent {
 
     private val dateInterface: DateInterface by inject()
     private val isoCountryISOHelper: CountryISOHelper by inject()
     private var errorColor: Int = Color.RED
-    internal var isError: Boolean = false
+    private var isError: Boolean = false
     private val set: MutableSet<InputFormLength> = mutableSetOf()
+
+    private val subject: ReplaySubject<Boolean> = ReplaySubject.create(1)
+
+    internal val errorObservable: Observable<Boolean>
+        get() = subject.subscribeOn(Schedulers.io())
+
+    private fun postIsError(msg: Boolean) = subject.onNext(msg)
 
     init {
         theme?.let {
@@ -31,6 +40,22 @@ class EditTextValidator(val theme: MaxPayTheme?) : KoinComponent {
         set.add(inputForm)
         inputForm.input.addTextChangedListener {
             removeErrorFromField(inputForm)
+            it?.let {
+                val validText = it.toString().replace(" ", "")
+                    .replace("_", "")
+                    .replace("/", "")
+                if (validText.length < inputForm.requiredLength) {
+                    if (set.elementAt(set.indexOf(inputForm)).isValid) {
+                        set.elementAt(set.indexOf(inputForm)).isValid = false
+                        checkEnableButton()
+                    }
+                } else {
+                    set.elementAt(set.indexOf(inputForm)).isValid = true
+                    checkEnableButton()
+                }
+            } ?: kotlin.run {
+                set.elementAt(set.indexOf(inputForm)).isValid = false
+            }
         }
 
         inputForm.input.setOnFocusChangeListener { _, b ->
@@ -50,6 +75,10 @@ class EditTextValidator(val theme: MaxPayTheme?) : KoinComponent {
         set.add(inputForm)
         inputForm.input.addTextChangedListener {
             removeErrorFromField(inputForm)
+            if (isValidEmailAddress(it.toString())) {
+                inputForm.isValid = true
+                checkEnableButton()
+            }
         }
         inputForm.input.setOnFocusChangeListener { _, b ->
             if (!b){
@@ -70,11 +99,24 @@ class EditTextValidator(val theme: MaxPayTheme?) : KoinComponent {
 
     internal fun validateETCardHolder(inputForm: InputFormLength) {
         set.add(inputForm)
+        inputForm.isValid = true
         inputForm.input.addTextChangedListener {
-
             removeErrorFromField(inputForm)
+            if (inputForm.input.text.length < inputForm.requiredLength ) {
+                set.elementAt(set.indexOf(inputForm)).isValid = false
+                checkEnableButton()
+            }
+            else {
+                set.elementAt(set.indexOf(inputForm)).isValid = true
+                checkEnableButton()
+            }
         }
         inputForm.input.filters = arrayOf(getEditTextFilter())
+
+        inputForm.input.setOnFocusChangeListener { _, b ->
+            if (!b)
+                isFormLengthValid(inputForm)
+        }
     }
 
     fun getEditTextFilter(): InputFilter? {
@@ -111,12 +153,21 @@ class EditTextValidator(val theme: MaxPayTheme?) : KoinComponent {
 
     internal fun validateETISOCountry(inputForm: InputFormLength) {
         set.add(inputForm)
+        val lstOfCountries = isoCountryISOHelper.getISOCountries()
         inputForm.input.addTextChangedListener {
             removeErrorFromField(inputForm)
+            if (lstOfCountries?.contains(it.toString()) == false) {
+                set.elementAt(set.indexOf(inputForm)).isValid = false
+                checkEnableButton()
+            }
+            else {
+                set.elementAt(set.indexOf(inputForm)).isValid = true
+                checkEnableButton()
+            }
         }
         inputForm.input.setOnFocusChangeListener { _, b ->
             if (!b){
-                if (isoCountryISOHelper.getISOCountries()?.contains(inputForm.input.text.toString()) == false)
+                if (lstOfCountries?.contains(inputForm.input.text.toString()) == false)
                     setError(inputForm)
             }
         }
@@ -162,6 +213,18 @@ class EditTextValidator(val theme: MaxPayTheme?) : KoinComponent {
                         setError(inputForm)
                     else if (s?.subSequence(0, 2).toString().toInt() in 1..12)
                         removeErrorFromField(inputForm)
+
+                if (inputForm.input.currentTextColor == errorColor || inputForm.input.text.toString()
+                                                                        .replace(" ", "")
+                                                                        .replace("_", "")
+                                                                        .replace("/", "").length != inputForm.requiredLength ) {
+                    set.elementAt(set.indexOf(inputForm)).isValid = false
+                    checkEnableButton()
+                }
+                else {
+                    set.elementAt(set.indexOf(inputForm)).isValid = true
+                    checkEnableButton()
+                }
             }
         })
 
@@ -192,19 +255,21 @@ class EditTextValidator(val theme: MaxPayTheme?) : KoinComponent {
                     )
                 }
                 img?.let { imageView.setImageDrawable(it) }
+                if (!LuhnAlgorithmHelper.checkLuhn(inputForm.input.text.toString().replace(" ", ""))) {
+                    set.elementAt(set.indexOf(inputForm)).isValid = false
+                    checkEnableButton()
+                }else {
+                    set.elementAt(set.indexOf(inputForm)).isValid = true
+                    checkEnableButton()
+                }
             }
 
-//            val luhn = LuhnAlgorithmHelper.checkLuhn(inputForm.input.text.toString().replace(" ", ""))
         }
-
-
 
         inputForm.input.setOnFocusChangeListener { _, b ->
             if (!b) {
                 isFormLengthValid(inputForm)
                 checkLuhn(inputForm)
-//                if (!LuhnAlgorithmHelper.checkLuhn(inputForm.input.text.toString().replace(" ", "")))
-//                    setError(inputForm)
             }
         }
     }
@@ -217,13 +282,24 @@ class EditTextValidator(val theme: MaxPayTheme?) : KoinComponent {
         return true
     }
 
-    internal fun isErrorInFields(): Boolean {
+    private fun isErrorInFields(): Boolean {
         set.forEach {
             if (it.input.currentTextColor == errorColor) {
                 return true
             }
         }
         return false
+    }
+
+
+    internal fun checkEnableButton() {
+        set.forEach {
+            if (!it.isValid) {
+                postIsError(true)
+                return
+            }
+        }
+        postIsError(false)
     }
 
     private fun setError(inputForm: InputFormLength) {
@@ -252,7 +328,6 @@ class EditTextValidator(val theme: MaxPayTheme?) : KoinComponent {
                 if (validText.length < item.requiredLength) {
                     item.input.setTextColor(errorColor)
                     item.card.strokeColor = errorColor
-//                item.input.error = getString(R.string.Global_field_not_vaild)
                     isValidate = false
                 } else {
                     if (isValidate != false)
@@ -260,7 +335,6 @@ class EditTextValidator(val theme: MaxPayTheme?) : KoinComponent {
                     item.input.error = null
                 }
             } ?: kotlin.run {
-//                item.input.error = getString(R.string.Global_field_empty)
                 isValidate = false
             }
         }

@@ -4,7 +4,6 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.graphics.Color
 import android.graphics.PorterDuff
 import android.net.Uri
 import android.os.Bundle
@@ -12,7 +11,6 @@ import android.text.*
 import android.view.View
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
-import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.activityViewModels
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener
@@ -25,6 +23,8 @@ import com.maxpay.sdk.model.request.TransactionType
 import com.maxpay.sdk.model.response.ResponseStatus
 import com.maxpay.sdk.utils.*
 import com.maxpay.sdk.utils.extensions.*
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.rxkotlin.addTo
 import kotlinx.android.synthetic.main.fragment_payment.*
 import kotlinx.android.synthetic.main.layout_billing_address.*
 import org.koin.android.ext.android.inject
@@ -150,21 +150,29 @@ internal class PaymentFragment: FragmentWithToolbar(R.layout.fragment_payment) {
             InputFormLength(etCardNumber, cvCardNumber, Constants.Companion.RequiredLength.CARD_INPUT_LENGTH), ivCard)
         editTextValidator.validateET(InputFormLength(etCvv, cvCvv, Constants.Companion.RequiredLength.CVV_INPUT_LENGTH))
         editTextValidator.validateExpirationDate(InputFormLength(etExpirationDate, cvExpirDate, Constants.Companion.RequiredLength.EXPIRY_INPUT_LENGTH))
-        editTextValidator.validateETISOCountry(InputFormLength(etCountry, cvCountry, 3))
-        editTextValidator.validateETCardHolder(InputFormLength(etCardHolderName, cvCardHolderName, 0))
+        if (cvCountry.visibility == View.VISIBLE)
+            editTextValidator.validateETISOCountry(InputFormLength(etCountry, cvCountry, 3))
+        editTextValidator.validateETCardHolder(InputFormLength(etCardHolderName, cvCardHolderName, Constants.Companion.RequiredLength.CARDHOLDER_INPUT_LENGTH))
+        editTextValidator.errorObservable
+                         .observeOn(AndroidSchedulers.mainThread())
+                         .subscribe {
+                             val isEnabled = !it && checkBoxAutoDebt.isChecked && checkBoxTermsOfUse.isChecked
+                             payBtn.isEnabled = isEnabled
+                             themeEditor.changeButtonColorFilter(view, isEnabled)
+                        }.addTo(viewModel.disposables)
 
-        etCountry.addTextChangedListener{
-            if(etCountry.currentTextColor == Color.RED) {
-                etCountry.setTextColor(
-                    ContextCompat.getColor(
-                        requireContext(),
-                        R.color.colorDarkText
-                    )
-                )
-                cvCountry.strokeColor = Color.TRANSPARENT
-            }
-
-        }
+//        etCountry.addTextChangedListener{
+//            if(etCountry.currentTextColor == Color.RED) {
+//                etCountry.setTextColor(
+//                    ContextCompat.getColor(
+//                        requireContext(),
+//                        R.color.colorDarkText
+//                    )
+//                )
+//                cvCountry.strokeColor = Color.TRANSPARENT
+//            }
+//
+//        }
         etCountry?.filters = arrayOf(InputFilter.AllCaps(), InputFilter.LengthFilter(3))
         payBtn.setOnClickListener {
             val isAuthTransaction = (maxpayPaymentData.transactionType == TransactionType.AUTH
@@ -239,8 +247,13 @@ internal class PaymentFragment: FragmentWithToolbar(R.layout.fragment_payment) {
                 || maxpayPaymentData.transactionType == TransactionType.AUTH3D)
         val showNameFields = (maxpayPaymentData.firstName.isNullOrEmpty() && isAuthTransaction)
         val showCountryFields = (maxpayPaymentData.country.isNullOrEmpty() && isAuthTransaction)
-        if (maxPayInitData.fieldsToShow?.showBillingAddressLayout == true || showCountryFields || showCountryFields) layoutBillingAddress.visibility =
-            View.VISIBLE
+
+        if (maxPayInitData.fieldsToShow?.showBirthdayField == true) {
+            tvBDAY.visibility = View.VISIBLE
+            cvBirthday.visibility = View.VISIBLE
+        }
+        if (maxPayInitData.fieldsToShow?.showBillingAddressLayout == true || showCountryFields || showNameFields)
+            layoutBillingAddress.visibility = View.VISIBLE
         else {
             layoutBillingAddress.visibility = View.GONE
             return
@@ -276,8 +289,8 @@ internal class PaymentFragment: FragmentWithToolbar(R.layout.fragment_payment) {
 
     private fun checkEnableButton() {
         val isEnabled = checkBoxTermsOfUse.isChecked && checkBoxAutoDebt.isChecked
-        payBtn.isEnabled = isEnabled
-        themeEditor.changeButtonColorFilter(view, isEnabled)
+        if (isEnabled)
+            editTextValidator.checkEnableButton()
     }
 
     private fun initToolbar() {

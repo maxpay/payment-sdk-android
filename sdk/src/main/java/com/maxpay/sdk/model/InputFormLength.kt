@@ -6,5 +6,6 @@ import com.google.android.material.card.MaterialCardView
 internal data class InputFormLength(
     val input: EditText,
     val card: MaterialCardView,
-    val requiredLength: Int
+    val requiredLength: Int,
+    var isValid: Boolean = false
 )

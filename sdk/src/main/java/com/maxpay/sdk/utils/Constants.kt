@@ -52,10 +52,12 @@ internal class Constants{
         }
 
         @IntDef(RequiredLength.CARD_INPUT_LENGTH, RequiredLength.CVV_INPUT_LENGTH,
-                RequiredLength.EXPIRY_INPUT_LENGTH, RequiredLength.ZIP_INPUT_LENGTH)
+                RequiredLength.EXPIRY_INPUT_LENGTH, RequiredLength.ZIP_INPUT_LENGTH,
+                RequiredLength.CARDHOLDER_INPUT_LENGTH)
         @Retention(AnnotationRetention.SOURCE)
         annotation class RequiredLength {
             companion object {
+                const val CARDHOLDER_INPUT_LENGTH = 2
                 const val CARD_INPUT_LENGTH = 16
                 const val COUNTRY_INPUT_LENGTH = 3
                 const val CVV_INPUT_LENGTH = 3
