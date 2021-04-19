@@ -50,6 +50,7 @@ data class AvailableFields(
     var showAddressField: Boolean? = null,
     var showCityField: Boolean? = null,
     var showZipField: Boolean? = null,
-    var showCountryField: Boolean? = null
+    var showCountryField: Boolean? = null,
+    var showBirthdayField: Boolean? = null
 ): Serializable
 

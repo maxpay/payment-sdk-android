@@ -105,7 +105,7 @@ class SettingsFragment : Fragment() {
         switcherShowNameField.isChecked = availableFields?.showNameField ?: false
         switcherShowZIP.isChecked = availableFields?.showZipField ?: false
         switcherShowCountry.isChecked = availableFields?.showCountryField ?: false
-
+        switcherShowBirthdayField.isChecked = availableFields?.showBirthdayField ?: false
 
     }
 
@@ -128,6 +128,9 @@ class SettingsFragment : Fragment() {
         }
         switcherShowCountry.setOnCheckedChangeListener { _, isChecked ->
             viewModel.viewState.maxPayAvailableFields.value?.showCountryField = isChecked
+        }
+        switcherShowBirthdayField.setOnCheckedChangeListener { _, isChecked ->
+            viewModel.viewState.maxPayAvailableFields.value?.showBirthdayField = isChecked
         }
     }
 

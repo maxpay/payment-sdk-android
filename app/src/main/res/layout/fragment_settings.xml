@@ -182,13 +182,29 @@
         android:outlineSpotShadowColor="@color/colorPrimary"
         android:shadowColor="@color/colorPrimary"
         android:text="Show name field"
-
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="@+id/switcherShowCountry"
         app:layout_constraintEnd_toStartOf="@id/switcherShowCountry"
         app:layout_constraintHorizontal_bias="0.1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/switcherShowCountry"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/switcherShowBirthdayField"
+        style="@style/ColorSwitchStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:outlineAmbientShadowColor="@color/colorPrimary"
+        android:outlineSpotShadowColor="@color/colorPrimary"
+        android:shadowColor="@color/colorPrimary"
+        android:text="Show birthday field"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/switcherShowZIP"
+        app:layout_constraintEnd_toStartOf="@id/switcherShowZIP"
+        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/switcherShowZIP"
         app:layout_constraintVertical_bias="0.0" />
 
     <androidx.appcompat.widget.SwitchCompat

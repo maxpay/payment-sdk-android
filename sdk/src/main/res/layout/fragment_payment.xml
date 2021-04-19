@@ -271,6 +271,7 @@
                 android:text="@string/payment_birthday_title"
                 android:textColor="@color/colorDarkText"
                 android:textStyle="bold"
+                android:visibility="gone"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/cvCardHolderName" />
 
@@ -283,6 +284,7 @@
                 app:cardCornerRadius="@dimen/corner_radius_card"
                 app:cardElevation="2dp"
                 app:strokeWidth="@dimen/stroke_card_view"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvBDAY">
