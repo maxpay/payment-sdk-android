@@ -262,12 +262,48 @@
                     android:padding="@dimen/margin_medium" />
             </com.google.android.material.card.MaterialCardView>
 
+            <TextView
+                android:id="@+id/tvBDAY"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/margin_medium"
+                android:text="@string/payment_birthday_title"
+                android:textColor="@color/colorDarkText"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cvCardHolderName" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cvBirthday"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_medium"
+                app:cardBackgroundColor="@color/editTextBackgroundColor"
+                app:cardCornerRadius="@dimen/corner_radius_card"
+                app:cardElevation="2dp"
+                app:strokeWidth="@dimen/stroke_card_view"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvBDAY">
+
+                <EditText
+                    android:id="@+id/etBirthday"
+                    style="@style/InputEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/payment_birthday_title"
+                    android:focusable="false"
+                    android:inputType="none"
+                    android:padding="@dimen/margin_medium" />
+            </com.google.android.material.card.MaterialCardView>
+
             <include
                 android:id="@+id/layoutBillingAddress"
                 layout="@layout/layout_billing_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/cvCardHolderName"
+                app:layout_constraintTop_toBottomOf="@id/cvBirthday"
                 tools:layout_editor_absoluteX="0dp" />
 
             <androidx.appcompat.widget.AppCompatCheckBox

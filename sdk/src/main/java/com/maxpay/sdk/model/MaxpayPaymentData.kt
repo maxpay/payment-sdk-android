@@ -19,7 +19,8 @@ data class MaxpayPaymentData(
     var userEmail: String = "",
     var callBackUrl: String = "",
     var redirectUrl: String = "",
-    var currency: Currency = Currency.getInstance(Locale.getDefault())
+    var currency: Currency = Currency.getInstance(Locale.getDefault()),
+    var birthday: String? = null
 ): Serializable
 
 
@@ -41,6 +42,7 @@ data class MaxpaySignatureData(
     val user_email: String? = null,
     val user_ip: String? = null,
     val callback_url: String? = null,
-    val redirect_url: String? = null
+    val redirect_url: String? = null,
+    val date_of_birth: String? = null
 ): Serializable
 

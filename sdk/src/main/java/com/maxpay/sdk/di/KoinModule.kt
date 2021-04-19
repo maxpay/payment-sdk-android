@@ -1,5 +1,6 @@
 package com.maxpay.sdk.di
 import android.app.Application
+import android.content.SharedPreferences
 import com.maxpay.sdk.SdkHelper
 import com.maxpay.sdk.datamodule.api.Api
 import com.maxpay.sdk.datamodule.repository.MaxPayRepositoryImpl
@@ -51,6 +52,6 @@ val utils = module {
 //            .build()
 //    }
 }
-fun getPrefs(app: Application) =
+fun getPrefs(app: Application): SharedPreferences =
     app.getSharedPreferences("default", android.content.Context.MODE_PRIVATE)
 

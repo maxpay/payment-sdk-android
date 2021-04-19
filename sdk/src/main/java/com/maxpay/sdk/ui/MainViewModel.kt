@@ -119,7 +119,8 @@ internal class MainViewModel(application: Application)
             userPhone = paymentData.userPhone,
             userEmail = paymentData.userEmail,
             userIp = ipHelper.getUserIp(),
-            publicKey = _viewState.maxpayInitData.value?.publicKey
+            publicKey = _viewState.maxpayInitData.value?.publicKey,
+            date_of_birth = paymentData.birthday
         )
         if (!paymentData.redirectUrl.isNullOrEmpty() && !paymentData.callBackUrl.isNullOrEmpty()) {
             payment.redirectUrl = paymentData.redirectUrl

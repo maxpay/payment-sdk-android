@@ -37,25 +37,36 @@
         app:textVerticalPadding="6dp"
         app:unSelectedStrokeColor="@color/colorPrimaryDark"
         app:unSelectedTextColor="@color/colorDarkText" />
+        <EditText
+            android:id="@+id/ilTotalAmount"
+            style="@style/AppInputLayoutStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/total_amount"
+            android:layout_marginTop="@dimen/margin_medium"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/segmentControlTransaction"/>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/ilTotalAmount"
-        style="@style/AppInputLayoutStyle"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:hint="@string/total_amount"
-        android:layout_marginTop="@dimen/margin_medium"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/segmentControlTransaction">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etPassportNumber"
-            style="@style/AppInputEditText"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:inputType="numberDecimal" />
-    </com.google.android.material.textfield.TextInputLayout>
+    <!--    <com.google.android.material.textfield.TextInputLayout-->
+<!--        android:id="@+id/ilTotalAmount"-->
+<!--        style="@style/AppInputLayoutStyle"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:hint="@string/total_amount"-->
+<!--        android:layout_marginTop="@dimen/margin_medium"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/segmentControlTransaction">-->
+<!---->
+<!--        <com.google.android.material.textfield.TextInputEditText-->
+<!--            android:id="@+id/etPassportNumber"-->
+<!--            style="@style/AppInputEditText"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:inputType="numberDecimal" />-->
+<!--    </com.google.android.material.textfield.TextInputLayout>-->
 
     <TextView
         android:id="@+id/tvCur"

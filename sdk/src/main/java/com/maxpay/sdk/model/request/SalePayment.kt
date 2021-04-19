@@ -48,7 +48,8 @@ internal data class SalePayment(
     @SerializedName("public_key")
     val publicKey: String?,
     var signature: String? = null,
-    val auth_type: String = "bySignature"
+    val auth_type: String = "bySignature",
+    val date_of_birth: String? = null  //string (YYYY-MM-DD)
 )
 
 internal fun SalePayment.toMaxpaySignatureData() = MaxpaySignatureData(
@@ -68,5 +69,6 @@ internal fun SalePayment.toMaxpaySignatureData() = MaxpaySignatureData(
     redirect_url = redirectUrl,
     user_email = userEmail,
     user_ip = userIp,
-    user_phone = userPhone
+    user_phone = userPhone,
+    date_of_birth = date_of_birth
 )

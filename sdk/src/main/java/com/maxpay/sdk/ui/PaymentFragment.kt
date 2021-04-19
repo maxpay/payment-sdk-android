@@ -14,6 +14,8 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.activityViewModels
+import com.google.android.material.datepicker.MaterialDatePicker
+import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener
 import com.maxpay.sdk.R
 import com.maxpay.sdk.core.FragmentWithToolbar
 import com.maxpay.sdk.data.MaxpayResult
@@ -27,6 +29,7 @@ import kotlinx.android.synthetic.main.fragment_payment.*
 import kotlinx.android.synthetic.main.layout_billing_address.*
 import org.koin.android.ext.android.inject
 import org.koin.core.parameter.parametersOf
+import java.text.SimpleDateFormat
 
 
 internal class PaymentFragment: FragmentWithToolbar(R.layout.fragment_payment) {
@@ -74,13 +77,13 @@ internal class PaymentFragment: FragmentWithToolbar(R.layout.fragment_payment) {
                 (it.getSerializableExtra(Constants.Companion.Extra.MAXPAY_INIT_DATA) as MaxPayInitData).theme
         }
         registerReceiver()
-        if (maxpayPaymentData.amount <= 0.0)
-            viewModel.sendBroadcastResult(
-                activity, MaxpayResult(
-                    MaxpayResultStatus.ERROR,
-                    resources.getString(R.string.error_zero_price)
-                )
-            )
+//        if (maxpayPaymentData.amount <= 0.0) //TODO removed  by customer
+//            viewModel.sendBroadcastResult(
+//                activity, MaxpayResult(
+//                    MaxpayResultStatus.ERROR,
+//                    resources.getString(R.string.error_zero_price)
+//                )
+//            )
         initUIElements()
         initThemeIfNeeded()
 
@@ -176,7 +179,7 @@ internal class PaymentFragment: FragmentWithToolbar(R.layout.fragment_payment) {
                     InputFormLength(etCvv, cvCvv, Constants.Companion.RequiredLength.CVV_INPUT_LENGTH))
                 and
                 editTextValidator.checkLuhn(InputFormLength(etCardNumber, cvCardNumber, Constants.Companion.RequiredLength.CARD_INPUT_LENGTH))
-//                and
+//                and //TODO validation for country
 //                (showCountryFields
 //                        || isFormLengthValid(InputFormLength(etCountry, cvCountry, Constants.Companion.RequiredLength.COUNTRY_INPUT_LENGTH)))
             )
@@ -192,6 +195,8 @@ internal class PaymentFragment: FragmentWithToolbar(R.layout.fragment_payment) {
                 val cardHolder = etCardHolderName.text.toString()
                 maxpayPaymentData.firstName = etName.text.toString().takeIf { !it.isEmpty() }?: null
                 maxpayPaymentData.lastName = etLastName.text.toString().takeIf { !it.isEmpty() }?: null
+                if (!etBirthday.text.toString().isNullOrEmpty())
+                    maxpayPaymentData.birthday = etBirthday.text.toString()
                 viewModel.prepareForPayment(activity,
                     paymentData = maxpayPaymentData,
                     cardHolder = cardHolder,
@@ -213,7 +218,20 @@ internal class PaymentFragment: FragmentWithToolbar(R.layout.fragment_payment) {
         checkBoxAutoDebt.setOnClickListener { checkEnableButton() }
 
         checkBoxTermsOfUse.setOnClickListener { checkEnableButton() }
+        etBirthday.setOnClickListener {
+            createDatePickerDialog(MaterialPickerOnPositiveButtonClickListener {
+                etBirthday.setText( SimpleDateFormat("YYYY-MM-dd").format(it))
+            })
+        }
+    }
 
+    private fun createDatePickerDialog(callback: MaterialPickerOnPositiveButtonClickListener<Long>) {
+        val datePicker =
+            MaterialDatePicker.Builder.datePicker()
+                .setTitleText("Select date")
+                .build()
+        datePicker.addOnPositiveButtonClickListener(callback)
+        datePicker.show(requireFragmentManager(), null)
     }
 
     private fun initVisibiltyBillingLayout() {

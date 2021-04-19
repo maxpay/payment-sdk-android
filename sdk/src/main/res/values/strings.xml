@@ -38,6 +38,7 @@
     <string name="payment_cvv_placeholder"> 123</string>
     <string name="payment_cardholder_title">Cardholder name</string>
     <string name="payment_cardholder_placeholder">Full Name</string>
+    <string name="payment_birthday_title">Birthday</string>
     <string name="payment_billing_header_title">Billing Address</string>
     <string name="payment_billing_name_title">First Name</string>
     <string name="payment_billing_last_name_title">Last Name</string>

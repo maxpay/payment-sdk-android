@@ -1,6 +1,5 @@
 package com.maxpay.sdk.utils
 
-import android.graphics.Color
 import android.graphics.PorterDuff
 import android.graphics.Typeface
 import android.view.View
@@ -22,12 +21,11 @@ class UIComponentThemeEditor(val theme: MaxPayTheme?) {
                 etCardHolderName?.setTextColor(it)
                 etName?.setTextColor(it)
                 etLastName?.setTextColor(it)
-
-
                 etAddr?.setTextColor(it)
                 etCity?.setTextColor(it)
                 etZip?.setTextColor(it)
                 etCountry?.setTextColor(it)
+                etBirthday?.setTextColor(it)
             }
             theme?.fieldBackgroundColor?.let {
                 cvEmail?.setCardBackgroundColor(it)
@@ -42,6 +40,7 @@ class UIComponentThemeEditor(val theme: MaxPayTheme?) {
                 cvZip?.setCardBackgroundColor(it)
                 cvCountry?.setCardBackgroundColor(it)
                 cvCardHolderName?.setCardBackgroundColor(it)
+                cvBirthday?.setCardBackgroundColor(it)
             }
             theme?.fieldTitleColor?.let {
                 tvEA?.setTextColor(it)
@@ -55,6 +54,7 @@ class UIComponentThemeEditor(val theme: MaxPayTheme?) {
                 tvCity?.setTextColor(it)
                 tvZIP?.setTextColor(it)
                 tvCountry?.setTextColor(it)
+                tvBDAY?.setTextColor(it)
             }
         } }
     }
@@ -94,6 +94,7 @@ class UIComponentThemeEditor(val theme: MaxPayTheme?) {
                         tvCity?.typeface = typeface
                         tvZIP?.typeface = typeface
                         tvCountry?.typeface = typeface
+                        tvBDAY?.typeface = typeface
                     }
                     theme.headerAmountFont?.let {
                         tvFullPrice?.typeface = Typeface.createFromAsset(resources.assets, it)
