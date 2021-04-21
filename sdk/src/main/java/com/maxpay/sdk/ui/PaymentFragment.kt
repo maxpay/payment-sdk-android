@@ -1,5 +1,6 @@
 package com.maxpay.sdk.ui
 
+import android.app.DatePickerDialog
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -30,6 +31,7 @@ import kotlinx.android.synthetic.main.layout_billing_address.*
 import org.koin.android.ext.android.inject
 import org.koin.core.parameter.parametersOf
 import java.text.SimpleDateFormat
+import java.util.*
 
 
 internal class PaymentFragment: FragmentWithToolbar(R.layout.fragment_payment) {
@@ -57,7 +59,12 @@ internal class PaymentFragment: FragmentWithToolbar(R.layout.fragment_payment) {
                         ?.let {
                             viewModel.pay(it as String)
                         } ?: kotlin.run {
-                            viewModel.sendBroadcastResult(activity, MaxpayResult(MaxpayResultStatus.UNDEF, "UNDEF"))
+                        viewModel.sendBroadcastResult(
+                            activity, MaxpayResult(
+                                MaxpayResultStatus.UNDEF,
+                                "UNDEF"
+                            )
+                        )
                     }
                 }
             }
@@ -130,29 +137,75 @@ internal class PaymentFragment: FragmentWithToolbar(R.layout.fragment_payment) {
         tvFullPrice.text = "${maxpayPaymentData.currency.symbol} ${maxpayPaymentData.amount}"
         payBtn.setText("${resources.getString(R.string.payment_pay_button_title)} ${maxpayPaymentData.amount} ${maxpayPaymentData.currency.symbol}")
 
+        etCountry?.setText(maxpayPaymentData.country)
+        etCity?.setText(maxpayPaymentData.city)
+        etZip?.setText(maxpayPaymentData.zip)
+        etAddr?.setText(maxpayPaymentData.address)
+        if (!maxpayPaymentData.firstName.isNullOrEmpty())
+            etName.setText(maxpayPaymentData.firstName)
+        if (!maxpayPaymentData.lastName.isNullOrEmpty())
+            etLastName.setText(maxpayPaymentData.lastName)
+
         val customTabs = customTabsHelper
             .getTabs(ContextCompat.getColor(requireContext(), R.color.primary_green))
         tvTerms.makeLinks(
             Pair(resources.getString(R.string.terms_key), View.OnClickListener {
-                customTabs.launchUrl(requireContext(), Uri.parse(Constants.Companion.Links.MAXPAY_TERMS))
+                customTabs.launchUrl(
+                    requireContext(),
+                    Uri.parse(Constants.Companion.Links.MAXPAY_TERMS)
+                )
             }),
             Pair(resources.getString(R.string.privacy_key), View.OnClickListener {
-                customTabs.launchUrl(requireContext(), Uri.parse(Constants.Companion.Links.MAXPAY_PRIVACY))
+                customTabs.launchUrl(
+                    requireContext(),
+                    Uri.parse(Constants.Companion.Links.MAXPAY_PRIVACY)
+                )
             }),
             Pair(resources.getString(R.string.maxpay_key), View.OnClickListener {
-                customTabs.launchUrl(requireContext(), Uri.parse(Constants.Companion.Links.MAXPAY_CONTACT))
+                customTabs.launchUrl(
+                    requireContext(),
+                    Uri.parse(Constants.Companion.Links.MAXPAY_CONTACT)
+                )
             }),
             theme = maxpayTheme
         )
 
         editTextValidator.validateETEmail(InputFormLength(etEmail, cvEmail, 0))
         editTextValidator.validateCardNumber(
-            InputFormLength(etCardNumber, cvCardNumber, Constants.Companion.RequiredLength.CARD_INPUT_LENGTH), ivCard)
-        editTextValidator.validateET(InputFormLength(etCvv, cvCvv, Constants.Companion.RequiredLength.CVV_INPUT_LENGTH))
-        editTextValidator.validateExpirationDate(InputFormLength(etExpirationDate, cvExpirDate, Constants.Companion.RequiredLength.EXPIRY_INPUT_LENGTH))
+            InputFormLength(
+                etCardNumber,
+                cvCardNumber,
+                Constants.Companion.RequiredLength.CARD_INPUT_LENGTH
+            ), ivCard
+        )
+        editTextValidator.validateET(
+            InputFormLength(
+                etCvv,
+                cvCvv,
+                Constants.Companion.RequiredLength.CVV_INPUT_LENGTH
+            )
+        )
+        editTextValidator.validateExpirationDate(
+            InputFormLength(
+                etExpirationDate,
+                cvExpirDate,
+                Constants.Companion.RequiredLength.EXPIRY_INPUT_LENGTH
+            )
+        )
         if (cvCountry.visibility == View.VISIBLE)
             editTextValidator.validateETISOCountry(InputFormLength(etCountry, cvCountry, 3))
-        editTextValidator.validateETCardHolder(InputFormLength(etCardHolderName, cvCardHolderName, Constants.Companion.RequiredLength.CARDHOLDER_INPUT_LENGTH))
+        if (cvName.visibility == View.VISIBLE)
+            editTextValidator.validateET(InputFormLength(etName, cvName, 1))
+        if (cvLastName.visibility == View.VISIBLE)
+            editTextValidator.validateET(InputFormLength(etLastName, cvLastName, 1))
+
+        editTextValidator.validateETCardHolder(
+            InputFormLength(
+                etCardHolderName,
+                cvCardHolderName,
+                Constants.Companion.RequiredLength.CARDHOLDER_INPUT_LENGTH
+            )
+        )
         editTextValidator.errorObservable
                          .observeOn(AndroidSchedulers.mainThread())
                          .subscribe {
@@ -161,32 +214,38 @@ internal class PaymentFragment: FragmentWithToolbar(R.layout.fragment_payment) {
                              themeEditor.changeButtonColorFilter(view, isEnabled)
                         }.addTo(viewModel.disposables)
 
-//        etCountry.addTextChangedListener{
-//            if(etCountry.currentTextColor == Color.RED) {
-//                etCountry.setTextColor(
-//                    ContextCompat.getColor(
-//                        requireContext(),
-//                        R.color.colorDarkText
-//                    )
-//                )
-//                cvCountry.strokeColor = Color.TRANSPARENT
-//            }
-//
-//        }
         etCountry?.filters = arrayOf(InputFilter.AllCaps(), InputFilter.LengthFilter(3))
         payBtn.setOnClickListener {
-            val isAuthTransaction = (maxpayPaymentData.transactionType == TransactionType.AUTH
-                    || maxpayPaymentData.transactionType == TransactionType.AUTH3D)
-            val showNameFields = (maxpayPaymentData.firstName.isNullOrEmpty() && isAuthTransaction)
-            val showCountryFields = (maxpayPaymentData.country.isNullOrEmpty() && isAuthTransaction)
-            if (isFormCompleted(InputFormLength(etEmail, cvEmail, 0),
-                    InputFormLength(etCardHolderName, cvCardHolderName, 0))
+            if (isFormCompleted(
+                    InputFormLength(etEmail, cvEmail, 0),
+                    InputFormLength(etCardHolderName, cvCardHolderName, 0)
+                )
                 and
-                isFormLengthValid(InputFormLength(etCardNumber, cvCardNumber, Constants.Companion.RequiredLength.CARD_INPUT_LENGTH),
-                    InputFormLength(etExpirationDate, cvExpirDate, Constants.Companion.RequiredLength.EXPIRY_INPUT_LENGTH),
-                    InputFormLength(etCvv, cvCvv, Constants.Companion.RequiredLength.CVV_INPUT_LENGTH))
+                isFormLengthValid(
+                    InputFormLength(
+                        etCardNumber,
+                        cvCardNumber,
+                        Constants.Companion.RequiredLength.CARD_INPUT_LENGTH
+                    ),
+                    InputFormLength(
+                        etExpirationDate,
+                        cvExpirDate,
+                        Constants.Companion.RequiredLength.EXPIRY_INPUT_LENGTH
+                    ),
+                    InputFormLength(
+                        etCvv,
+                        cvCvv,
+                        Constants.Companion.RequiredLength.CVV_INPUT_LENGTH
+                    )
+                )
                 and
-                editTextValidator.checkLuhn(InputFormLength(etCardNumber, cvCardNumber, Constants.Companion.RequiredLength.CARD_INPUT_LENGTH))
+                editTextValidator.checkLuhn(
+                    InputFormLength(
+                        etCardNumber,
+                        cvCardNumber,
+                        Constants.Companion.RequiredLength.CARD_INPUT_LENGTH
+                    )
+                )
 //                and //TODO validation for country
 //                (showCountryFields
 //                        || isFormLengthValid(InputFormLength(etCountry, cvCountry, Constants.Companion.RequiredLength.COUNTRY_INPUT_LENGTH)))
@@ -205,32 +264,53 @@ internal class PaymentFragment: FragmentWithToolbar(R.layout.fragment_payment) {
                 maxpayPaymentData.lastName = etLastName.text.toString().takeIf { !it.isEmpty() }?: null
                 if (!etBirthday.text.toString().isNullOrEmpty())
                     maxpayPaymentData.birthday = etBirthday.text.toString()
-                viewModel.prepareForPayment(activity,
+                viewModel.prepareForPayment(
+                    activity,
                     paymentData = maxpayPaymentData,
                     cardHolder = cardHolder,
                     cardNumber = cardNumber,
                     cvv = cvv,
                     expMonth = expMonth,
-                    expYear = expYear)
+                    expYear = expYear
+                )
             }
         }
 
-        etCountry?.setText(maxpayPaymentData.country)
-        etCity?.setText(maxpayPaymentData.city)
-        etZip?.setText(maxpayPaymentData.zip)
-        etAddr?.setText(maxpayPaymentData.address)
-        if (!maxpayPaymentData.firstName.isNullOrEmpty())
-            etName.setText(maxpayPaymentData.firstName)
-        if (!maxpayPaymentData.lastName.isNullOrEmpty())
-            etLastName.setText(maxpayPaymentData.lastName)
         checkBoxAutoDebt.setOnClickListener { checkEnableButton() }
 
         checkBoxTermsOfUse.setOnClickListener { checkEnableButton() }
         etBirthday.setOnClickListener {
-            createDatePickerDialog(MaterialPickerOnPositiveButtonClickListener {
-                etBirthday.setText( SimpleDateFormat("YYYY-MM-dd").format(it))
+//            createDatePickerDialog(MaterialPickerOnPositiveButtonClickListener {
+//                etBirthday.setText( SimpleDateFormat("YYYY-MM-dd").format(it))
+//            })
+            openDatePicker(DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
+                val c = Calendar.getInstance()
+                c[Calendar.YEAR] = year
+                c[Calendar.MONTH] = monthOfYear
+                c[Calendar.DAY_OF_MONTH] = dayOfMonth
+//
+                etBirthday.setText( SimpleDateFormat("YYYY-MM-dd").format(c.time))
             })
         }
+    }
+
+    private fun openDatePicker(callback: DatePickerDialog.OnDateSetListener) {
+        val c = Calendar.getInstance()
+        val year = c.get(Calendar.YEAR)
+        val month = c.get(Calendar.MONTH)
+        val day = c.get(Calendar.DAY_OF_MONTH)
+        val dpd = DatePickerDialog(
+            requireContext(),
+//            R.style.DialogTheme,
+            callback,
+            year,
+            month,
+            day
+        )
+//        dpd.datePicker.colo
+        dpd.datePicker.maxDate = c.timeInMillis
+//        dpd.datePicker.minDate = LocalDateTime.now().plusDays(1).toInstant(ZoneOffset.UTC).toEpochMilli()
+        dpd.show()
     }
 
     private fun createDatePickerDialog(callback: MaterialPickerOnPositiveButtonClickListener<Long>) {
@@ -245,8 +325,8 @@ internal class PaymentFragment: FragmentWithToolbar(R.layout.fragment_payment) {
     private fun initVisibiltyBillingLayout() {
         val isAuthTransaction = (maxpayPaymentData.transactionType == TransactionType.AUTH
                 || maxpayPaymentData.transactionType == TransactionType.AUTH3D)
-        val showNameFields = (maxpayPaymentData.firstName.isNullOrEmpty() && isAuthTransaction)
-        val showCountryFields = (maxpayPaymentData.country.isNullOrEmpty() && isAuthTransaction)
+        val showNameFields = (maxpayPaymentData.firstName.isNullOrEmpty())
+        val showCountryFields = (maxpayPaymentData.country.isNullOrEmpty())
 
         if (maxPayInitData.fieldsToShow?.showBirthdayField == true) {
             tvBDAY.visibility = View.VISIBLE

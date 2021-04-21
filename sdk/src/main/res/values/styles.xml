@@ -54,10 +54,10 @@
         <item name="android:textColor">@color/colorDarkText</item>
     </style>
 
-    <style name="DialogTheme" parent="ThemeOverlay.AppCompat.Dialog">
-        <item name="colorAccent">@android:color/black</item>
-        <item name="android:textColorPrimary">@android:color/black</item>
-    </style>
+<!--    <style name="DialogTheme" parent="ThemeOverlay.AppCompat.Dialog">-->
+<!--        <item name="colorAccent">@android:color/black</item>-->
+<!--        <item name="android:textColorPrimary">@android:color/black</item>-->
+<!--    </style>-->
     <style name="CircularProgress" parent="Theme.AppCompat.Light">
         <item name="android:indeterminateTint">@color/colorPrimary</item>
     </style>
@@ -122,6 +122,43 @@
         <item name="android:textSize">@dimen/text_size_small</item>
         <item name="android:background">@android:color/transparent</item>
     </style>
+
+    <style name="MyDatePickerDialogTheme" parent="android:Theme.Material.Light.Dialog">
+        <item name="android:colorAccent">@color/alertRed</item>
+
+        <!-- No need to override 'datePickerStyle' -->
+        <!-- <item name="android:datePickerStyle">@style/MyDatePickerStyle</item> -->
+    </style>
+
+    <style name="DialogTheme" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">@color/primary_green</item>
+        <item name="buttonBarPositiveButtonStyle">@style/Alert.Button.Positive</item>
+        <item name="buttonBarNegativeButtonStyle">@style/Alert.Button.Neutral</item>
+        <item name="buttonBarNeutralButtonStyle">@style/Alert.Button.Neutral</item>
+    </style>
+
+    <style name="Alert.Button.Positive" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="backgroundTint">@color/colorBarTransparent</item>
+        <item name="rippleColor">@color/colorAccent</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
+
+    <style name="Alert.Button.Neutral" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="backgroundTint">@color/colorBarTransparent</item>
+        <item name="rippleColor">@color/colorAccent</item>
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+<!--    <style name="MyDatePickerDialogTheme" parent="android:Theme.Material.Light.Dialog">-->
+<!--        <item name="android:datePickerStyle">@style/MyDatePickerStyle</item>-->
+<!--    </style>-->
+
+<!--    <style name="MyDatePickerStyle" parent="@android:style/Widget.Material.Light.DatePicker">-->
+<!--        <item name="android:headerBackground">@color/alertRed</item>-->
+<!--    </style>-->
 
 
     <!--    <color name="colorWindowBackground">#fff</color>-->

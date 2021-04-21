@@ -2,6 +2,7 @@ package com.maxpay.sdk.utils
 
 import android.graphics.Color
 import android.text.*
+import android.util.Log
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
@@ -133,7 +134,7 @@ class EditTextValidator(val theme: MaxPayTheme?) : KoinComponent {
                 val sb = StringBuilder(end - start)
                 for (i in start until end) {
                     val c = source[i]
-                    if (c.isLetter()) // put your condition here
+                    if (c.isLetter() || c == ' ' ) // put your condition here
                         sb.append(c) else keepOriginal = false
                 }
                 if (keepOriginal)
@@ -154,6 +155,8 @@ class EditTextValidator(val theme: MaxPayTheme?) : KoinComponent {
     internal fun validateETISOCountry(inputForm: InputFormLength) {
         set.add(inputForm)
         val lstOfCountries = isoCountryISOHelper.getISOCountries()
+        if (inputForm.input.text.length > 0 && lstOfCountries?.contains(inputForm.input.text.toString()) == false)
+            setError(inputForm)
         inputForm.input.addTextChangedListener {
             removeErrorFromField(inputForm)
             if (lstOfCountries?.contains(it.toString()) == false) {
@@ -215,13 +218,13 @@ class EditTextValidator(val theme: MaxPayTheme?) : KoinComponent {
                         removeErrorFromField(inputForm)
 
                 if (inputForm.input.currentTextColor == errorColor || inputForm.input.text.toString()
-                                                                        .replace(" ", "")
-                                                                        .replace("_", "")
-                                                                        .replace("/", "").length != inputForm.requiredLength ) {
+                        .replace(" ", "")
+                        .replace("_", "")
+                        .replace("/", "").length != inputForm.requiredLength
+                ) {
                     set.elementAt(set.indexOf(inputForm)).isValid = false
                     checkEnableButton()
-                }
-                else {
+                } else {
                     set.elementAt(set.indexOf(inputForm)).isValid = true
                     checkEnableButton()
                 }
@@ -234,37 +237,150 @@ class EditTextValidator(val theme: MaxPayTheme?) : KoinComponent {
         }
     }
 
-
     internal fun validateCardNumber(inputForm: InputFormLength, imageView: ImageView) {
         set.add(inputForm)
-        inputForm.input.addTextChangedListener {
-            removeErrorFromField(inputForm)
-            it?.let {
-                val img = when (if (it.length > 0) it.get(0) else '0') {
-                    '4' -> ContextCompat.getDrawable(
-                        inputForm.card.context,
-                        R.drawable.ic_visa_logo
-                    )
-                    '5' -> ContextCompat.getDrawable(
-                        inputForm.card.context,
-                        R.drawable.ic_logo_mastercard
-                    )
-                    else -> ContextCompat.getDrawable(
-                        inputForm.card.context,
-                        R.drawable.ic_credit_card
-                    )
+        val SUPPORTED_CARDS : MutableList<CardType> =  mutableListOf(
+            CardType.Visa,
+            CardType.MasterCard,
+            CardType.AmericanExpress,
+            CardType.DinersClub,
+            CardType.Discover,
+            CardType.Jcb,
+            CardType.Maestro)
+
+
+
+        inputForm.input.addTextChangedListener(
+            beforeTextChanged = { _, _, _, _ -> },
+            onTextChanged = { text, start, before, count ->
+                removeErrorFromField(inputForm)
+//                val ePattern =
+//                    "^5[1-5][0-9]{14}\$|^2(?:2(?:2[1-9]|[3-9][0-9])|[3-6][0-9][0-9]|7(?:[01][0-9]|20))[0-9]{12}\$"
+//                val p = Pattern.compile(ePattern)
+//                val m = p.matcher(it)
+//                if (m.matches()) {
+//                    val img = ContextCompat.getDrawable(
+//                        inputForm.card.context,
+//                        R.drawable.ic_visa_logo
+//                    )
+//                }
+
+                val s = "^(5018|5081|5044|5020|5038|603845|6304|6759|676[1-3]|6799|6220|504834|504817|504645)[0-9]{8,15}$"
+                val d =  "^(5018|5081|5044|5020|5038|603845|6304|6759|676[1-3]|6799|6220|504834|504817|504645)[0-9]{8,15}\$"
+                val rslt1 = "6799".matches(s.toRegex())
+                val rslt11 = "67999999".matches(s.toRegex())
+                val rslt2 = "6799".matches(d.toRegex())
+                val rslt22 = "6799990100000000019".matches(d.toRegex())
+
+                text?.let {
+                    if (it.length == 0)
+                        imageView.setImageDrawable(ContextCompat.getDrawable(
+                            inputForm.card.context,
+                            R.drawable.ic_credit_card
+                        ))
+                    if (it.length == 1) {
+                        val img = when (if (it.length > 0) it.get(0) else '0') {
+                            '4' -> ContextCompat.getDrawable(
+                                inputForm.card.context,
+                                R.drawable.ic_visa_logo
+                            )
+                            '5' -> ContextCompat.getDrawable(
+                                inputForm.card.context,
+                                R.drawable.ic_logo_mastercard
+                            )
+                            else -> ContextCompat.getDrawable(
+                                inputForm.card.context,
+                                R.drawable.ic_credit_card
+                            )
+                        }
+                        img?.let { imageView.setImageDrawable(it) }
+                    }
+                    if (it.length > 1) {
+                        val str = it.toString().replace(" ", "")
+                        var img = ContextCompat.getDrawable(inputForm.card.context, R.drawable.ic_credit_card )
+//                        SUPPORTED_CARDS.forEach {  supportedType ->
+                        for (supportedType in SUPPORTED_CARDS) {
+                                if (str.matches(supportedType.pattern.toRegex())) {
+                                    img = when (supportedType) {
+                                        CardType.Visa -> ContextCompat.getDrawable(
+                                            inputForm.card.context,
+                                            R.drawable.ic_visa_logo
+                                        )
+                                        CardType.MasterCard -> ContextCompat.getDrawable(
+                                            inputForm.card.context,
+                                            R.drawable.ic_logo_mastercard
+                                        )
+                                        CardType.AmericanExpress -> ContextCompat.getDrawable(
+                                            inputForm.card.context,
+                                            R.drawable.ic_american_express
+                                        )
+                                        CardType.Discover -> ContextCompat.getDrawable(
+                                            inputForm.card.context,
+                                            R.drawable.ic_discover_4
+                                        )
+                                        CardType.DinersClub -> ContextCompat.getDrawable(
+                                            inputForm.card.context,
+                                            R.drawable.ic_logo_dinner_club
+                                        )
+                                        CardType.Maestro -> ContextCompat.getDrawable(
+                                            inputForm.card.context,
+                                            R.drawable.ic_maestro_logo
+                                        )
+                                        else -> ContextCompat.getDrawable(
+                                            inputForm.card.context,
+                                            R.drawable.ic_credit_card
+                                        )
+                                    }
+                                    break
+                                }  else {
+                                    img = ContextCompat.getDrawable(inputForm.card.context, R.drawable.ic_credit_card )
+                                }
+                            }
+                        imageView.setImageDrawable(img)
+                    }
                 }
-                img?.let { imageView.setImageDrawable(it) }
-                if (!LuhnAlgorithmHelper.checkLuhn(inputForm.input.text.toString().replace(" ", ""))) {
+            },
+            afterTextChanged = { text ->
+                if (!LuhnAlgorithmHelper.checkLuhn(
+                        inputForm.input.text.toString().replace(" ", "")
+                    )
+                ) {
                     set.elementAt(set.indexOf(inputForm)).isValid = false
                     checkEnableButton()
-                }else {
+                } else {
                     set.elementAt(set.indexOf(inputForm)).isValid = true
                     checkEnableButton()
                 }
             }
 
-        }
+
+        )
+//        inputForm.input.addTextChangedListener() {
+//            it?.let {
+//                val img = when (if (it.length > 0) it.get(0) else '0') {
+//                    '4' -> ContextCompat.getDrawable(
+//                        inputForm.card.context,
+//                        R.drawable.ic_visa_logo
+//                    )
+//                    '5' -> ContextCompat.getDrawable(
+//                        inputForm.card.context,
+//                        R.drawable.ic_logo_mastercard
+//                    )
+//                    else -> ContextCompat.getDrawable(
+//                        inputForm.card.context,
+//                        R.drawable.ic_credit_card
+//                    )
+//                }
+//                img?.let { imageView.setImageDrawable(it) }
+//                if (!LuhnAlgorithmHelper.checkLuhn(inputForm.input.text.toString().replace(" ", ""))) {
+//                    set.elementAt(set.indexOf(inputForm)).isValid = false
+//                    checkEnableButton()
+//                }else {
+//                    set.elementAt(set.indexOf(inputForm)).isValid = true
+//                    checkEnableButton()
+//                }
+//            }
+//        }
 
         inputForm.input.setOnFocusChangeListener { _, b ->
             if (!b) {
@@ -340,4 +456,16 @@ class EditTextValidator(val theme: MaxPayTheme?) : KoinComponent {
         }
         return isValidate ?: true
     }
+}
+
+sealed class CardType(val pattern: String) {
+    object Visa : CardType("^4[0-9]{6,}\$")
+    object MasterCard : CardType("^5[1-5][0-9]{5,}|222[1-9][0-9]{3,}|22[3-9][0-9]{4,}|2[3-6][0-9]{5,}|27[01][0-9]{4,}|2720[0-9]{3,}\$")
+    object AmericanExpress : CardType("^3[47][0-9]{5,}\$")
+    object DinersClub : CardType("^3(?:0[0-5]|[68][0-9])[0-9]{4,}\$")
+    object Discover : CardType("^6(?:011|5[0-9]{2})[0-9]{3,}\$")
+    object Jcb : CardType("^(?:2131|1800|35[0-9]{3})[0-9]{3,}\$")
+    object Maestro : CardType("^(5018|5081|5044|5020|5038|603845|6304|6759|676[1-3]|6799|6220|504834|504817|504645)[0-9]{8,15}\$")
+//    object Maestro : CardType1( "^(5018|5020|5038|5893|6304|6759|6761|6762|6763|6799)[0-9]{4,15}$")
+
 }

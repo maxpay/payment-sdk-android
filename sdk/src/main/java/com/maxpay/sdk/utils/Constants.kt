@@ -58,7 +58,7 @@ internal class Constants{
         annotation class RequiredLength {
             companion object {
                 const val CARDHOLDER_INPUT_LENGTH = 2
-                const val CARD_INPUT_LENGTH = 16
+                const val CARD_INPUT_LENGTH = 13
                 const val COUNTRY_INPUT_LENGTH = 3
                 const val CVV_INPUT_LENGTH = 3
                 const val EXPIRY_INPUT_LENGTH = 4
