@@ -7,14 +7,14 @@
     <string name="payment_email_placeholder">youremail@gmail.com</string>
     <string name="payment_cardnumber_title">Kortin numero</string>
     <string name="payment_cardnumber_placeholder">1234567891234567</string>
-    <string name="payment_expired_title">Expiration Date</string>
+    <string name="payment_expired_title">Viimeinen käyttöpäivä</string>
     <string name="payment_expired_placeholder">kkvv</string>
     <string name="payment_cvv_title">CVV/CVC</string>
     <string name="payment_cvv_placeholder"> 123</string>
     <string name="payment_cardholder_title">Kortinhaltijan nimi</string>
     <string name="payment_cardholder_placeholder">Full Name</string>
     <string name="payment_billing_header_title">Billing Address</string>
-    <string name="payment_billing_name_title">First name</string>
+    <string name="payment_billing_name_title">Etunimi</string>
     <string name="payment_billing_name_placeholder">Full Name</string>
     <string name="payment_billing_address_title">Osoite</string>
     <string name="payment_billing_address_placeholder">Placeholder</string>
@@ -30,4 +30,6 @@
     <string name="privacy_key">yksityisyydensuojakäytäntömme</string>
     <string name="terms_key">käyttöehtomme</string>
     <string name="payment_autodebit_confirmation">Vahvistan, että kortiltani voidaan veloittaa automaattinen suoritus, mikäli ostan uuden tuotteen tai mikäli tilaus tulee vastaan</string>
+    <string name="payment_screen_title">Lisää kortti</string>
+    <string name="payment_billing_last_name_title">Sukunimi</string>
 </resources>

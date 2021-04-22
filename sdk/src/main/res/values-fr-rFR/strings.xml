@@ -6,14 +6,14 @@
     <string name="payment_email_placeholder">youremail@gmail.com</string>
     <string name="payment_cardnumber_title">Numéro de carte</string>
     <string name="payment_cardnumber_placeholder">1234567891234567</string>
-    <string name="payment_expired_title">Expiration Date</string>
+    <string name="payment_expired_title">Date d\'expiration</string>
     <string name="payment_expired_placeholder">MMAA</string>
     <string name="payment_cvv_title">CVV/CVC</string>
     <string name="payment_cvv_placeholder"> 123</string>
     <string name="payment_cardholder_title">Nom du titulaire</string>
     <string name="payment_cardholder_placeholder">Full Name</string>
     <string name="payment_billing_header_title">Billing Address</string>
-    <string name="payment_billing_name_title">First name</string>
+    <string name="payment_billing_name_title">Prénom</string>
     <string name="payment_billing_name_placeholder">Full Name</string>
     <string name="payment_billing_address_title">Adresse</string>
     <string name="payment_billing_address_placeholder">Placeholder</string>
@@ -29,4 +29,6 @@
     <string name="privacy_key">Politique de confidentialité</string>
     <string name="terms_key">Conditions d`utilisation</string>
     <string name="payment_autodebit_confirmation">Je vous autorise à prélever de l`argent sur ma carte bancaire en cas d`achat d`un nouveau produit ou d`expiration de la période de souscription au produit actuel</string>
+    <string name="payment_screen_title">Ajouter une carte</string>
+    <string name="payment_billing_last_name_title">Nom de famille</string>
 </resources>

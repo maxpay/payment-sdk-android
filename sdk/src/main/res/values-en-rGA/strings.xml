@@ -30,4 +30,6 @@
     <string name="payment_autodebit_confirmation">I confirm that an automatic debit maybe made from my card if i buy new product or a subscription payment is required</string>
     <string name="payment_terms_and_privacy_confirmation">By clicking Pay you agree to our Terms of Use and our Privacy Policy and confirm that you have read carefully and fully understand its provisions. You may receive email message notifications from Maxpay and can op at any time.</string>
     <string name="payment_pay_button_title">Pay now</string>
+    <string name="payment_screen_title">Add card</string>
+    <string name="payment_billing_last_name_title">Last Name</string>
 </resources>

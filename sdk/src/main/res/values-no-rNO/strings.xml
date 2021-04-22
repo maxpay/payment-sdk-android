@@ -6,14 +6,14 @@
     <string name="payment_email_placeholder">youremail@gmail.com</string>
     <string name="payment_cardnumber_title">Kortnummer</string>
     <string name="payment_cardnumber_placeholder">1234567891234567</string>
-    <string name="payment_expired_title">Expiration Date</string>
+    <string name="payment_expired_title">Utløpsdato</string>
     <string name="payment_expired_placeholder">mmåå</string>
     <string name="payment_cvv_title">CVV/CVC</string>
     <string name="payment_cvv_placeholder"> 123</string>
     <string name="payment_cardholder_title">Korthaverens navn</string>
     <string name="payment_cardholder_placeholder">Full Name</string>
     <string name="payment_billing_header_title">Billing Address</string>
-    <string name="payment_billing_name_title">First name</string>
+    <string name="payment_billing_name_title">Fornavn</string>
     <string name="payment_billing_name_placeholder">Full Name</string>
     <string name="payment_billing_address_title">Adresse</string>
     <string name="payment_billing_address_placeholder">Placeholder</string>
@@ -29,4 +29,6 @@
     <string name="privacy_key">retningslinjer for Personvern</string>
     <string name="terms_key">Brukervilkår</string>
     <string name="payment_autodebit_confirmation">Jeg bekrefter at kortet mitt kan bli belastet automatisk hvis jeg kjøper et nytt produkt eller at en abonnementsbetaling er påkrevd</string>
+    <string name="payment_screen_title">Legg til kort</string>
+    <string name="payment_billing_last_name_title">Etternavn</string>
 </resources>
