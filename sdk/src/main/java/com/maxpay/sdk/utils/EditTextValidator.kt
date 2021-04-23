@@ -73,13 +73,38 @@ class EditTextValidator(val theme: MaxPayTheme?) : KoinComponent {
 
     internal fun validateETEmail(inputForm: InputFormLength) {
         set.add(inputForm)
-        inputForm.input.addTextChangedListener {
-            removeErrorFromField(inputForm)
-            if (isValidEmailAddress(it.toString())) {
-                inputForm.isValid = true
-                checkEnableButton()
+        inputForm.input.addTextChangedListener(
+            beforeTextChanged = { _, _, _, _ -> },
+            onTextChanged = { text, start, before, count ->
+                removeErrorFromField(inputForm)
+                if (isValidEmailAddress(text.toString())) {
+                    inputForm.isValid = true
+                    checkEnableButton()
+                } else {
+                    inputForm.isValid = false
+                    checkEnableButton()
+                }
+            },
+            afterTextChanged = { text ->
+                if (isValidEmailAddress(text.toString())) {
+                    inputForm.isValid = true
+                    checkEnableButton()
+                } else {
+                    inputForm.isValid = false
+                    checkEnableButton()
+                }
             }
-        }
+        )
+//        inputForm.input.addTextChangedListener {
+//            removeErrorFromField(inputForm)
+//            if (isValidEmailAddress(it.toString())) {
+//                inputForm.isValid = true
+//                checkEnableButton()
+//            } else {
+//                inputForm.isValid = false
+//                checkEnableButton()
+//            }
+//        }
         inputForm.input.setOnFocusChangeListener { _, b ->
             if (!b){
                 if (!isValidEmailAddress(inputForm.input.text.toString()))
@@ -341,32 +366,6 @@ class EditTextValidator(val theme: MaxPayTheme?) : KoinComponent {
 
 
         )
-//        inputForm.input.addTextChangedListener() {
-//            it?.let {
-//                val img = when (if (it.length > 0) it.get(0) else '0') {
-//                    '4' -> ContextCompat.getDrawable(
-//                        inputForm.card.context,
-//                        R.drawable.ic_visa_logo
-//                    )
-//                    '5' -> ContextCompat.getDrawable(
-//                        inputForm.card.context,
-//                        R.drawable.ic_logo_mastercard
-//                    )
-//                    else -> ContextCompat.getDrawable(
-//                        inputForm.card.context,
-//                        R.drawable.ic_credit_card
-//                    )
-//                }
-//                img?.let { imageView.setImageDrawable(it) }
-//                if (!LuhnAlgorithmHelper.checkLuhn(inputForm.input.text.toString().replace(" ", ""))) {
-//                    set.elementAt(set.indexOf(inputForm)).isValid = false
-//                    checkEnableButton()
-//                }else {
-//                    set.elementAt(set.indexOf(inputForm)).isValid = true
-//                    checkEnableButton()
-//                }
-//            }
-//        }
 
         inputForm.input.setOnFocusChangeListener { _, b ->
             if (!b) {

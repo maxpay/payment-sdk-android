@@ -136,15 +136,6 @@ internal class PaymentFragment: FragmentWithToolbar(R.layout.fragment_payment) {
         tvFullPrice.text = "${maxpayPaymentData.currency.symbol} ${maxpayPaymentData.amount}"
         payBtn.setText("${resources.getString(R.string.payment_pay_button_title)} ${maxpayPaymentData.amount} ${maxpayPaymentData.currency.symbol}")
 
-        etCountry?.setText(maxpayPaymentData.country)
-        etCity?.setText(maxpayPaymentData.city)
-        etZip?.setText(maxpayPaymentData.zip)
-        etAddr?.setText(maxpayPaymentData.address)
-        if (!maxpayPaymentData.firstName.isNullOrEmpty())
-            etName.setText(maxpayPaymentData.firstName)
-        if (!maxpayPaymentData.lastName.isNullOrEmpty())
-            etLastName.setText(maxpayPaymentData.lastName)
-
         val customTabs = customTabsHelper
             .getTabs(ContextCompat.getColor(requireContext(), R.color.primary_green))
         tvTerms.makeLinks(
@@ -212,6 +203,14 @@ internal class PaymentFragment: FragmentWithToolbar(R.layout.fragment_payment) {
                              payBtn.isEnabled = isEnabled
                              themeEditor.changeButtonColorFilter(view, isEnabled)
                         }.addTo(viewModel.disposables)
+        etCountry?.setText(maxpayPaymentData.country)
+        etCity?.setText(maxpayPaymentData.city)
+        etZip?.setText(maxpayPaymentData.zip)
+        etAddr?.setText(maxpayPaymentData.address)
+        if (!maxpayPaymentData.firstName.isNullOrEmpty())
+            etName.setText(maxpayPaymentData.firstName)
+        if (!maxpayPaymentData.lastName.isNullOrEmpty())
+            etLastName.setText(maxpayPaymentData.lastName)
 
         etCountry?.filters = arrayOf(InputFilter.AllCaps(), InputFilter.LengthFilter(3))
         payBtn.setOnClickListener {
