@@ -1,6 +1,6 @@
 package com.maxpay.sdk.utils
 
-import org.koin.core.KoinComponent
+import org.koin.core.component.KoinComponent
 import java.util.*
 
 internal interface CountryISOHelper {
@@ -20,7 +20,7 @@ internal class CountryISOHelperImpl: CountryISOHelper, KoinComponent {
         val lst = arrayListOf<String>()
         Locale.getISOCountries().forEach { countryCode ->
             val locale = Locale("", countryCode)
-            lst.add(locale.getISO3Country())
+            lst.add(locale.isO3Country)
         }
         return lst
 

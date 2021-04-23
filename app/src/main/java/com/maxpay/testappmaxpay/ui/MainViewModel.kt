@@ -1,6 +1,7 @@
 package com.maxpay.testappmaxpay.ui
 
 import android.app.Application
+import android.content.Context
 import com.maxpay.sdk.SDKFacade
 import com.maxpay.sdk.SdkFacadeImpl
 import com.maxpay.sdk.data.MaxpayCallback
@@ -16,8 +17,8 @@ import com.maxpay.testappmaxpay.model.ProductItemtUI
 import com.maxpay.testappmaxpay.ui.state.MainViewState
 import com.maxpay.testappmaxpay.ui.state.MainViewStateImpl
 import com.maxpay.testappmaxpay.utils.SignatureHelper
-import org.koin.core.KoinComponent
-import org.koin.core.inject
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import java.util.*
 
 class MainViewModel(application: Application)
@@ -77,15 +78,8 @@ class MainViewModel(application: Application)
         _viewState.fullPrice.value = price
     }
 
-    fun payWithSDK() {
-        val sdk: SDKFacade = SdkFacadeImpl(
-            MaxPayInitData(
-                apiVersion = 1,
-                fieldsToShow = _viewState.maxPayAvailableFields.value,
-                publicKey = _viewState.pk.value ?: "pkLive_HzmqN88yqNwwzuCRBgboOIvVOiNAX09x",
-                theme = _viewState.maxPayTheme.value ?: null
-            )
-        )
+    fun payWithSDK(context: Context) {
+        val sdk: SDKFacade = SdkFacadeImpl.instance
 
         _viewState.settings.value?.let {
             it.transactionId = "Pay${dateInterface.getCurrentTimeStamp()}"
@@ -95,13 +89,19 @@ class MainViewModel(application: Application)
                     it.callBackUrl = "https://callbacks.envlog.net/callback.php"
                 }
             }
+            val data = MaxPayInitData(
+                apiVersion = 1,
+                fieldsToShow = _viewState.maxPayAvailableFields.value,
+                publicKey = _viewState.pk.value ?: "pkLive_HzmqN88yqNwwzuCRBgboOIvVOiNAX09x",
+                theme = _viewState.maxPayTheme.value ?: null
+            )
 //            if (it.firstName.isNullOrEmpty())
 //                it.firstName = "John"
 //            if (it.lastName.isNullOrEmpty())
 //                it.lastName = "Doe"
 //            if (it.country.isNullOrEmpty())
 //                it.country = "USA"
-            sdk.pay(it, object: MaxpayCallback {
+            sdk.pay(context,data, it, object: MaxpayCallback {
                 override fun onResponseSuccess(result: MaxpayResult?) {
                     _viewState.maxpayResult.value = result
                 }
@@ -113,7 +113,6 @@ class MainViewModel(application: Application)
                 override fun onNeedCalculateSignature(dataForSignature: MaxpaySignatureData?,
                                                       signatureCalback: (String)-> Unit) {
                     Thread {
-                        Thread.sleep(5000)
                         dataForSignature?.let { it1 ->
                             val signature =
                                 SignatureHelper("sklive_wbkz4pc670ajfywc9st0ioajc07cesok").getHashOfRequest(
@@ -122,8 +121,6 @@ class MainViewModel(application: Application)
                             signatureCalback.invoke(signature)
                         }
                     }.start()
-
-
                 }
 
             })

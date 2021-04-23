@@ -38,13 +38,12 @@ internal class PaymentFragment: FragmentWithToolbar(R.layout.fragment_payment) {
 
     private val viewModel: MainViewModel by activityViewModels()
     override fun getCurrentViewModel() = viewModel
-    private val dateInterface: DateInterface by inject()
     private val customTabsHelper: CustomTabsHelper by inject()
     private val expiryParser: ExpiryParser by inject()
-    private val editTextValidator: EditTextValidator by inject() {
+    private val editTextValidator: EditTextValidator by inject {
         parametersOf((activity?.intent?.getSerializableExtra(Constants.Companion.Extra.MAXPAY_INIT_DATA) as MaxPayInitData).theme)
     }
-    private val themeEditor: UIComponentThemeEditor by inject() {
+    private val themeEditor: UIComponentThemeEditor by inject {
         parametersOf((activity?.intent?.getSerializableExtra(Constants.Companion.Extra.MAXPAY_INIT_DATA) as MaxPayInitData).theme)
     }
     private lateinit var maxPayInitData: MaxPayInitData

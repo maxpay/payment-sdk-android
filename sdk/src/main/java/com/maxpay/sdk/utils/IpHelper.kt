@@ -3,8 +3,8 @@ package com.maxpay.sdk.utils
 import android.content.Context
 import android.net.wifi.WifiManager
 import android.text.format.Formatter
-import org.koin.core.KoinComponent
-import org.koin.core.inject
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import java.math.BigInteger
 import java.net.InetAddress
 
@@ -18,10 +18,7 @@ class IpHelperImpl: IpHelper, KoinComponent {
     override fun getUserIp(): String {
         val wm =
             context.applicationContext?.getSystemService(Context.WIFI_SERVICE) as WifiManager
-
-        val ip: String = Formatter.formatIpAddress(wm.connectionInfo.ipAddress)
-
-        return ip
+        return Formatter.formatIpAddress(wm.connectionInfo.ipAddress)
     }
 
     override fun getUserIpNew(): String {
@@ -30,9 +27,7 @@ class IpHelperImpl: IpHelper, KoinComponent {
         val ipAddressInt = wm.dhcpInfo.netmask
         val ipAddress = BigInteger.valueOf(ipAddressInt.toLong()).toByteArray()
         val myaddr = InetAddress.getByAddress(ipAddress)
-        val hostaddr: String =
-            myaddr.getHostAddress() // numeric representation (such as "127.0.0.1")
-        return hostaddr
+        return myaddr.getHostAddress() // numeric representation (such as "127.0.0.1")
     }
 
 

@@ -1,7 +1,7 @@
 package com.maxpay.sdk.utils
 
 import androidx.browser.customtabs.*
-import org.koin.core.KoinComponent
+import org.koin.core.component.KoinComponent
 
 internal class CustomTabsHelper: KoinComponent {
 

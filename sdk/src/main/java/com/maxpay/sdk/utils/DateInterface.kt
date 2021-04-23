@@ -1,7 +1,6 @@
 package com.maxpay.sdk.utils
 
 import java.text.SimpleDateFormat
-import java.time.LocalDateTime
 import java.util.*
 
 interface DateInterface {

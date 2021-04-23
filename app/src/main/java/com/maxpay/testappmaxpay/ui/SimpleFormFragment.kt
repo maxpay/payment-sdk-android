@@ -67,7 +67,7 @@ class SimpleFormFragment : Fragment() {
             if (switcherEditCustomerData.isChecked)
                 findNavController().navigate(R.id.action_simpleFormFragment_to_payFragment)
             else
-                viewModel.payWithSDK()
+                viewModel.payWithSDK(requireContext())
 
         }
         tvChange.setOnClickListener {

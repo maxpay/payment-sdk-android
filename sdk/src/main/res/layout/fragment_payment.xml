@@ -145,7 +145,8 @@
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_marginEnd="@dimen/margin_small"
-                    android:layout_gravity="center"/>
+                    android:layout_gravity="center"
+                    android:contentDescription="@string/cvc"/>
                 </LinearLayout>
 
 

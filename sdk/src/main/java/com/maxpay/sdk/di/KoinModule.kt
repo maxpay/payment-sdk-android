@@ -33,7 +33,6 @@ val utils = module {
     factory<DateInterface> {
         return@factory DateFormat()
     }
-    single { PrefsUtils(get()) }
     single<IpHelper> { IpHelperImpl() }
     single<CountryISOHelper> { CountryISOHelperImpl() }
     single { CustomTabsHelper() }

@@ -9,7 +9,7 @@ object Versions {
     const val material = "1.0.0"
     const val room = "2.2.3"
 
-    const val koin = "2.0.0-rc-2"
+    const val koin = "2.2.0"
 
     const val retrofit = "2.5.0"
     const val okHttpLoggingInterceptor = "3.14.0"

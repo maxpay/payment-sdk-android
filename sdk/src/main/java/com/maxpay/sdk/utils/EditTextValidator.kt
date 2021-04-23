@@ -2,7 +2,6 @@ package com.maxpay.sdk.utils
 
 import android.graphics.Color
 import android.text.*
-import android.util.Log
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
@@ -12,8 +11,8 @@ import com.maxpay.sdk.model.MaxPayTheme
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.ReplaySubject
-import org.koin.core.KoinComponent
-import org.koin.core.inject
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import java.util.regex.Pattern
 
 class EditTextValidator(val theme: MaxPayTheme?) : KoinComponent {
@@ -115,12 +114,16 @@ class EditTextValidator(val theme: MaxPayTheme?) : KoinComponent {
         inputForm.input.filters = arrayOf(getEditTextFilter())
 
         inputForm.input.setOnFocusChangeListener { _, b ->
+            if (inputForm.input.length() > 0)
+                    inputForm.input.setText(inputForm.input.text.trimEnd().toString())
+
+
             if (!b)
                 isFormLengthValid(inputForm)
         }
     }
 
-    fun getEditTextFilter(): InputFilter? {
+    fun getEditTextFilter(): InputFilter {
         return object : InputFilter {
             override fun filter(
                 source: CharSequence,
@@ -254,23 +257,6 @@ class EditTextValidator(val theme: MaxPayTheme?) : KoinComponent {
             beforeTextChanged = { _, _, _, _ -> },
             onTextChanged = { text, start, before, count ->
                 removeErrorFromField(inputForm)
-//                val ePattern =
-//                    "^5[1-5][0-9]{14}\$|^2(?:2(?:2[1-9]|[3-9][0-9])|[3-6][0-9][0-9]|7(?:[01][0-9]|20))[0-9]{12}\$"
-//                val p = Pattern.compile(ePattern)
-//                val m = p.matcher(it)
-//                if (m.matches()) {
-//                    val img = ContextCompat.getDrawable(
-//                        inputForm.card.context,
-//                        R.drawable.ic_visa_logo
-//                    )
-//                }
-
-                val s = "^(5018|5081|5044|5020|5038|603845|6304|6759|676[1-3]|6799|6220|504834|504817|504645)[0-9]{8,15}$"
-                val d =  "^(5018|5081|5044|5020|5038|603845|6304|6759|676[1-3]|6799|6220|504834|504817|504645)[0-9]{8,15}\$"
-                val rslt1 = "6799".matches(s.toRegex())
-                val rslt11 = "67999999".matches(s.toRegex())
-                val rslt2 = "6799".matches(d.toRegex())
-                val rslt22 = "6799990100000000019".matches(d.toRegex())
 
                 text?.let {
                     if (it.length == 0)
@@ -316,11 +302,11 @@ class EditTextValidator(val theme: MaxPayTheme?) : KoinComponent {
                                         )
                                         CardType.Discover -> ContextCompat.getDrawable(
                                             inputForm.card.context,
-                                            R.drawable.ic_discover_4
+                                            R.drawable.ic_discover
                                         )
                                         CardType.DinersClub -> ContextCompat.getDrawable(
                                             inputForm.card.context,
-                                            R.drawable.ic_logo_dinner_club
+                                            R.drawable.ic_dinners_club
                                         )
                                         CardType.Maestro -> ContextCompat.getDrawable(
                                             inputForm.card.context,
@@ -459,13 +445,14 @@ class EditTextValidator(val theme: MaxPayTheme?) : KoinComponent {
 }
 
 sealed class CardType(val pattern: String) {
-    object Visa : CardType("^4[0-9]{6,}\$")
+    object Visa : CardType("^4[0-9]{1,}\$")
     object MasterCard : CardType("^5[1-5][0-9]{5,}|222[1-9][0-9]{3,}|22[3-9][0-9]{4,}|2[3-6][0-9]{5,}|27[01][0-9]{4,}|2720[0-9]{3,}\$")
     object AmericanExpress : CardType("^3[47][0-9]{5,}\$")
     object DinersClub : CardType("^3(?:0[0-5]|[68][0-9])[0-9]{4,}\$")
-    object Discover : CardType("^6(?:011|5[0-9]{2})[0-9]{3,}\$")
+    object Discover : CardType("^65[4-9][0-9]{13}|64[4-9][0-9]{3,}|6011[0-9]{3,}|(622(?:12[6-9]|1[3-9][0-9]|[2-8][0-9][0-9]|9[01][0-9]|92[0-5])[0-9]{3,})$")
+//    object Discover : CardType("^6(?:011|5[0-9]{2}|644||645|646|647|648|649)[0-9]{3,}\$")
     object Jcb : CardType("^(?:2131|1800|35[0-9]{3})[0-9]{3,}\$")
-    object Maestro : CardType("^(5018|5081|5044|5020|5038|603845|6304|6759|676[1-3]|6799|6220|504834|504817|504645)[0-9]{8,15}\$")
+    object Maestro : CardType("^(5893|5018|5081|5044|5020|5038|603845|6304|6759|676|6771|6799|6220|504834|504817|504645)[0-9]{1,}\$")
 //    object Maestro : CardType1( "^(5018|5020|5038|5893|6304|6759|6761|6762|6763|6799)[0-9]{4,15}$")
 
 }

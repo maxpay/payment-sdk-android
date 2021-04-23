@@ -11,8 +11,8 @@ import com.maxpay.sdk.model.MaxPayInitData
 import com.maxpay.sdk.model.MaxpayPaymentData
 import com.maxpay.sdk.model.MaxpaySignatureData
 import com.maxpay.sdk.utils.Constants
-import org.koin.core.KoinComponent
-import org.koin.core.inject
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
 internal class SdkHelper: KoinComponent {
     private val context: Context by inject()
@@ -75,6 +75,12 @@ internal class SdkHelper: KoinComponent {
         val intentFilter = IntentFilter()
         intentFilter.addAction(Constants.MAXPAY_CALLBACK_BROADCAST_SIGNATURE)
         intentFilter.addAction(Constants.MAXPAY_CALLBACK_BROADCAST)
+        try {
+
+            context.unregisterReceiver(mReceiver)
+        } catch (e: IllegalArgumentException) {
+            e.printStackTrace()
+        }
         context.registerReceiver(mReceiver, intentFilter)
 
         context.startActivity(Intent(context, SdkActivity::class.java).apply {

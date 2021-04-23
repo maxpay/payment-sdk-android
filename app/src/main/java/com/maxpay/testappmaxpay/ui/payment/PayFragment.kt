@@ -74,7 +74,7 @@ class PayFragment : Fragment() {
                 viewModel.viewState.pk.value = it.text.toString().takeIf { !it.isEmpty() }?: null
             }
 
-            viewModel.payWithSDK()
+            viewModel.payWithSDK(requireContext())
         }
     }
 

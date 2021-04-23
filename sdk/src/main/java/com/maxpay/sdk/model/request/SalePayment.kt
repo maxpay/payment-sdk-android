@@ -7,10 +7,6 @@ import com.maxpay.sdk.model.MaxpaySignatureData
 internal data class SalePayment(
     @SerializedName("api_version")
     val apiVersion: Int?,
-//    @SerializedName("merchant_account")
-//    val merchantAccount: String?,
-//    @SerializedName("merchant_password")
-//    val merchantPassword: String?,
     @SerializedName("transaction_unique_id")
     val transactionId: String,
     @SerializedName("transaction_type")
@@ -32,7 +28,6 @@ internal data class SalePayment(
     val cardHolder: String,
     val address: String? = null,
     val city: String? = null,
-//    val state: String,
     val zip: String? = null,
     val country: String,
     @SerializedName("user_phone")

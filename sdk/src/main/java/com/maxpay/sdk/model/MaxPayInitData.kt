@@ -40,9 +40,7 @@ data class MaxPayTheme(
    val  disabledButtonTitleColor: Int? = null,
    val  buttonCornerRadius: Float? = null
 
-): Serializable {
-
-}
+): Serializable
 
 data class AvailableFields(
     var showBillingAddressLayout: Boolean? = null,
