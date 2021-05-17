@@ -6,8 +6,8 @@ import android.content.Intent
 import com.maxpay.sdk.core.MyAndroidViewModel
 import com.maxpay.sdk.data.MaxpayResult
 import com.maxpay.sdk.model.MaxPayRepository
-import com.maxpay.sdk.model.MaxpayPaymentData
-import com.maxpay.sdk.model.MaxpaySignatureData
+import com.maxpay.sdk.model.PayPaymentInfo
+import com.maxpay.sdk.model.PaySignatureInfo
 import com.maxpay.sdk.model.request.SalePayment
 import com.maxpay.sdk.model.request.TransactionType
 import com.maxpay.sdk.model.request.toMaxpaySignatureData
@@ -39,35 +39,35 @@ internal class MainViewModel(application: Application)
     val mainNavigation: SingleLiveEvent<SDKNavigation>
         get() = _mainNavigation
 
-    fun prepareForPayment(activity: Activity?, paymentData: MaxpayPaymentData, cardNumber: String,
+    fun prepareForPayment(activity: Activity?, paymentInfo: PayPaymentInfo, cardNumber: String,
                           expMonth: String, expYear: String, cvv: String, cardHolder: String) {
         state.value = StateEnum.UNITERUPTEDLOADING
         val payment = SalePayment(
-            apiVersion = _viewState.maxpayInitData.value?.apiVersion,
-            transactionId = paymentData.transactionId,
-            transactionType = paymentData.transactionType,
-            amount = paymentData.amount,
-            currency = paymentData.currency.currencyCode,
+            apiVersion = _viewState.payInitData.value?.apiVersion,
+            transactionId = paymentInfo.transactionId,
+            transactionType = paymentInfo.transactionType,
+            amount = paymentInfo.amount,
+            currency = paymentInfo.currency.currencyCode,
             cardNumber = cardNumber,
             cardExpMonth = expMonth,
             cardExpYear = expYear,
             cvv = cvv,
-            firstName = paymentData.firstName?.takeIf { !it.isEmpty() } ?: " ",
-            lastName = paymentData.lastName?.takeIf { !it.isEmpty() } ?: " ",
+            firstName = paymentInfo.firstName?.takeIf { !it.isEmpty() } ?: " ",
+            lastName = paymentInfo.lastName?.takeIf { !it.isEmpty() } ?: " ",
             cardHolder = cardHolder,
-            address = paymentData.address,
-            city = paymentData.city,
-            zip = paymentData.zip,
-            country = paymentData.country,
-            userPhone = paymentData.userPhone,
-            userEmail = paymentData.userEmail,
+            address = paymentInfo.address,
+            city = paymentInfo.city,
+            zip = paymentInfo.zip,
+            country = paymentInfo.country,
+            userPhone = paymentInfo.userPhone,
+            userEmail = paymentInfo.userEmail,
             userIp = ipHelper.getUserIp(),
-            publicKey = _viewState.maxpayInitData.value?.publicKey,
-            date_of_birth = paymentData.birthday
+            publicKey = _viewState.payInitData.value?.publicKey,
+            date_of_birth = paymentInfo.birthday
         )
-        if (!paymentData.redirectUrl.isNullOrEmpty() && !paymentData.callBackUrl.isNullOrEmpty()) {
-            payment.redirectUrl = paymentData.redirectUrl
-            payment.callBackUrl = paymentData.callBackUrl
+        if (!paymentInfo.sale3dRedirectUrl.isNullOrEmpty() && !paymentInfo.sale3dCallBackUrl.isNullOrEmpty()) {
+            payment.redirectUrl = paymentInfo.sale3dRedirectUrl
+            payment.callBackUrl = paymentInfo.sale3dCallBackUrl
         }
         _viewState.tmpPaymentData.value = payment
         sendBroadcastData(activity, payment.toMaxpaySignatureData())
@@ -109,19 +109,19 @@ internal class MainViewModel(application: Application)
 
     fun sendBroadcastResult(activity: Activity?, data: MaxpayResult?) {
         activity?.finish()
-        val intent = Intent(Constants.MAXPAY_CALLBACK_BROADCAST)
+        val intent = Intent(Constants.PAY_CALLBACK_BROADCAST)
         data?.let {
             intent.setPackage(activity?.packageName)
-            intent.putExtra(Constants.Companion.Extra.MAXPAY_BROADCAST_DATA, data)
+            intent.putExtra(Constants.Companion.Extra.PAY_BROADCAST_DATA, data)
         }
         activity?.sendBroadcast(intent)
     }
 
-    fun sendBroadcastData(activity: Activity?, data: MaxpaySignatureData?) {
-        val intent = Intent(Constants.MAXPAY_CALLBACK_BROADCAST_SIGNATURE)
+    fun sendBroadcastData(activity: Activity?, data: PaySignatureInfo?) {
+        val intent = Intent(Constants.PAY_CALLBACK_BROADCAST_SIGNATURE)
         data?.let {
             intent.setPackage(activity?.packageName)
-            intent.putExtra(Constants.Companion.Extra.MAXPAY_BROADCAST_SIGNATURE_DATA, data)
+            intent.putExtra(Constants.Companion.Extra.PAY_BROADCAST_SIGNATURE_DATA, data)
         }
         activity?.sendBroadcast(intent)
     }

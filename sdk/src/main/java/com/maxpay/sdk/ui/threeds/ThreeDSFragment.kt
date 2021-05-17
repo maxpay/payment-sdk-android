@@ -18,7 +18,7 @@ import kotlinx.android.synthetic.main.fragment_three_d_s.*
 import java.net.URLEncoder
 
 internal class ThreeDSFragment: FragmentWithToolbar(R.layout.fragment_three_d_s) {
-    private val resultLink: String = "google.com"
+//    private val resultLink: String = "google.com"
     private val callBack = "https://callback.maxpay.com/callback/sale3dSecure" // TODO here must be valid callback
     private val viewModel: MainViewModel by activityViewModels()
     override fun getCurrentViewModel() = viewModel
@@ -35,7 +35,6 @@ internal class ThreeDSFragment: FragmentWithToolbar(R.layout.fragment_three_d_s)
         super.onCreate(savedInstanceState)
         val progressDialog = ProgressDialog(context)
         progressDialog.setMessage("Loading...")
-//        progressDialog.show()
 
         var reqData: String? = null
         val authResponse = viewModel.viewState.authPaymentResponse.value
@@ -96,8 +95,8 @@ internal class ThreeDSFragment: FragmentWithToolbar(R.layout.fragment_three_d_s)
                 if (url.contains("checkout/info") && Build.VERSION.SDK_INT < 21 && progressDialog != null) {
                     progressDialog.cancel()
                 }
-                if (url.contains(resultLink) || url.contains(callBack)) {
-
+                val authRedirect = viewModel.viewState.payPaymentInfo.value?.auth3dRedirectUrl
+                if ( (authRedirect != null && url.contains(authRedirect)) || url.contains(callBack) ) {
                     viewModel.viewState.isFromWebView.value = true
                     viewModel.sendBroadcastResult(activity, MaxpayResult(MaxpayResultStatus.SUCCESS, "Success"))
                 }

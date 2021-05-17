@@ -10,7 +10,7 @@ import android.widget.ArrayAdapter
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import com.maxpay.sdk.model.MaxPayTheme
+import com.maxpay.sdk.model.PayTheme
 import com.maxpay.sdk.model.request.TransactionType
 import com.maxpay.testappmaxpay.R
 import com.maxpay.testappmaxpay.ui.MainViewModel
@@ -49,7 +49,7 @@ class SettingsFragment : Fragment() {
             }
         }
 
-        viewModel.viewState.maxPayTheme.value?.let {
+        viewModel.viewState.payTheme.value?.let {
             segmentedControlTheme.setSelectedSegment(1)
         }?: kotlin.run { segmentedControlTheme.setSelectedSegment(0) }
         if (viewModel.viewState.maxPayAvailableFields.value?.showBillingAddressLayout == true)
@@ -59,9 +59,9 @@ class SettingsFragment : Fragment() {
         segmentedControlTheme.addOnSegmentClickListener {
             val  font = "fonts/GVB.otf"
             when(it.column) {
-                0 -> viewModel.viewState.maxPayTheme.value = null
-                1 -> viewModel.viewState.maxPayTheme.value =
-                MaxPayTheme(
+                0 -> viewModel.viewState.payTheme.value = null
+                1 -> viewModel.viewState.payTheme.value =
+                PayTheme(
                     fieldTitleColor = Color.RED,
                     fieldBackgroundColor = Color.YELLOW,
                     fieldTextColor = Color.CYAN,

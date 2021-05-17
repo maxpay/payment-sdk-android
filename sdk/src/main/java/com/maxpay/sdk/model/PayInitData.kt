@@ -2,14 +2,14 @@ package com.maxpay.sdk.model
 
 import java.io.Serializable
 
-data class MaxPayInitData(
+data class PayInitData(
     val apiVersion: Int,
     val publicKey: String,
-    val theme: MaxPayTheme? = null,
+    val theme: PayTheme? = null,
     val fieldsToShow: AvailableFields? = null
 ): Serializable
 
-data class MaxPayTheme(
+data class PayTheme(
    val  backgroundColor: Int? = null,
    val  errorColor: Int? = null,
    val  hyperlinkColor: Int? = null,  //  font size same as main text, weight semibold,
@@ -24,7 +24,7 @@ data class MaxPayTheme(
    val  fieldBackgroundColor: Int? = null,
    val  fieldTitleColor: Int? = null,
    val  fieldTextColor: Int? = null,
-   val progressBarColor: Int? = null,
+   val  progressBarColor: Int? = null,
    val  fieldTitleFont: String? = null,
    val  fieldTextFont: String? = null,
    val  fieldBackgroundCornerRadius: Float? = null,

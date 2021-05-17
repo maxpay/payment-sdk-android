@@ -2,9 +2,9 @@ package com.maxpay.sdk
 
 import android.content.Context
 import com.maxpay.sdk.data.MaxpayCallback
-import com.maxpay.sdk.model.MaxPayInitData
-import com.maxpay.sdk.model.MaxpayPaymentData
+import com.maxpay.sdk.model.PayInitData
+import com.maxpay.sdk.model.PayPaymentInfo
 
 interface SDKFacade {
-    fun pay(context: Context?, data: MaxPayInitData, maxpay: MaxpayPaymentData, callback: MaxpayCallback)
+    fun pay(context: Context?, data: PayInitData, pay: PayPaymentInfo, callback: MaxpayCallback)
 }

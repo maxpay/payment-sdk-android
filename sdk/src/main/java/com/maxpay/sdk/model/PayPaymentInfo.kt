@@ -4,7 +4,7 @@ import com.maxpay.sdk.model.request.TransactionType
 import java.io.Serializable
 import java.util.*
 
-data class MaxpayPaymentData(
+data class PayPaymentInfo(
     var transactionType: TransactionType = TransactionType.AUTH,
     var transactionId: String,
     var amount: Float,
@@ -17,14 +17,15 @@ data class MaxpayPaymentData(
     var country: String = "",
     var userPhone: String? = null,
     var userEmail: String = "",
-    var callBackUrl: String = "",
-    var redirectUrl: String = "",
+    var sale3dCallBackUrl: String = "",
+    var sale3dRedirectUrl: String = "",
+    var auth3dRedirectUrl: String? = null,
     var currency: Currency = Currency.getInstance(Locale.getDefault()),
     var birthday: String? = null
 ): Serializable
 
 
-data class MaxpaySignatureData(
+data class PaySignatureInfo(
     val api_version: Int? = null,
     val auth_type: String = "bysignature",
     val transaction_unique_id: String? = null,

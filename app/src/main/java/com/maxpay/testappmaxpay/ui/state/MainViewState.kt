@@ -3,8 +3,8 @@ package com.maxpay.testappmaxpay.ui.state
 import androidx.lifecycle.MutableLiveData
 import com.maxpay.sdk.data.MaxpayResult
 import com.maxpay.sdk.model.AvailableFields
-import com.maxpay.sdk.model.MaxPayTheme
-import com.maxpay.sdk.model.MaxpayPaymentData
+import com.maxpay.sdk.model.PayTheme
+import com.maxpay.sdk.model.PayPaymentInfo
 import com.maxpay.sdk.utils.SingleLiveEvent
 import com.maxpay.testappmaxpay.model.ProductItemtUI
 
@@ -13,9 +13,9 @@ interface MainViewState {
      val countProducts: MutableLiveData<Int>
      val fullPrice: MutableLiveData<Float>
 
-     val settings: MutableLiveData<MaxpayPaymentData>
+     val settings: MutableLiveData<PayPaymentInfo>
      val maxpayResult: SingleLiveEvent<MaxpayResult>
-     val maxPayTheme: MutableLiveData<MaxPayTheme>
+     val payTheme: MutableLiveData<PayTheme>
      val maxPayAvailableFields: MutableLiveData<AvailableFields>
      val pk: MutableLiveData<String>
 }

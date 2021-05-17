@@ -5,11 +5,11 @@ import android.graphics.Typeface
 import android.view.View
 import androidx.fragment.app.FragmentActivity
 import com.maxpay.sdk.core.ProgressActivity
-import com.maxpay.sdk.model.MaxPayTheme
+import com.maxpay.sdk.model.PayTheme
 import kotlinx.android.synthetic.main.fragment_payment.view.*
 import kotlinx.android.synthetic.main.layout_billing_address.view.*
 
-class UIComponentThemeEditor(val theme: MaxPayTheme?) {
+class UIComponentThemeEditor(val theme: PayTheme?) {
 
     fun setInputStyle(view: View?) {
         view?.let { it.run {

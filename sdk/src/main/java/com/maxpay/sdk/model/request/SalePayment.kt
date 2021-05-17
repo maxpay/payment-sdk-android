@@ -2,7 +2,7 @@ package com.maxpay.sdk.model.request
 
 import com.google.gson.annotations.SerializedName
 import com.maxpay.sdk.core.removeZero
-import com.maxpay.sdk.model.MaxpaySignatureData
+import com.maxpay.sdk.model.PaySignatureInfo
 
 internal data class SalePayment(
     @SerializedName("api_version")
@@ -47,7 +47,7 @@ internal data class SalePayment(
     val date_of_birth: String? = null  //string (YYYY-MM-DD)
 )
 
-internal fun SalePayment.toMaxpaySignatureData() = MaxpaySignatureData(
+internal fun SalePayment.toMaxpaySignatureData() = PaySignatureInfo(
     api_version = apiVersion,
     currency = currency,
     amount = amount.removeZero(),

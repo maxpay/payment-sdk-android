@@ -1,7 +1,7 @@
 package com.maxpay.testappmaxpay.utils
 
 import com.maxpay.sdk.core.removeZero
-import com.maxpay.sdk.model.MaxpaySignatureData
+import com.maxpay.sdk.model.PaySignatureInfo
 import java.security.MessageDigest
 import kotlin.reflect.full.memberProperties
 
@@ -13,7 +13,7 @@ class SignatureHelper(
 //    .getHashOfRequest(payment)
 
 
-    internal fun getHashOfRequest(request: MaxpaySignatureData): String {
+    internal fun getHashOfRequest(request: PaySignatureInfo): String {
         request.amount?.toFloat()?.let {
             return calculateHash(request, it)
         }?: kotlin.run {
@@ -22,11 +22,11 @@ class SignatureHelper(
 
     }
 
-    private fun calculateHash(sigH: MaxpaySignatureData, amount: Float): String {
+    private fun calculateHash(sigH: PaySignatureInfo, amount: Float): String {
         sigH.amount = amount.removeZero()
         var str = ""
         val arr = arrayListOf<String>()
-        for (prop in MaxpaySignatureData::class.memberProperties) {
+        for (prop in PaySignatureInfo::class.memberProperties) {
             if (prop.get(sigH) != null && !prop.get(sigH).toString().isEmpty())
                 arr.add("${prop.name}=${prop.get(sigH)}|")
         }

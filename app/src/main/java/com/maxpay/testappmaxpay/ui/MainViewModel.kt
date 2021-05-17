@@ -7,9 +7,9 @@ import com.maxpay.sdk.SdkFacadeImpl
 import com.maxpay.sdk.data.MaxpayCallback
 import com.maxpay.sdk.data.MaxpayResult
 import com.maxpay.sdk.model.AvailableFields
-import com.maxpay.sdk.model.MaxPayInitData
-import com.maxpay.sdk.model.MaxpayPaymentData
-import com.maxpay.sdk.model.MaxpaySignatureData
+import com.maxpay.sdk.model.PayInitData
+import com.maxpay.sdk.model.PayPaymentInfo
+import com.maxpay.sdk.model.PaySignatureInfo
 import com.maxpay.sdk.model.request.TransactionType
 import com.maxpay.sdk.utils.DateInterface
 import com.maxpay.testappmaxpay.core.MyAndroidViewModel
@@ -32,7 +32,7 @@ class MainViewModel(application: Application)
 
     init {
         if (_viewState.settings.value == null)
-            _viewState.settings.value = MaxpayPaymentData(currency = Currency.getInstance(Locale.getDefault()), amount = 0.0F, transactionId = "Pay${dateInterface.getCurrentTimeStamp()}")
+            _viewState.settings.value = PayPaymentInfo(currency = Currency.getInstance(Locale.getDefault()), amount = 0.0F, transactionId = "Pay${dateInterface.getCurrentTimeStamp()}")
 
         if (_viewState.maxPayAvailableFields.value == null)
             _viewState.maxPayAvailableFields.value = AvailableFields(showBillingAddressLayout = false)
@@ -85,32 +85,25 @@ class MainViewModel(application: Application)
             it.transactionId = "Pay${dateInterface.getCurrentTimeStamp()}"
             when (it.transactionType) {
                 TransactionType.SALE3D -> {
-                    it.redirectUrl = "https://callbacks.envlog.net/shopEcho.php"
-                    it.callBackUrl = "https://callbacks.envlog.net/callback.php"
+                    it.sale3dRedirectUrl = "https://callbacks.envlog.net/shopEcho.php"
+                    it.sale3dCallBackUrl = "https://callbacks.envlog.net/callback.php"
+                }
+                TransactionType.AUTH3D -> {
+                    it.auth3dRedirectUrl = "https://callbacks.envlog.net/shopEcho.php"
                 }
             }
-            val data = MaxPayInitData(
+            val data = PayInitData(
                 apiVersion = 1,
                 fieldsToShow = _viewState.maxPayAvailableFields.value,
                 publicKey = _viewState.pk.value ?: "pkLive_HzmqN88yqNwwzuCRBgboOIvVOiNAX09x",
-                theme = _viewState.maxPayTheme.value ?: null
+                theme = _viewState.payTheme.value ?: null
             )
-//            if (it.firstName.isNullOrEmpty())
-//                it.firstName = "John"
-//            if (it.lastName.isNullOrEmpty())
-//                it.lastName = "Doe"
-//            if (it.country.isNullOrEmpty())
-//                it.country = "USA"
             sdk.pay(context,data, it, object: MaxpayCallback {
-                override fun onResponseSuccess(result: MaxpayResult?) {
+                override fun onResponseResult(result: MaxpayResult?) {
                     _viewState.maxpayResult.value = result
                 }
 
-                override fun onResponceError(result: MaxpayResult?) {
-                    _viewState.maxpayResult.value = result
-                }
-
-                override fun onNeedCalculateSignature(dataForSignature: MaxpaySignatureData?,
+                override fun onNeedCalculateSignature(dataForSignature: PaySignatureInfo?,
                                                       signatureCalback: (String)-> Unit) {
                     Thread {
                         dataForSignature?.let { it1 ->

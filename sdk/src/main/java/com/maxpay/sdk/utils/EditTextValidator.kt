@@ -7,7 +7,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import com.maxpay.sdk.R
 import com.maxpay.sdk.model.InputFormLength
-import com.maxpay.sdk.model.MaxPayTheme
+import com.maxpay.sdk.model.PayTheme
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.ReplaySubject
@@ -15,7 +15,7 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import java.util.regex.Pattern
 
-class EditTextValidator(val theme: MaxPayTheme?) : KoinComponent {
+class EditTextValidator(val theme: PayTheme?) : KoinComponent {
 
     private val dateInterface: DateInterface by inject()
     private val isoCountryISOHelper: CountryISOHelper by inject()

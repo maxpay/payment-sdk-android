@@ -41,20 +41,20 @@ internal class PaymentFragment: FragmentWithToolbar(R.layout.fragment_payment) {
     private val customTabsHelper: CustomTabsHelper by inject()
     private val expiryParser: ExpiryParser by inject()
     private val editTextValidator: EditTextValidator by inject {
-        parametersOf((activity?.intent?.getSerializableExtra(Constants.Companion.Extra.MAXPAY_INIT_DATA) as MaxPayInitData).theme)
+        parametersOf((activity?.intent?.getSerializableExtra(Constants.Companion.Extra.MAXPAY_INIT_DATA) as PayInitData).theme)
     }
     private val themeEditor: UIComponentThemeEditor by inject {
-        parametersOf((activity?.intent?.getSerializableExtra(Constants.Companion.Extra.MAXPAY_INIT_DATA) as MaxPayInitData).theme)
+        parametersOf((activity?.intent?.getSerializableExtra(Constants.Companion.Extra.MAXPAY_INIT_DATA) as PayInitData).theme)
     }
-    private lateinit var maxPayInitData: MaxPayInitData
-    private lateinit var maxpayPaymentData: MaxpayPaymentData
-    private var maxpayTheme: MaxPayTheme? = null
+    private lateinit var maxPayInitData: PayInitData
+    private lateinit var payPaymentInfo: PayPaymentInfo
+    private var maxpayTheme: PayTheme? = null
 
     private val mReceiver: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
             when (intent.action) {
-                Constants.MAXPAY_BROAD_SIGNATURE_RES -> {
-                    intent.getSerializableExtra(Constants.Companion.Extra.MAXPAY_BROADCAST_SIGNATURE_DATA)
+                Constants.PAY_BROAD_SIGNATURE_RES -> {
+                    intent.getSerializableExtra(Constants.Companion.Extra.PAY_BROADCAST_SIGNATURE_DATA)
                         ?.let {
                             viewModel.pay(it as String)
                         } ?: kotlin.run {
@@ -75,12 +75,13 @@ internal class PaymentFragment: FragmentWithToolbar(R.layout.fragment_payment) {
 
 
         activity?.intent?.let {
-            maxPayInitData = it.getSerializableExtra(Constants.Companion.Extra.MAXPAY_INIT_DATA) as MaxPayInitData
-            viewModel.viewState.maxpayInitData.value = maxPayInitData
-            maxpayPaymentData = it.getSerializableExtra(Constants.Companion.Extra.MAXPAY_PAYMENT_DATA) as MaxpayPaymentData
+            maxPayInitData = it.getSerializableExtra(Constants.Companion.Extra.MAXPAY_INIT_DATA) as PayInitData
+            viewModel.viewState.payInitData.value = maxPayInitData
+            payPaymentInfo = it.getSerializableExtra(Constants.Companion.Extra.MAXPAY_PAYMENT_DATA) as PayPaymentInfo
+            viewModel.viewState.payPaymentInfo.value = payPaymentInfo
 
             maxpayTheme =
-                (it.getSerializableExtra(Constants.Companion.Extra.MAXPAY_INIT_DATA) as MaxPayInitData).theme
+                (it.getSerializableExtra(Constants.Companion.Extra.MAXPAY_INIT_DATA) as PayInitData).theme
         }
         registerReceiver()
 //        if (maxpayPaymentData.amount <= 0.0) //TODO removed  by customer
@@ -114,7 +115,7 @@ internal class PaymentFragment: FragmentWithToolbar(R.layout.fragment_payment) {
 
     private fun registerReceiver() {
         val intentFilter = IntentFilter()
-        intentFilter.addAction(Constants.MAXPAY_BROAD_SIGNATURE_RES)
+        intentFilter.addAction(Constants.PAY_BROAD_SIGNATURE_RES)
         context?.registerReceiver(mReceiver, intentFilter)
     }
 
@@ -133,8 +134,8 @@ internal class PaymentFragment: FragmentWithToolbar(R.layout.fragment_payment) {
     private fun initUIElements() {
         initVisibiltyBillingLayout()
 
-        tvFullPrice.text = "${maxpayPaymentData.currency.symbol} ${maxpayPaymentData.amount}"
-        payBtn.setText("${resources.getString(R.string.payment_pay_button_title)} ${maxpayPaymentData.amount} ${maxpayPaymentData.currency.symbol}")
+        tvFullPrice.text = "${payPaymentInfo.currency.symbol} ${payPaymentInfo.amount}"
+        payBtn.setText("${resources.getString(R.string.payment_pay_button_title)} ${payPaymentInfo.amount} ${payPaymentInfo.currency.symbol}")
 
         val customTabs = customTabsHelper
             .getTabs(ContextCompat.getColor(requireContext(), R.color.primary_green))
@@ -203,14 +204,14 @@ internal class PaymentFragment: FragmentWithToolbar(R.layout.fragment_payment) {
                              payBtn.isEnabled = isEnabled
                              themeEditor.changeButtonColorFilter(view, isEnabled)
                         }.addTo(viewModel.disposables)
-        etCountry?.setText(maxpayPaymentData.country)
-        etCity?.setText(maxpayPaymentData.city)
-        etZip?.setText(maxpayPaymentData.zip)
-        etAddr?.setText(maxpayPaymentData.address)
-        if (!maxpayPaymentData.firstName.isNullOrEmpty())
-            etName.setText(maxpayPaymentData.firstName)
-        if (!maxpayPaymentData.lastName.isNullOrEmpty())
-            etLastName.setText(maxpayPaymentData.lastName)
+        etCountry?.setText(payPaymentInfo.country)
+        etCity?.setText(payPaymentInfo.city)
+        etZip?.setText(payPaymentInfo.zip)
+        etAddr?.setText(payPaymentInfo.address)
+        if (!payPaymentInfo.firstName.isNullOrEmpty())
+            etName.setText(payPaymentInfo.firstName)
+        if (!payPaymentInfo.lastName.isNullOrEmpty())
+            etLastName.setText(payPaymentInfo.lastName)
 
         etCountry?.filters = arrayOf(InputFilter.AllCaps(), InputFilter.LengthFilter(3))
         payBtn.setOnClickListener {
@@ -249,22 +250,22 @@ internal class PaymentFragment: FragmentWithToolbar(R.layout.fragment_payment) {
 //                        || isFormLengthValid(InputFormLength(etCountry, cvCountry, Constants.Companion.RequiredLength.COUNTRY_INPUT_LENGTH)))
             )
             if (checkBoxAutoDebt.isChecked && checkBoxTermsOfUse.isChecked) {
-                maxpayPaymentData.userEmail = etEmail.text.toString()
+                payPaymentInfo.userEmail = etEmail.text.toString()
                 val cardNumber = etCardNumber.text.toString().replace(" ", "")
                 val expMonth = expiryParser.getMonth(etExpirationDate.text.toString())
                 val expYear = expiryParser.getYear(etExpirationDate.text.toString())
                 val cvv = etCvv.text.toString()
-                maxpayPaymentData.country = etCountry.text.toString()
-                maxpayPaymentData.city = etCity.text.toString().takeIf { !it.isEmpty() }?: null
-                maxpayPaymentData.zip = etZip.text.toString().takeIf { !it.isEmpty() }?: null
+                payPaymentInfo.country = etCountry.text.toString()
+                payPaymentInfo.city = etCity.text.toString().takeIf { !it.isEmpty() }?: null
+                payPaymentInfo.zip = etZip.text.toString().takeIf { !it.isEmpty() }?: null
                 val cardHolder = etCardHolderName.text.toString()
-                maxpayPaymentData.firstName = etName.text.toString().takeIf { !it.isEmpty() }?: null
-                maxpayPaymentData.lastName = etLastName.text.toString().takeIf { !it.isEmpty() }?: null
+                payPaymentInfo.firstName = etName.text.toString().takeIf { !it.isEmpty() }?: null
+                payPaymentInfo.lastName = etLastName.text.toString().takeIf { !it.isEmpty() }?: null
                 if (!etBirthday.text.toString().isNullOrEmpty())
-                    maxpayPaymentData.birthday = etBirthday.text.toString()
+                    payPaymentInfo.birthday = etBirthday.text.toString()
                 viewModel.prepareForPayment(
                     activity,
-                    paymentData = maxpayPaymentData,
+                    paymentInfo = payPaymentInfo,
                     cardHolder = cardHolder,
                     cardNumber = cardNumber,
                     cvv = cvv,
@@ -321,10 +322,10 @@ internal class PaymentFragment: FragmentWithToolbar(R.layout.fragment_payment) {
     }
 
     private fun initVisibiltyBillingLayout() {
-        val isAuthTransaction = (maxpayPaymentData.transactionType == TransactionType.AUTH
-                || maxpayPaymentData.transactionType == TransactionType.AUTH3D)
-        val showNameFields = (maxpayPaymentData.firstName.isNullOrEmpty())
-        val showCountryFields = (maxpayPaymentData.country.isNullOrEmpty())
+        val isAuthTransaction = (payPaymentInfo.transactionType == TransactionType.AUTH
+                || payPaymentInfo.transactionType == TransactionType.AUTH3D)
+        val showNameFields = (payPaymentInfo.firstName.isNullOrEmpty())
+        val showCountryFields = (payPaymentInfo.country.isNullOrEmpty())
 
         if (maxPayInitData.fieldsToShow?.showBirthdayField == true) {
             tvBDAY.visibility = View.VISIBLE
