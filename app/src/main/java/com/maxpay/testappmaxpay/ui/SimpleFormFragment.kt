@@ -74,7 +74,7 @@ class SimpleFormFragment : Fragment() {
             chooseCurrency()
         }
         viewModel.run {
-            observeCommandSafety(viewState.maxpayResult) {
+            observeCommandSafety(viewState.payResult) {
 //                it.status
                 showDialog(it.status.toString(), it.message?: "Undefined error")
 //                showInfo(it.message)

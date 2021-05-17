@@ -32,7 +32,7 @@ class PayFragment : Fragment() {
         initToolbar()
         initUIelements()
         viewModel.run {
-            observeCommandSafety(viewState.maxpayResult) {
+            observeCommandSafety(viewState.payResult) {
                 showDialog(it.status.toString(), it.message?: "Undefined error")
             }
         }

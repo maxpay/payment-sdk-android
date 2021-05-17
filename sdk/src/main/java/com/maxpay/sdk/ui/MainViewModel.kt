@@ -4,7 +4,7 @@ import android.app.Activity
 import android.app.Application
 import android.content.Intent
 import com.maxpay.sdk.core.MyAndroidViewModel
-import com.maxpay.sdk.data.MaxpayResult
+import com.maxpay.sdk.data.PayResult
 import com.maxpay.sdk.model.MaxPayRepository
 import com.maxpay.sdk.model.PayPaymentInfo
 import com.maxpay.sdk.model.PaySignatureInfo
@@ -107,7 +107,7 @@ internal class MainViewModel(application: Application)
         }
     }
 
-    fun sendBroadcastResult(activity: Activity?, data: MaxpayResult?) {
+    fun sendBroadcastResult(activity: Activity?, data: PayResult?) {
         activity?.finish()
         val intent = Intent(Constants.PAY_CALLBACK_BROADCAST)
         data?.let {

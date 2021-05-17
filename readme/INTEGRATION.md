@@ -1,6 +1,6 @@
 # Basic Integration
 
-## 1. Set up MaxPay
+## 1. Set up PaySDK
 
 First of all [register](https://my.maxpay.com/#/signup) on site [Maxpay](https://maxpay.com/) and get merchant login and password.
 
@@ -24,9 +24,9 @@ After clicking next you will see import module from library window. Find locatio
 
 
 
-### 3. Add dependency to Maxpay SDK
+### PaySDK
 
-To use MaxpaySDK inside your app, you need to provide dependency to maxpay. Click File -> Project Structure -> Choose your app module, click + button -> module dependency here you can find "maxpay_sdk" module
+To use PaySDK inside your app, you need to provide dependency to paySdk. Click File -> Project Structure -> Choose your app module, click + button -> module dependency here you can find "pay_sdk" module
 
 <img src="add_dependency.png" style="zoom:75%;" />
 
@@ -38,7 +38,7 @@ Now you can use SDK inside your application
 
 ### 4. Dependencies
 
-To use MaxpaySDK inside your app, you need to provide dependencies
+To use PaySDK inside your app, you need to provide dependencies
 
 ```groovy
 	// You can use versions upper this
@@ -63,108 +63,17 @@ To use MaxpaySDK inside your app, you need to provide dependencies
     implementation 'com.google.code.gson:gson:2.8.5'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation "androidx.browser:browser:1.2.0"
-	implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
 }
 ```
 
 
-
-### 5. Configure application theme
-
-In Maxpay sdk we are using material theme for UI, this is required to use globally material theme. 
-
-#### 5.1 Change theme of your app to Material
-
-You can change whole theme of your app to material theme "Theme.MaterialComponents.Light.NoActionBar" 
-
-```xml
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:buttonStyle">@style/AppPrimaryButton</item>
-        <item name="materialButtonStyle">@style/AppPrimaryButton</item>
-        <item name="android:actionMenuTextColor">@color/colorWhite</item>
-    </style>
-```
-
-Here you can find other material themes:
-https://material.io/develop/android/docs/getting-started#bridge-themes
-
-
-
-This change will affect your application theme, if you don`t want to make it happen:
-
-	#### 5.2 Use material bridge theme
-
-If you cannot change your theme to inherit from a Material Components theme, you can inherit from a Material Components **Bridge** theme.
-
-```xml
-<style name="Theme.MyApp" parent="Theme.MaterialComponents.Light.Bridge">
-    <!-- ... -->
-</style>
-```
-
-Both Theme.MaterialComponents and Theme.MaterialComponents.Light have .Bridge themes:
-
-- Theme.MaterialComponents.Bridge
-- Theme.MaterialComponents.Light.Bridge
-- Theme.MaterialComponents.NoActionBar.Bridge
-- Theme.MaterialComponents.Light.NoActionBar.Bridge
-- Theme.MaterialComponents.Light.DarkActionBar.Bridge
-
-Bridge themes inherit from AppCompat themes, but also define the new Material Components theme attributes for you. If you use a bridge theme, you can start using Material Design components without changing your app theme.
-
-	#### 5.3 Without changing theme
-
-If  you don`t want to change your current theme, you can use this solution to make MaxPaySDK work:
-
-```xml
-<style name="Theme.MyApp" parent="Theme.AppCompat">
-
-  <!-- Original AppCompat attributes. -->
-  <item name="colorPrimary">@color/my_app_primary_color</item>
-  <item name="colorSecondary">@color/my_app_secondary_color</item>
-  <item name="android:colorBackground">@color/my_app_background_color</item>
-  <item name="colorError">@color/my_app_error_color</item>
-
-  <!-- New MaterialComponents attributes. -->
-  <item name="colorPrimaryVariant">@color/my_app_primary_variant_color</item>
-  <item name="colorSecondaryVariant">@color/my_app_secondary_variant_color</item>
-  <item name="colorSurface">@color/my_app_surface_color</item>
-  <item name="colorOnPrimary">@color/my_app_color_on_primary</item>
-  <item name="colorOnSecondary">@color/my_app_color_on_secondary</item>
-  <item name="colorOnBackground">@color/my_app_color_on_background</item>
-  <item name="colorOnError">@color/my_app_color_on_error</item>
-  <item name="colorOnSurface">@color/my_app_color_on_surface</item>
-  <item name="scrimBackground">@color/mtrl_scrim_color</item>
-  <item name="textAppearanceHeadline1">@style/TextAppearance.MaterialComponents.Headline1</item>
-  <item name="textAppearanceHeadline2">@style/TextAppearance.MaterialComponents.Headline2</item>
-  <item name="textAppearanceHeadline3">@style/TextAppearance.MaterialComponents.Headline3</item>
-  <item name="textAppearanceHeadline4">@style/TextAppearance.MaterialComponents.Headline4</item>
-  <item name="textAppearanceHeadline5">@style/TextAppearance.MaterialComponents.Headline5</item>
-  <item name="textAppearanceHeadline6">@style/TextAppearance.MaterialComponents.Headline6</item>
-  <item name="textAppearanceSubtitle1">@style/TextAppearance.MaterialComponents.Subtitle1</item>
-  <item name="textAppearanceSubtitle2">@style/TextAppearance.MaterialComponents.Subtitle2</item>
-  <item name="textAppearanceBody1">@style/TextAppearance.MaterialComponents.Body1</item>
-  <item name="textAppearanceBody2">@style/TextAppearance.MaterialComponents.Body2</item>
-  <item name="textAppearanceCaption">@style/TextAppearance.MaterialComponents.Caption</item>
-  <item name="textAppearanceButton">@style/TextAppearance.MaterialComponents.Button</item>
-  <item name="textAppearanceOverline">@style/TextAppearance.MaterialComponents.Overline</item>
-
-</style>
-```
-
-Both Theme.MaterialComponents and Theme.MaterialComponents.Light have .Bridge themes:
 
 
 
 ## 2 Prepare data
 
 In your application create all necessary forms and request to collect all data about merchant, customer and order.
-On the basis of the information obtained create **MaxPayInitData**, **MaxpayPaymentData**.
+On the basis of the information obtained create **PayInitInfo**, **PayPaymentInfo**.
 
 ### 2.1 Prepare merchant data
 
@@ -172,10 +81,10 @@ On the basis of the information obtained create **MaxPayInitData**, **MaxpayPaym
 
 | Property     | Type            | Description                                   | Note     |
 | ------------ | --------------- | --------------------------------------------- | -------- |
-| apiVersion   | Int             | Maxpay API version                            | required |
+| apiVersion   | Int             | API version                                   | required |
 | publicKey    | String          | Merchant public key                           | required |
 | fieldsToShow | AvailableFields | Fields that need to show in billing address   | optional |
-| theme        | MaxPayTheme     | Custom theme, to change payment screen colors | optional |
+| theme        | PayTheme        | Custom theme, to change payment screen colors | optional |
 
 
 
@@ -189,40 +98,36 @@ On the basis of the information obtained create **MaxPayInitData**, **MaxpayPaym
 | showCityField            | Boolean | Set this flag if you need to city field be shown in the payment screen | optional |
 | showZipField             | Boolean | Set this flag if you need to zip field be shown in the payment screen | optional |
 | showCountryField         | Boolean | Set this flag if you need to country field be shown in the payment screen | optional |
+| showBirthdayField        | Boolean | Set this flag if you need to birthday field be shown in the payment screen | optional |
 
 
-
-**Sale3DRedirect** is just a wrapper for two redirection links.
-
-| Property    | Type   | Description                                                  | Note     |
-| ----------- | ------ | ------------------------------------------------------------ | -------- |
-| callbackURL | String | Once the order has been processed merchant will receive a final response (callback)  regarding the transaction status to this URL | required |
-| redirectURL | String | Once the verification process has been done a customer will be redirected to this URL | required |
 
 ### 2.2 Prepare customer data
 
-**MaxpayPaymentData** provides information about customer.
+**PayPaymentInfo** provides information about customer.
 
-| Property        | Type            | Description                                                  | Note     |
-| --------------- | --------------- | ------------------------------------------------------------ | -------- |
-| firstName       | String          | The first name of the customer                               | required |
-| lastName        | String          | The last name of the customer                                | required |
-| userPhone       | String          | Customer's phone number.                                     | optional |
-| email           | String          | Customer's email address                                     | required |
-| ip              | String          | Customer's IP address. Not all acquirers support IPv6 format | required |
-| city            | String          |                                                              | optional |
-| transactionType | TransactionType | Type of transaction Sale, sale3d                             | required |
-| transactionId   | Int             | Unique id                                                    | required |
-| zip             | String          |                                                              | optional |
-| address         | String          |                                                              | optional |
-| state           | String          |                                                              | optional |
-| country         | String          |                                                              | optional |
-| userEmail       | String          |                                                              | optional |
-| callBackUrl     | String          | This is needed for 3D secure                                 | optional |
-| redirectUrl     | String          | This is needed for 3D secure                                 | optional |
-| currency        | Currency        | Currency of order                                            | required |
+| Property          | Type              | Description                                                  | Note     |
+| ----------------- | ----------------- | ------------------------------------------------------------ | -------- |
+| firstName         | String            | The first name of the customer                               | required |
+| lastName          | String            | The last name of the customer                                | required |
+| userPhone         | String            | Customer's phone number.                                     | optional |
+| email             | String            | Customer's email address                                     | required |
+| ip                | String            | Customer's IP address. Not all acquirers support IPv6 format | required |
+| city              | String            |                                                              | optional |
+| transactionType   | TransactionType   | Type of transaction Sale, sale3d                             | required |
+| transactionId     | Int               | Unique id                                                    | required |
+| zip               | String            |                                                              | optional |
+| address           | String            |                                                              | optional |
+| state             | String            |                                                              | optional |
+| country           | String            |                                                              | optional |
+| userEmail         | String            |                                                              | optional |
+| sale3dCallBackUrl | String            | This is needed for 3D secure                                 | optional |
+| sale3dRedirectUrl | String            | This is needed for 3D secure                                 | optional |
+| auth3dRedirectUrl | auth3dRedirectUrl |                                                              |          |
+| currency          | Currency          | Currency of order                                            | required |
+| birthday          | String            |                                                              |          |
 
-**TransactionType** is transaction types supported by Maxpay.
+**TransactionType** is transaction types supported by PaySDK.
 
 | State  |
 | ------ |
@@ -233,54 +138,54 @@ On the basis of the information obtained create **MaxPayInitData**, **MaxpayPaym
 
 ## 3 Set up an SDKFacade
 
-Class **SDKFacade** provides information to create payment request to Maxpay service.
+Class **SDKFacade** provides information to create payment request to Pay service.
 
 ```kotlin
         val sdk: SDKFacade = SdkFacadeImpl(
-            MaxPayInitData(
+		   val initInfo = PayInitInfo(
                 apiVersion = 1,
                 fieldsToShow = AvailableFields() // Fill data class to show fields that you want to show
                 publicKey = "YourPublicKey"
-                theme = null// Or you can add your theme manually by filling MaxpayTheme data class
+                theme = null// Or you can add your theme manually by filling PayTheme data class
             )
             )
 
-			val maxPaymentData = MaxpayPaymentData() // Fill data class
-            sdk.pay(maxPaymentData, object: MaxpayCallback {
-                override fun onResponseSuccess(result: MaxpayResult?) {
-                    _viewState.maxpayResult.value = result
+			val payInfo = PayPaymentInfo() // Fill data class
+            sdk.pay(context,initInfo, payInfo, object: PayCallback {
+                override fun onResponseResult(result: PayResult?) {
+                    _viewState.payResult.value = result
                 }
 
-                override fun onResponceError(result: MaxpayResult?) {
-                    _viewState.maxpayResult.value = result
-                }
-                
-                override fun onNeedCalculateSignature(dataForSignature: MaxpaySignatureData?,
+                override fun onNeedCalculateSignature(dataForSignature: PaySignatureInfo?,
                                                       signatureCalback: (String)-> Unit) {
-					// Here using data from sdk, you need to generate signature
-                    val signature = SignatureHelper().getSignature(dataForSignature)
-                    
-                    // After it, you need to provide signature to SDK with this callback
-                    signatureCalback.invoke(signature)
-                 }
+                    Thread {
+                        dataForSignature?.let { it1 ->
+                            val signature =
+                                SignatureHelper("YOUR_PRIVATE_KEY").getHashOfRequest(
+                                    it1
+                                )
+                            signatureCalback.invoke(signature)
+                        }
+                    }.start()
                 }
+
             })
 
 ```
 
 
 
-**language** - Maxpay provides different languages for the payment page localization. Available languages English, Russian, German, French, Portuguese, Italian, Spanish, Turkish, Swedish, Norwegian, Danish, Finnish, Dutch, Irish, Polish, Lithuanian.
+**language** - PaySDK provides different languages for the payment page localization. Available languages English, Russian, German, French, Portuguese, Italian, Spanish, Turkish, Swedish, Norwegian, Danish, Finnish, Dutch, Irish, Polish, Lithuanian.
 
-## 4 Set up an MaxPayTheme
+## 4 Set up an PayTheme
 
-**MaxPayTheme** objects can be used to visually style Maxpay-provided UI.
+**PayTheme** objects can be used to visually style pay-provided UI.
 
- Here you can find sample how to customize UI by filling MaxPayTheme object
+ Here you can find sample how to customize UI by filling PayTheme object
 
 
 
-     MaxPayTheme(
+     PayTheme(
          fieldTitleColor = Color.RED,
          fieldBackgroundColor = Color.YELLOW,
          fieldTextColor = Color.CYAN,

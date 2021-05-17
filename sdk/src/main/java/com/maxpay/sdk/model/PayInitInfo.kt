@@ -2,7 +2,7 @@ package com.maxpay.sdk.model
 
 import java.io.Serializable
 
-data class PayInitData(
+data class PayInitInfo(
     val apiVersion: Int,
     val publicKey: String,
     val theme: PayTheme? = null,

@@ -17,8 +17,8 @@ import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener
 import com.maxpay.sdk.R
 import com.maxpay.sdk.core.FragmentWithToolbar
-import com.maxpay.sdk.data.MaxpayResult
-import com.maxpay.sdk.data.MaxpayResultStatus
+import com.maxpay.sdk.data.PayResult
+import com.maxpay.sdk.data.PayResultStatus
 import com.maxpay.sdk.model.*
 import com.maxpay.sdk.model.request.TransactionType
 import com.maxpay.sdk.model.response.ResponseStatus
@@ -41,12 +41,12 @@ internal class PaymentFragment: FragmentWithToolbar(R.layout.fragment_payment) {
     private val customTabsHelper: CustomTabsHelper by inject()
     private val expiryParser: ExpiryParser by inject()
     private val editTextValidator: EditTextValidator by inject {
-        parametersOf((activity?.intent?.getSerializableExtra(Constants.Companion.Extra.MAXPAY_INIT_DATA) as PayInitData).theme)
+        parametersOf((activity?.intent?.getSerializableExtra(Constants.Companion.Extra.MAXPAY_INIT_DATA) as PayInitInfo).theme)
     }
     private val themeEditor: UIComponentThemeEditor by inject {
-        parametersOf((activity?.intent?.getSerializableExtra(Constants.Companion.Extra.MAXPAY_INIT_DATA) as PayInitData).theme)
+        parametersOf((activity?.intent?.getSerializableExtra(Constants.Companion.Extra.MAXPAY_INIT_DATA) as PayInitInfo).theme)
     }
-    private lateinit var maxPayInitData: PayInitData
+    private lateinit var maxPayInitData: PayInitInfo
     private lateinit var payPaymentInfo: PayPaymentInfo
     private var maxpayTheme: PayTheme? = null
 
@@ -59,8 +59,8 @@ internal class PaymentFragment: FragmentWithToolbar(R.layout.fragment_payment) {
                             viewModel.pay(it as String)
                         } ?: kotlin.run {
                         viewModel.sendBroadcastResult(
-                            activity, MaxpayResult(
-                                MaxpayResultStatus.UNDEF,
+                            activity, PayResult(
+                                PayResultStatus.UNDEF,
                                 "UNDEF"
                             )
                         )
@@ -75,13 +75,13 @@ internal class PaymentFragment: FragmentWithToolbar(R.layout.fragment_payment) {
 
 
         activity?.intent?.let {
-            maxPayInitData = it.getSerializableExtra(Constants.Companion.Extra.MAXPAY_INIT_DATA) as PayInitData
+            maxPayInitData = it.getSerializableExtra(Constants.Companion.Extra.MAXPAY_INIT_DATA) as PayInitInfo
             viewModel.viewState.payInitData.value = maxPayInitData
             payPaymentInfo = it.getSerializableExtra(Constants.Companion.Extra.MAXPAY_PAYMENT_DATA) as PayPaymentInfo
             viewModel.viewState.payPaymentInfo.value = payPaymentInfo
 
             maxpayTheme =
-                (it.getSerializableExtra(Constants.Companion.Extra.MAXPAY_INIT_DATA) as PayInitData).theme
+                (it.getSerializableExtra(Constants.Companion.Extra.MAXPAY_INIT_DATA) as PayInitInfo).theme
         }
         registerReceiver()
 //        if (maxpayPaymentData.amount <= 0.0) //TODO removed  by customer
@@ -101,12 +101,12 @@ internal class PaymentFragment: FragmentWithToolbar(R.layout.fragment_payment) {
 
             observeCommandSafety(viewState.salePaymentResponse) {
                 val status = when(it.status) {
-                    ResponseStatus.success -> MaxpayResultStatus.SUCCESS
-                    ResponseStatus.decline -> MaxpayResultStatus.REJECTED
-                    ResponseStatus.error -> MaxpayResultStatus.ERROR
+                    ResponseStatus.success -> PayResultStatus.SUCCESS
+                    ResponseStatus.decline -> PayResultStatus.REJECTED
+                    ResponseStatus.error -> PayResultStatus.ERROR
                 }
 
-                viewModel.sendBroadcastResult(activity, MaxpayResult(status, it.message))
+                viewModel.sendBroadcastResult(activity, PayResult(status, it.message))
             }
         }
 

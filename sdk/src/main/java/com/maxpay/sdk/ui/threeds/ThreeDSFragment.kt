@@ -11,8 +11,8 @@ import android.webkit.WebViewClient
 import androidx.fragment.app.activityViewModels
 import com.maxpay.sdk.R
 import com.maxpay.sdk.core.FragmentWithToolbar
-import com.maxpay.sdk.data.MaxpayResult
-import com.maxpay.sdk.data.MaxpayResultStatus
+import com.maxpay.sdk.data.PayResult
+import com.maxpay.sdk.data.PayResultStatus
 import com.maxpay.sdk.ui.MainViewModel
 import kotlinx.android.synthetic.main.fragment_three_d_s.*
 import java.net.URLEncoder
@@ -55,7 +55,7 @@ internal class ThreeDSFragment: FragmentWithToolbar(R.layout.fragment_three_d_s)
         } else {
             viewModel.sendBroadcastResult(
                 activity,
-                MaxpayResult(MaxpayResultStatus.UNDEF, "Error ${authResponse?.message}")
+                PayResult(PayResultStatus.UNDEF, "Error ${authResponse?.message}")
             )
             return
         }
@@ -98,7 +98,7 @@ internal class ThreeDSFragment: FragmentWithToolbar(R.layout.fragment_three_d_s)
                 val authRedirect = viewModel.viewState.payPaymentInfo.value?.auth3dRedirectUrl
                 if ( (authRedirect != null && url.contains(authRedirect)) || url.contains(callBack) ) {
                     viewModel.viewState.isFromWebView.value = true
-                    viewModel.sendBroadcastResult(activity, MaxpayResult(MaxpayResultStatus.SUCCESS, "Success"))
+                    viewModel.sendBroadcastResult(activity, PayResult(PayResultStatus.SUCCESS, "Success"))
                 }
             }
 

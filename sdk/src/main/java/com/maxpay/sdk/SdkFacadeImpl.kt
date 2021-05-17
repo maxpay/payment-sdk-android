@@ -4,17 +4,17 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import com.maxpay.sdk.data.MaxpayCallback
-import com.maxpay.sdk.data.MaxpayResult
-import com.maxpay.sdk.data.MaxpayResultStatus
-import com.maxpay.sdk.model.PayInitData
+import com.maxpay.sdk.data.PayCallback
+import com.maxpay.sdk.data.PayResult
+import com.maxpay.sdk.data.PayResultStatus
+import com.maxpay.sdk.model.PayInitInfo
 import com.maxpay.sdk.model.PayPaymentInfo
 import com.maxpay.sdk.model.PaySignatureInfo
 import com.maxpay.sdk.utils.Constants
 
 class SdkFacadeImpl private constructor() : SDKFacade {
 
-    private var checkoutCallBack: MaxpayCallback? = null
+    private var checkoutCallBack: PayCallback? = null
 
     private val mReceiver: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
@@ -23,11 +23,11 @@ class SdkFacadeImpl private constructor() : SDKFacade {
                     Constants.PAY_CALLBACK_BROADCAST -> {
                         intent.getSerializableExtra(Constants.Companion.Extra.PAY_BROADCAST_DATA)
                             ?.let {
-                                this@SdkFacadeImpl.checkoutCallBack?.onResponseResult(it as? MaxpayResult)
+                                this@SdkFacadeImpl.checkoutCallBack?.onResponseResult(it as? PayResult)
                             } ?: kotlin.run {
                             this@SdkFacadeImpl.checkoutCallBack?.onResponseResult(
-                                MaxpayResult(
-                                    status = MaxpayResultStatus.REJECTED,
+                                PayResult(
+                                    status = PayResultStatus.REJECTED,
                                     message = "Unknown error"
                                 )
                             )
@@ -42,8 +42,8 @@ class SdkFacadeImpl private constructor() : SDKFacade {
                                 }
                             } ?: kotlin.run {
                             this@SdkFacadeImpl.checkoutCallBack?.onResponseResult(
-                                MaxpayResult(
-                                    status = MaxpayResultStatus.UNDEF,
+                                PayResult(
+                                    status = PayResultStatus.UNDEF,
                                     message = "Unknown error"
                                 )
                             )
@@ -70,7 +70,7 @@ class SdkFacadeImpl private constructor() : SDKFacade {
             val instance: SdkFacadeImpl by lazy { HOLDER.INSTANCE }
     }
 
-    override fun pay(context: Context?, data: PayInitData, pay: PayPaymentInfo, callback: MaxpayCallback) {
+    override fun pay(context: Context?, data: PayInitInfo, pay: PayPaymentInfo, callback: PayCallback) {
 //        SdkHelper().startSdkActivity()
 //        SdkHelper().startSdkActivity(maxpay, data, callback)
         this.checkoutCallBack = callback

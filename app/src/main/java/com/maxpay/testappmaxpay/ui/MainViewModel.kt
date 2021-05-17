@@ -4,10 +4,10 @@ import android.app.Application
 import android.content.Context
 import com.maxpay.sdk.SDKFacade
 import com.maxpay.sdk.SdkFacadeImpl
-import com.maxpay.sdk.data.MaxpayCallback
-import com.maxpay.sdk.data.MaxpayResult
+import com.maxpay.sdk.data.PayCallback
+import com.maxpay.sdk.data.PayResult
 import com.maxpay.sdk.model.AvailableFields
-import com.maxpay.sdk.model.PayInitData
+import com.maxpay.sdk.model.PayInitInfo
 import com.maxpay.sdk.model.PayPaymentInfo
 import com.maxpay.sdk.model.PaySignatureInfo
 import com.maxpay.sdk.model.request.TransactionType
@@ -92,15 +92,15 @@ class MainViewModel(application: Application)
                     it.auth3dRedirectUrl = "https://callbacks.envlog.net/shopEcho.php"
                 }
             }
-            val data = PayInitData(
+            val data = PayInitInfo(
                 apiVersion = 1,
                 fieldsToShow = _viewState.maxPayAvailableFields.value,
                 publicKey = _viewState.pk.value ?: "pkLive_HzmqN88yqNwwzuCRBgboOIvVOiNAX09x",
                 theme = _viewState.payTheme.value ?: null
             )
-            sdk.pay(context,data, it, object: MaxpayCallback {
-                override fun onResponseResult(result: MaxpayResult?) {
-                    _viewState.maxpayResult.value = result
+            sdk.pay(context,data, it, object: PayCallback {
+                override fun onResponseResult(result: PayResult?) {
+                    _viewState.payResult.value = result
                 }
 
                 override fun onNeedCalculateSignature(dataForSignature: PaySignatureInfo?,
