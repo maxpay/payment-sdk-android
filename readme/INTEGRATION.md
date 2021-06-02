@@ -160,10 +160,9 @@ Class **SDKFacade** provides information to create payment request to Pay servic
                                                       signatureCalback: (String)-> Unit) {
                     Thread {
                         dataForSignature?.let { it1 ->
-                            val signature =
-                                SignatureHelper("YOUR_PRIVATE_KEY").getHashOfRequest(
-                                    it1
-                                )
+                            // Here you need make request for your server, to calculate signature
+                            val signature = httpApi.calculateSignature(it1)
+                               
                             signatureCalback.invoke(signature)
                         }
                     }.start()
