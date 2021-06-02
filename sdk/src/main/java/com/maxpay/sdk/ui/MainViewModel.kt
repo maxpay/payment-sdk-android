@@ -5,7 +5,9 @@ import android.app.Application
 import android.content.Intent
 import com.maxpay.sdk.core.MyAndroidViewModel
 import com.maxpay.sdk.data.PayResult
+import com.maxpay.sdk.datamodule.repository.MaxPayRepositoryImpl
 import com.maxpay.sdk.model.MaxPayRepository
+import com.maxpay.sdk.model.PayGatewayInfo
 import com.maxpay.sdk.model.PayPaymentInfo
 import com.maxpay.sdk.model.PaySignatureInfo
 import com.maxpay.sdk.model.request.SalePayment
@@ -23,9 +25,12 @@ import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
+import org.koin.core.parameter.parametersOf
 
 
-internal class MainViewModel(application: Application)
+internal class MainViewModel(
+    application: Application
+)
     : MyAndroidViewModel(application), KoinComponent {
 
     private val repository: MaxPayRepository by inject()
@@ -76,7 +81,8 @@ internal class MainViewModel(application: Application)
     fun pay(signature: String) {
         viewState.tmpPaymentData.value?.let {payment ->
             payment.signature = signature
-            repository.pay(payment)
+
+            repository.pay(payment, viewState.payInitData.value?.paymentGateway)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(

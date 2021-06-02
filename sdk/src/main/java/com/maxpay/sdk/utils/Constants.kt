@@ -6,6 +6,8 @@ import androidx.annotation.StringDef
 internal class Constants{
     companion object {
 
+        const val PROD_URL = "https://gateway.maxpay.com/api/"
+        const val SANDBOX_URL = "https://gateway-sandbox.maxpay.com/api/"
         const val PAY_CALLBACK_BROADCAST = "pay_callback_BROADCAST"
         const val PAY_CALLBACK_BROADCAST_SIGNATURE = "pay_signature_broadcast"
         const val PAY_BROAD_SIGNATURE_RES = "pay_signature_RES"

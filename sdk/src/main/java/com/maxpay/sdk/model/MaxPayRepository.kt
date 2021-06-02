@@ -6,6 +6,6 @@ import com.maxpay.sdk.model.response.BaseResponse
 import io.reactivex.Single
 
 internal interface MaxPayRepository {
-    fun pay3D(salePayment: ThreeDPayment): Single<BaseResponse>
-    fun pay(authPayment: SalePayment): Single<BaseResponse>
+    fun pay3D(salePayment: ThreeDPayment, gatewayInfo: PayGatewayInfo): Single<BaseResponse>
+    fun pay(authPayment: SalePayment, gatewayInfo: PayGatewayInfo?): Single<BaseResponse>
 }

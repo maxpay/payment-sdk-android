@@ -94,7 +94,7 @@ class MainViewModel(application: Application)
                 fieldsToShow = _viewState.maxPayAvailableFields.value,
                 publicKey = _viewState.pk.value ?: "pkLive_HzmqN88yqNwwzuCRBgboOIvVOiNAX09x",
                 theme = _viewState.payTheme.value ?: null,
-                paymentGateway = PayGatewayInfo.SANDBOX
+                paymentGateway = PayGatewayInfo.PRODUCTION
             )
             sdk.pay(context, data, it, object: PayCallback {
                 override fun onResponseResult(result: PayResult?) {

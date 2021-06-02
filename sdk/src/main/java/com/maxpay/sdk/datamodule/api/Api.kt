@@ -3,6 +3,7 @@ package com.maxpay.sdk.datamodule.api
 import android.content.SharedPreferences
 import com.google.gson.GsonBuilder
 import com.maxpay.sdk.BuildConfig
+import com.maxpay.sdk.model.PayGatewayInfo
 import com.maxpay.sdk.utils.Constants
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -11,7 +12,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 import kotlin.properties.Delegates
 
-internal class Api(private val pref: SharedPreferences, key: String?) {
+internal class Api(private val pref: SharedPreferences, gatewayInfo: PayGatewayInfo?) {
 
     private val baseUrl = BuildConfig.BASE_URL
     private var retrofitClient by Delegates.notNull<Retrofit>()
@@ -42,7 +43,12 @@ internal class Api(private val pref: SharedPreferences, key: String?) {
 
         val gson = GsonBuilder().setDateFormat("yyyy-MM-dd").create()
 
-        retrofitClient = Retrofit.Builder().baseUrl(baseUrl).client(okHttpClient)
+        val url = when(gatewayInfo){
+            PayGatewayInfo.PRODUCTION -> Constants.PROD_URL
+            PayGatewayInfo.SANDBOX -> Constants.SANDBOX_URL
+            else -> Constants.SANDBOX_URL
+        }
+        retrofitClient = Retrofit.Builder().baseUrl(url).client(okHttpClient)
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
@@ -54,13 +60,9 @@ internal class Api(private val pref: SharedPreferences, key: String?) {
             return retrofitClient
         }
 
-    fun <T> createApi(classToCreate: Class<T>): T = Api(
+    fun <T> createApi(classToCreate: Class<T>, gatewayInfo: PayGatewayInfo?): T = Api(
         pref,
-        key = when (classToCreate) {
-            in apisWithAccessToken -> getPref(Constants.Companion.Token.ACCESS_TOKEN_KEY)
-            in apisWithUserAccessToken -> getPref(Constants.Companion.Token.USER_ACCESS_TOKEN_KEY)
-            else -> null
-        }
+        gatewayInfo = gatewayInfo
     ).client.create(classToCreate)
 
     private fun getPref(findKey: String)= pref.getString(findKey, "")
