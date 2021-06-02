@@ -5,9 +5,14 @@ import java.io.Serializable
 data class PayInitInfo(
     val apiVersion: Int,
     val publicKey: String,
+    val paymentGateway: PayGatewayInfo,
     val theme: PayTheme? = null,
     val fieldsToShow: AvailableFields? = null
 ): Serializable
+
+enum class PayGatewayInfo{
+    PRODUCTION, SANDBOX
+}
 
 data class PayTheme(
    val  backgroundColor: Int? = null,
