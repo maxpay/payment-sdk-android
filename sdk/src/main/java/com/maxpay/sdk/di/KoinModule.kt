@@ -4,7 +4,7 @@ import android.content.SharedPreferences
 import com.maxpay.sdk.SdkHelper
 import com.maxpay.sdk.datamodule.api.Api
 import com.maxpay.sdk.datamodule.repository.MaxPayRepositoryImpl
-import com.maxpay.sdk.model.MaxPayRepository
+import com.maxpay.sdk.datamodule.repository.MaxPayRepository
 import com.maxpay.sdk.model.PayTheme
 import com.maxpay.sdk.ui.MainViewModel
 import com.maxpay.sdk.utils.*
@@ -18,9 +18,6 @@ val viewModelModule = module {
 }
 
 val facadeModule = module {
-//    single<Context> { androidContext() }
-//    single <SDKFacade> { SdkFacadeImpl() }
-//    single { SdkFacadeImpl() }
     single { SdkHelper() }
 }
 
@@ -40,16 +37,6 @@ val utils = module {
     factory { (theme: PayTheme?) -> EditTextValidator(theme) }
     factory { (theme: PayTheme?) -> UIComponentThemeEditor(theme) }
 
-//    factory { WebViewUtil() }
-//
-//    single { FileUtil(get()) }
-//
-//    single {
-//        CustomTabsIntent.Builder()
-//            .setToolbarColor(androidApplication().resources.getColor(R.color.colorPrimary))
-//            .setShowTitle(true)
-//            .build()
-//    }
 }
 fun getPrefs(app: Application): SharedPreferences =
     app.getSharedPreferences("default", android.content.Context.MODE_PRIVATE)

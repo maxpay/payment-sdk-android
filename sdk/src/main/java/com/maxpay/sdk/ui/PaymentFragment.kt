@@ -279,15 +279,11 @@ internal class PaymentFragment: FragmentWithToolbar(R.layout.fragment_payment) {
 
         checkBoxTermsOfUse.setOnClickListener { checkEnableButton() }
         etBirthday.setOnClickListener {
-//            createDatePickerDialog(MaterialPickerOnPositiveButtonClickListener {
-//                etBirthday.setText( SimpleDateFormat("YYYY-MM-dd").format(it))
-//            })
             openDatePicker(DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
                 val c = Calendar.getInstance()
                 c[Calendar.YEAR] = year
                 c[Calendar.MONTH] = monthOfYear
                 c[Calendar.DAY_OF_MONTH] = dayOfMonth
-//
                 etBirthday.setText( SimpleDateFormat("YYYY-MM-dd").format(c.time))
             })
         }
@@ -300,15 +296,12 @@ internal class PaymentFragment: FragmentWithToolbar(R.layout.fragment_payment) {
         val day = c.get(Calendar.DAY_OF_MONTH)
         val dpd = DatePickerDialog(
             requireContext(),
-//            R.style.DialogTheme,
             callback,
             year,
             month,
             day
         )
-//        dpd.datePicker.colo
         dpd.datePicker.maxDate = c.timeInMillis
-//        dpd.datePicker.minDate = LocalDateTime.now().plusDays(1).toInstant(ZoneOffset.UTC).toEpochMilli()
         dpd.show()
     }
 
@@ -322,8 +315,6 @@ internal class PaymentFragment: FragmentWithToolbar(R.layout.fragment_payment) {
     }
 
     private fun initVisibiltyBillingLayout() {
-        val isAuthTransaction = (payPaymentInfo.transactionType == TransactionType.AUTH
-                || payPaymentInfo.transactionType == TransactionType.AUTH3D)
         val showNameFields = (payPaymentInfo.firstName.isNullOrEmpty())
         val showCountryFields = (payPaymentInfo.country.isNullOrEmpty())
 

@@ -69,9 +69,9 @@ dependencies {
     implementation 'org.koin:koin-androidx-viewmodel:2.0.1'
     implementation 'org.koin:koin-androidx-scope:2.0.1'
     implementation 'org.koin:koin-android:2.0.1'
-    implementation 'com.squareup.okhttp3:logging-interceptor:3.14.0'
-    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.5.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
+//    implementation 'com.squareup.okhttp3:logging-interceptor:3.14.0'
+//    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.5.0'
+//    implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     implementation 'com.google.code.gson:gson:2.8.5'
     implementation 'io.github.inflationx:viewpump:2.0.3'

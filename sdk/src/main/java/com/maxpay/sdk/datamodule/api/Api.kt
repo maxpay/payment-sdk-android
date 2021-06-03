@@ -14,24 +14,7 @@ import kotlin.properties.Delegates
 
 internal class Api(private val pref: SharedPreferences, gatewayInfo: PayGatewayInfo?) {
 
-    private val baseUrl = BuildConfig.BASE_URL
     private var retrofitClient by Delegates.notNull<Retrofit>()
-
-    private val apisWithUserAccessToken by lazy {
-        listOf(
-            AuthApi::class.java,
-            PayApi::class.java,
-            PayApi::class.java
-        )
-    }
-
-    private val apisWithAccessToken by lazy {
-        listOf(
-            PayApi::class.java,
-            PayApi::class.java,
-            AuthApi::class.java
-        )
-    }
 
     init {
         val okHttpClient = OkHttpClient.Builder()

@@ -5,9 +5,7 @@ import android.app.Application
 import android.content.Intent
 import com.maxpay.sdk.core.MyAndroidViewModel
 import com.maxpay.sdk.data.PayResult
-import com.maxpay.sdk.datamodule.repository.MaxPayRepositoryImpl
-import com.maxpay.sdk.model.MaxPayRepository
-import com.maxpay.sdk.model.PayGatewayInfo
+import com.maxpay.sdk.datamodule.repository.MaxPayRepository
 import com.maxpay.sdk.model.PayPaymentInfo
 import com.maxpay.sdk.model.PaySignatureInfo
 import com.maxpay.sdk.model.request.SalePayment
@@ -25,7 +23,6 @@ import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
-import org.koin.core.parameter.parametersOf
 
 
 internal class MainViewModel(

@@ -71,17 +71,13 @@ class SdkFacadeImpl private constructor() : SDKFacade {
     }
 
     override fun pay(context: Context?, data: PayInitInfo, pay: PayPaymentInfo, callback: PayCallback) {
-//        SdkHelper().startSdkActivity()
-//        SdkHelper().startSdkActivity(maxpay, data, callback)
         this.checkoutCallBack = callback
         val intentFilter = IntentFilter()
         intentFilter.addAction(Constants.PAY_CALLBACK_BROADCAST_SIGNATURE)
         intentFilter.addAction(Constants.PAY_CALLBACK_BROADCAST)
         try {
             context!!.unregisterReceiver(mReceiver)
-        } catch (e: IllegalArgumentException) {
-            e.printStackTrace()
-        }
+        } catch (e: IllegalArgumentException) {}
         context!!.registerReceiver(mReceiver, intentFilter)
 
         context.startActivity(Intent(context, SdkActivity::class.java).apply {

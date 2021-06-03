@@ -18,7 +18,6 @@ import kotlinx.android.synthetic.main.fragment_three_d_s.*
 import java.net.URLEncoder
 
 internal class ThreeDSFragment: FragmentWithToolbar(R.layout.fragment_three_d_s) {
-//    private val resultLink: String = "google.com"
     private val callBack = "https://callback.maxpay.com/callback/sale3dSecure" // TODO here must be valid callback
     private val viewModel: MainViewModel by activityViewModels()
     override fun getCurrentViewModel() = viewModel
@@ -60,33 +59,11 @@ internal class ThreeDSFragment: FragmentWithToolbar(R.layout.fragment_three_d_s)
             return
         }
 
-//        if (authResponse?.pareq.isNullOrEmpty() || authResponse?.reference.isNullOrEmpty()) {
-//            viewModel.sendBroadcastResult(
-//                activity,
-//                MaxpayResult(MaxpayResultStatus.UNDEF, "Error ${authResponse?.message}")
-//            )
-//            return
-//        }
-//        var pareq = URLEncoder.encode(authResponse?.pareq)
-//        val md = URLEncoder.encode(authResponse?.reference)
-//        val termUrl = URLEncoder.encode("https://google.com")
-//        reqData = "PaReq=$pareq&TermUrl=$termUrl&MD=$md"
-//        url?.let {
-//            maxpay_webview?.postUrl(it, reqData.toByteArray())
-//        }
-
         maxpay_webview?.settings?.javaScriptEnabled = true
         maxpay_webview?.settings?.domStorageEnabled = true
         maxpay_webview?.webViewClient = object : WebViewClient() {
             override fun onPageFinished(view: WebView, url: String) {
                 progressDialog.cancel()
-//                if (url.contains(resultLink)) {
-//                    if (parseUri(Uri.parse(url)))
-//                        sendBroadcastResult(MaxpayResult.SUCCESS)
-//                    else
-//                        sendBroadcastResult(null)
-//                    this@MaxPayActivity.finish()
-//                }
                 super.onPageFinished(view, url)
             }
 
@@ -101,17 +78,6 @@ internal class ThreeDSFragment: FragmentWithToolbar(R.layout.fragment_three_d_s)
                     viewModel.sendBroadcastResult(activity, PayResult(PayResultStatus.SUCCESS, "Success"))
                 }
             }
-
-//            override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
-//                url?.let {
-//                    if (it.contains(resultLink)) {
-//                        return true
-//                    } else
-//                        super.shouldOverrideUrlLoading(view, url)
-//                }
-//
-//                return false; // then it is not handled by default action
-//            }
         }
     }
     companion object {

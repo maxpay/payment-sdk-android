@@ -13,7 +13,6 @@ data class PayResult(
     val reference: String? = null,
     val timestamp: Long? = null,
     val authcode: String? = null,
-//    val status: String,
     val code: Int? = null
 ): Serializable
 
