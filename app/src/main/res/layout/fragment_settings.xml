@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tvTransaction"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:layout_marginEnd="15dp"
+        android:textColor="@color/colorDarkText"
+        android:textSize="@dimen/text_size_large"
+        android:textStyle="bold"
+        app:layout_constrainedHeight="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/guideline8"
+        android:text="@string/transaction" />
+
+    <segmented_control.widget.custom.android.com.segmentedcontrol.SegmentedControl
+        android:id="@+id/segmentControlTransaction"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_medium"
+        app:columnCount="4"
+        app:distributeEvenly="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvTransaction"
+        app:radius="12dp"
+        app:segments="@array/payment_types"
+        app:selectedBackgroundColor="@color/colorPrimary"
+        app:textVerticalPadding="6dp"
+        app:unSelectedStrokeColor="@color/colorPrimaryDark"
+        app:unSelectedTextColor="@color/colorDarkText" />
+
+    <TextView
+        android:id="@+id/tvTheme"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:layout_marginEnd="15dp"
+        android:textColor="@color/colorDarkText"
+        android:textSize="@dimen/text_size_large"
+        android:textStyle="bold"
+        app:layout_constrainedHeight="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/segmentControlTransaction"
+        android:text="@string/theme" />
+
+    <segmented_control.widget.custom.android.com.segmentedcontrol.SegmentedControl
+        android:id="@+id/segmentedControlTheme"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_medium"
+        app:columnCount="2"
+        app:distributeEvenly="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvTheme"
+        app:radius="12dp"
+        app:segments="@array/theme"
+        app:selectedBackgroundColor="@color/colorPrimary"
+        app:textVerticalPadding="6dp"
+        app:unSelectedStrokeColor="@color/colorPrimaryDark"
+        app:unSelectedTextColor="@color/colorDarkText" />
+
+    <TextView
+        android:id="@+id/tvCur"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:layout_marginEnd="15dp"
+        android:textColor="@color/colorDarkText"
+        android:textSize="@dimen/text_size_large"
+        android:textStyle="bold"
+        app:layout_constrainedHeight="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/segmentedControlTheme"
+        android:text="@string/currency" />
+
+    <TextView
+        android:id="@+id/tvCurrency"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:layout_marginEnd="15dp"
+        android:textColor="@color/colorDarkText"
+        android:textSize="@dimen/text_size_medium"
+        app:layout_constrainedHeight="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvCur"
+        android:text="USD" />
+
+    <TextView
+        android:id="@+id/tvChange"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:layout_marginEnd="15dp"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/text_size_medium"
+        app:layout_constrainedHeight="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvCur"
+        android:text="@string/change" />
+
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/switcherShowBilling"
+        style="@style/ColorSwitchStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Show billing layout"
+        android:textSize="12sp"
+        android:shadowColor="@color/colorPrimary"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:outlineAmbientShadowColor="@color/colorPrimary"
+        android:outlineSpotShadowColor="@color/colorPrimary"
+        app:layout_constraintTop_toBottomOf="@id/tvChange"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/switcherShowAddress"
+        style="@style/ColorSwitchStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:outlineAmbientShadowColor="@color/colorPrimary"
+        android:outlineSpotShadowColor="@color/colorPrimary"
+        android:shadowColor="@color/colorPrimary"
+        android:text="Show Address field"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/switcherShowBilling" />
+
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/switcherShowCity"
+        style="@style/ColorSwitchStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:outlineAmbientShadowColor="@color/colorPrimary"
+        android:outlineSpotShadowColor="@color/colorPrimary"
+        android:shadowColor="@color/colorPrimary"
+        android:text="Show city field"
+        android:textSize="12sp"
+        app:switchPadding="11dp"
+        app:layout_constraintBottom_toBottomOf="@+id/switcherShowAddress"
+        app:layout_constraintEnd_toStartOf="@id/switcherShowAddress"
+        app:layout_constraintHorizontal_bias="0.101"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/switcherShowAddress"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/switcherShowCountry"
+        style="@style/ColorSwitchStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:outlineAmbientShadowColor="@color/colorPrimary"
+        android:outlineSpotShadowColor="@color/colorPrimary"
+        android:shadowColor="@color/colorPrimary"
+        android:text="Show country field"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/switcherShowCity" />
+
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/switcherShowNameField"
+        style="@style/ColorSwitchStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:outlineAmbientShadowColor="@color/colorPrimary"
+        android:outlineSpotShadowColor="@color/colorPrimary"
+        android:shadowColor="@color/colorPrimary"
+        android:text="Show name field"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/switcherShowCountry"
+        app:layout_constraintEnd_toStartOf="@id/switcherShowCountry"
+        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/switcherShowCountry"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/switcherShowBirthdayField"
+        style="@style/ColorSwitchStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:outlineAmbientShadowColor="@color/colorPrimary"
+        android:outlineSpotShadowColor="@color/colorPrimary"
+        android:shadowColor="@color/colorPrimary"
+        android:text="Show birthday field"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/switcherShowZIP"
+        app:layout_constraintEnd_toStartOf="@id/switcherShowZIP"
+        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/switcherShowZIP"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/switcherShowZIP"
+        style="@style/ColorSwitchStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Show zip field"
+        android:textSize="12sp"
+        android:shadowColor="@color/colorPrimary"
+        android:outlineAmbientShadowColor="@color/colorPrimary"
+        android:outlineSpotShadowColor="@color/colorPrimary"
+        app:layout_constraintTop_toBottomOf="@id/switcherShowNameField"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/layout_simple_toolbar1"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="@dimen/height_toolbar" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

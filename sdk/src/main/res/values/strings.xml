@@ -1,0 +1,63 @@
+<resources>
+    <string name="title_activity_sdk">SdkActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="mask_credit_card_number">#### #### #### #### ###</string>
+    <string name="mask_month"><![CDATA[>__]]></string>
+    <string name="card_number">Card number</string>
+    <string name="expiry">Expiry</string>
+    <string name="cvc">CVC</string>
+    <string name="zip">Zip code</string>
+    <string name="global_error">Error</string>
+    <string name="global_info">Info</string>
+    <string name="Global_ok">Ok</string>
+    <string name="mask_expiry">##/##</string>
+    <string name="mask_cvc">####</string>
+    <string name="mask_country">###</string>
+    <string name="mask_zip_code">_____</string>
+    <string name="Global_field_empty">Field is empty</string>
+    <string name="Global_field_not_vaild">Поле неверно заполненно</string>
+
+    <string name="payment_screen_title">Add a Card</string>
+
+
+    <string name="payment_amount">Payment Amount:</string>
+    <string name="payment_email_title">Email Address</string>
+    <string name="payment_email_placeholder">youremail@gmail.com</string>
+    <string name="payment_cardnumber_title">Card number</string>
+    <string name="payment_cardnumber_placeholder">1234 5678 9123 4567</string>
+    <string name="payment_expired_title">Expiration Date</string>
+    <string name="payment_expired_placeholder">mmyy</string>
+    <string name="payment_cvv_title">CVV/CVC</string>
+    <string name="payment_cvv_placeholder"> 123</string>
+    <string name="payment_cardholder_title">Cardholder name</string>
+    <string name="payment_cardholder_placeholder">Full Name</string>
+    <string name="payment_birthday_title">Birthday</string>
+    <string name="payment_billing_header_title">Billing Address</string>
+    <string name="payment_billing_name_title">First Name</string>
+    <string name="payment_billing_last_name_title">Last Name</string>
+    <string name="payment_billing_name_placeholder">Full Name</string>
+    <string name="payment_billing_address_title">Address</string>
+    <string name="payment_billing_address_placeholder">Placeholder</string>
+    <string name="payment_billing_city_title">City</string>
+    <string name="payment_billing_city_placeholder">Placeholder</string>
+    <string name="payment_billing_zip_title">Zip</string>
+    <string name="payment_billing_zip_placeholder">55001</string>
+    <string name="payment_billing_country_title">Country</string>
+    <string name="payment_billing_country_placeholder">Placeholder</string>
+
+    <string name="terms_key">Terms of Use</string>
+    <string name="privacy_key">Privacy Policy</string>
+    <string name="maxpay_key">Maxpay</string>
+    <string name="payment_autodebit_confirmation">I confirm that an automatic debit maybe made from my card if i buy new product or a subscription payment is required</string>
+    <string name="payment_terms_and_privacy_confirmation">By clicking Pay you agree to our Terms of Use and our Privacy Policy and confirm that you have read carefully and fully understand its provisions. You may receive email message notifications from Maxpay and can op at any time.</string>
+    <string name="payment_pay_button_title">Pay now</string>
+    <string name="payment_title">Payment</string>
+    <string name="error_zero_price">Amount must be bigger than 0.0"</string>
+
+</resources>
