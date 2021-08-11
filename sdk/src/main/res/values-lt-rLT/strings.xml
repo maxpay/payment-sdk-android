@@ -31,4 +31,5 @@
     <string name="payment_email_placeholder">youremail@gmail.com</string>
     <string name="payment_billing_last_name_title">Pavardė</string>
     <string name="payment_screen_title">Pridėti kortelę</string>
+    <string name="payment_birthday_title">Gimimo data</string>
 </resources>

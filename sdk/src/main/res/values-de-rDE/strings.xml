@@ -31,4 +31,5 @@
     <string name="payment_autodebit_confirmation">Ich bin damit einverstanden, dass die Geldmittel von meiner Karte in den Fällen des Kaufs eines neuen Produktes oder bei dem Ablauf der Abonnementfrist dieses Produktes abgebucht werden.</string>
     <string name="payment_screen_title">Karte hinzufügen</string>
     <string name="payment_billing_last_name_title">Nachname</string>
+    <string name="payment_birthday_title">Geburtsdatum</string>
 </resources>

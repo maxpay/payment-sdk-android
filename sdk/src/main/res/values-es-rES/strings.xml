@@ -31,4 +31,5 @@
     <string name="payment_autodebit_confirmation">Estoy de acuerdo en deducir de fondos de mi tarjeta en caso de compra de un nuevo producto o la expiración del período de suscripción para el producto actual</string>
     <string name="payment_screen_title">Agregar tarjeta</string>
     <string name="payment_billing_last_name_title">Apellido</string>
+    <string name="payment_birthday_title">Fecha de nacimiento</string>
 </resources>

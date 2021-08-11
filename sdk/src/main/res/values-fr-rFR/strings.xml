@@ -31,4 +31,5 @@
     <string name="payment_autodebit_confirmation">Je vous autorise à prélever de l`argent sur ma carte bancaire en cas d`achat d`un nouveau produit ou d`expiration de la période de souscription au produit actuel</string>
     <string name="payment_screen_title">Ajouter une carte</string>
     <string name="payment_billing_last_name_title">Nom de famille</string>
+    <string name="payment_birthday_title">Date de naissance</string>
 </resources>

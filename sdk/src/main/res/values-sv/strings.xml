@@ -31,4 +31,5 @@
     <string name="payment_autodebit_confirmation">Jag bekräftar att mitt kort kan komma att debiteras automatiskt om jag köper en ny produkt eller en prenumerationsbetalning är begärd</string>
     <string name="payment_screen_title">lägg till kort</string>
     <string name="payment_billing_last_name_title">Efternamn</string>
+    <string name="payment_birthday_title">Födelsedatum</string>
 </resources>

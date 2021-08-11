@@ -31,4 +31,5 @@
     <string name="payment_autodebit_confirmation">Jeg bekrefter at kortet mitt kan bli belastet automatisk hvis jeg kjøper et nytt produkt eller at en abonnementsbetaling er påkrevd</string>
     <string name="payment_screen_title">Legg til kort</string>
     <string name="payment_billing_last_name_title">Etternavn</string>
+    <string name="payment_birthday_title">Fødselsdato</string>
 </resources>

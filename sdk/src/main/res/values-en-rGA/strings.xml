@@ -32,4 +32,5 @@
     <string name="payment_pay_button_title">Pay now</string>
     <string name="payment_screen_title">Add card</string>
     <string name="payment_billing_last_name_title">Last Name</string>
+    <string name="payment_birthday_title">Date of birth</string>
 </resources>

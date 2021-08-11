@@ -31,4 +31,5 @@
     <string name="payment_autodebit_confirmation">Ik bevestig dat een automatische incasso kan plaatsvinden via mijn kaart als ik een nieuw product koop of als er abonnementsgeld dient te worden betaald</string>
     <string name="payment_screen_title">Voeg een kaart toe</string>
     <string name="payment_billing_last_name_title">Achternaam</string>
+    <string name="payment_birthday_title">Geboortedatum</string>
 </resources>

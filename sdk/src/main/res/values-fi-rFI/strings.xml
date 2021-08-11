@@ -32,4 +32,5 @@
     <string name="payment_autodebit_confirmation">Vahvistan, että kortiltani voidaan veloittaa automaattinen suoritus, mikäli ostan uuden tuotteen tai mikäli tilaus tulee vastaan</string>
     <string name="payment_screen_title">Lisää kortti</string>
     <string name="payment_billing_last_name_title">Sukunimi</string>
+    <string name="payment_birthday_title">Syntymäaika</string>
 </resources>

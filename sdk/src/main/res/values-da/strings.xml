@@ -31,4 +31,5 @@
     <string name="payment_autodebit_confirmation">Jeg bekræfter, at automatisk debit må trækkes fra mit kort, hvis jeg køber nyt produkt, eller hvis en abonnementsbetaling kræves</string>
     <string name="payment_screen_title">Tilføj kort</string>
     <string name="payment_billing_last_name_title">Efternavn</string>
+    <string name="payment_birthday_title">Fødselsdato</string>
 </resources>

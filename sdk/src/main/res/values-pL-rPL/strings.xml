@@ -31,4 +31,5 @@
     <string name="payment_autodebit_confirmation">Potwierdzam, że moja karta może być automatycznie obciążona, jeśli kupuję nowy produkt lub jeśli jest wymagana opłata subskrypcyjna</string>
     <string name="payment_screen_title">Dodaj kartę</string>
     <string name="payment_billing_last_name_title">Nazwisko</string>
+    <string name="payment_birthday_title">Data urodzenia</string>
 </resources>

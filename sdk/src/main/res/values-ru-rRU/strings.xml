@@ -31,4 +31,5 @@
     <string name="payment_autodebit_confirmation">Я даю согласие на списание средств со своей карты в случаях покупки нового продукта или при истечении срока подписки на текущий продукт</string>
     <string name="payment_billing_last_name_title">Фамилия</string>
     <string name="payment_screen_title">Добавить карту</string>
+    <string name="payment_birthday_title">Дата рождения</string>
 </resources>

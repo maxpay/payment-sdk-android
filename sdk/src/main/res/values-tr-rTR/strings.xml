@@ -31,4 +31,5 @@
     <string name="payment_autodebit_confirmation">Yeni ürün aldığımda veya abonelik ödemesi gerektiğinde kartımdan otomatik olarak düşülebileceğini teyit ediyorum</string>
     <string name="payment_screen_title">Kart ekle</string>
     <string name="payment_billing_last_name_title">Soyadı</string>
+    <string name="payment_birthday_title">Doğum tarihi</string>
 </resources>

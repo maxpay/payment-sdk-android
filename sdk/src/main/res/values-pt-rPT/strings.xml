@@ -31,4 +31,5 @@
     <string name="payment_autodebit_confirmation">Concordo para retirar fundos do meu cartão em caso de compra de um novo produto ou em caso de termo do período de subscrição para o produto atual.</string>
     <string name="payment_screen_title">Adicionar cartão</string>
     <string name="payment_billing_last_name_title">Sobrenome</string>
+    <string name="payment_birthday_title">Data de nascimento</string>
 </resources>

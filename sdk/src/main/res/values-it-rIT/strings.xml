@@ -31,4 +31,5 @@
     <string name="payment_autodebit_confirmation">Sono d`accordo a prelevare fondi dalla vostra carta in caso di acquisto di un nuovo prodotto o la scadenza del periodo di abbonamento per il prodotto corrente</string>
     <string name="payment_screen_title">Aggiungi carta</string>
     <string name="payment_billing_last_name_title">Cognome</string>
+    <string name="payment_birthday_title">Data di nascita</string>
 </resources>
