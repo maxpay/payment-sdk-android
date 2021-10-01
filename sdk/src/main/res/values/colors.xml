@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#6200EE</color>
+    <color name="colorPrimaryDark">#040404</color>
+    <color name="colorAccent">#EA5D2A</color>
+    <color name="colorSecondary">#8261C5</color>
+
+    <color name="colorWindowBackground">#fff</color>
+    <color name="colorBarTransparent">#F0FFFFFF</color>
+    <color name="colorYellowPrice">#F1E44C</color>
+
+    <color name="colorWhiteTransparent">#F0FFFFFF</color>
+
+    <color name="colorDarkText">#040404</color>
+    <color name="colorLightText">#ffffff</color>
+    <color name="colorRedText">#D9615C</color>
+    <color name="colorPurpleText">@color/colorSecondary</color>
+    <color name="colorHint">#9A9A9A</color>
+    <color name="colorCheckBox">#666666</color>
+
+    <color name="colorDisabled">#9A9A9A</color>
+    <color name="colorGrey">#9A9A9A</color>
+    <color name="colorDisabledMinusButton">#F7E5E0</color>
+
+    <color name="colorToolbarTitle">@color/colorHint</color>
+
+    <color name="colorBackgroundPrimaryBtn">#EA5D2A</color>
+    <color name="colorDisableBackgroundPrimaryBtn">#F7E5E0</color>
+
+    <color name="colorBlockedWindowBackground">#4D000000</color>
+    <color name="colorWhite">#fff</color>
+    <color name="colorBackgroundValue">#F1E44C</color>
+
+    <color name="colorDarkRed">#D9615C</color>
+
+    <color name="colorLayoutThingsAttentionGrey">#EEEEEE</color>
+    <color name="colorLayoutThingsCommentGrey">#EEEEEE</color>
+
+    <color name="colorSecondaryLight">#E1E1F5</color>
+    <color name="colorLike">#57AB68</color>
+    <color name="colorDislike">#D9615C</color>
+    <color name="colorAdditionalServicesTopLabelEconom">#92D1F4</color>
+    <color name="colorAdditionalServicesTopLabelStandard">#9BD94C</color>
+    <color name="colorAdditionalProductsLabel">#819BEE</color>
+
+    <color name="colorFillRatingStar">@color/colorAccent</color>
+    <color name="colorEmptyRatingStar">@color/colorDisableBackgroundPrimaryBtn</color>
+    <color name="alertGreen">#D5F0D3</color>
+    <color name="alertRed">#FFEBEB</color>
+    <color name="editTextBackgroundColor">#F9F9FB</color>
+    <color name="editTextHintColor">#8E8E93</color>
+
+    <color name="divider_line">#E4E4E4</color>
+    <color name="primary_green">#6DB026</color>
+
+
+</resources>

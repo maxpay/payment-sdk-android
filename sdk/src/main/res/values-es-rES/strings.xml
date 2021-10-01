@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title_activity_sdk">SdkActivity</string>
+    <string name="payment_amount">Cantidad a pagar:</string>
+    <string name="payment_email_title">Dirección de correo electrónico</string>
+    <string name="payment_email_placeholder">youremail@gmail.com</string>
+    <string name="payment_cardnumber_title">Número de tarjeta</string>
+    <string name="payment_cardnumber_placeholder">1234567891234567</string>
+    <string name="payment_expired_title">Fecha de caducidad</string>
+    <string name="payment_expired_placeholder">mmaa</string>
+    <string name="payment_cvv_title">CVV/CVC</string>
+    <string name="payment_cvv_placeholder"> 123</string>
+    <string name="payment_cardholder_title">El nombre del titular</string>
+    <string name="payment_cardholder_placeholder">Full Name</string>
+    <string name="payment_billing_header_title">Billing Address</string>
+    <string name="payment_billing_name_title">Nombre propio</string>
+    <string name="payment_billing_name_placeholder">Full Name</string>
+    <string name="payment_billing_address_title">Dirección</string>
+    <string name="payment_billing_address_placeholder">Placeholder</string>
+    <string name="payment_billing_city_title">Ciudad</string>
+    <string name="payment_billing_city_placeholder">Placeholder</string>
+    <string name="payment_billing_zip_title">Código postal</string>
+    <string name="payment_billing_zip_placeholder">55001</string>
+    <string name="payment_billing_country_title">País</string>
+    <string name="payment_billing_country_placeholder">Placeholder</string>
+    <string name="payment_pay_button_title">Pague ahora</string>
+    <string name="payment_terms_and_privacy_confirmation">Al hacer clic en Pagar, aceptas nuestros Términos de uso y Política de Privacidad, y confirmas que has leído atentamente y entiendes sus disposiciones. Puedes recibir notificaciones por correo electrónico de Maxpay de las que puedes darte de baja en cualquier momento.</string>
+    <string name="maxpay_key">Maxpay</string>
+    <string name="privacy_key">Política de Privacidad</string>
+    <string name="terms_key">Términos de uso</string>
+    <string name="payment_autodebit_confirmation">Estoy de acuerdo en deducir de fondos de mi tarjeta en caso de compra de un nuevo producto o la expiración del período de suscripción para el producto actual</string>
+    <string name="payment_screen_title">Agregar tarjeta</string>
+    <string name="payment_billing_last_name_title">Apellido</string>
+    <string name="payment_birthday_title">Fecha de nacimiento</string>
+</resources>

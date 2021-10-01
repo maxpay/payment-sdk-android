@@ -1,0 +1,167 @@
+<resources>
+
+    <style name="AppThmeMPD" parent="Theme.MaterialComponents.Light.NoActionBar" />
+
+    <style name="AppThmeMPD.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="AppInputLayoutTheme" parent="AppThmeMPD">
+        <item name="colorAccent">@color/colorDisabled</item>
+        <item name="colorPrimary">@color/colorDisabled</item>
+    </style>
+    <style name="AppInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
+        <item name="theme">@style/AppInputLayoutTheme</item>
+        <item name="boxBackgroundColor">@color/colorWindowBackground</item>
+        <item name="hintTextAppearance">@style/InputLayoutHintText</item>
+        <item name="android:textColorHint">@color/colorHint</item>
+        <item name="prefixTextColor">@color/colorDarkText</item>
+        <item name="boxStrokeColor">@color/colorLayoutThingsAttentionGrey</item>
+        <item name="paddingStart">@dimen/padding_medium</item>
+        <item name="paddingEnd">@dimen/padding_medium</item>
+        <item name="android:layout_marginStart">@dimen/margin_medium</item>
+        <item name="android:layout_marginEnd">@dimen/margin_medium</item>
+    </style>
+
+    <style name="ToolbarTitleTextAppearance" parent="@style/TextAppearance.MaterialComponents.Headline6">
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textColor">@color/colorToolbarTitle</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="AppToolbarTitle">
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textColor">@color/colorToolbarTitle</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="InputLayoutHintText" parent="TextAppearance.Design.Hint">
+        <item name="android:textColor">@color/colorHint</item>
+    </style>
+
+    <style name="AppInputEditText" parent="Widget.MaterialComponents.TextInputEditText.FilledBox.Dense">
+        <item name="android:paddingStart">0dp</item>
+        <item name="android:paddingEnd">0dp</item>
+        <item name="android:paddingLeft">0dp</item>
+        <item name="android:paddingRight">0dp</item>
+        <item name="android:textColor">@color/colorDarkText</item>
+    </style>
+
+<!--    <style name="DialogTheme" parent="ThemeOverlay.AppCompat.Dialog">-->
+<!--        <item name="colorAccent">@android:color/black</item>-->
+<!--        <item name="android:textColorPrimary">@android:color/black</item>-->
+<!--    </style>-->
+    <style name="CircularProgress" parent="Theme.AppCompat.Light">
+        <item name="android:indeterminateTint">@color/colorPrimary</item>
+    </style>
+<!--    <style name="InputEditText">-->
+<!--        <item name="android:textAllCaps">true</item>-->
+<!--        <item name="android:textColor">@color/colorDarkText</item>-->
+<!--        <item name="android:textColorHint">@color/editTextHintColor</item>-->
+<!--        <item name="android:textSize">@dimen/text_size_medium</item>-->
+<!--        <item name="android:layout_gravity">center</item>-->
+<!--        <item name="android:background">@android:color/transparent</item>-->
+<!--        <item name="android:maxLines">1</item>-->
+<!--    </style>-->
+
+
+    <style name="Btn" >
+        <item name="android:textAppearance">@style/AppButtonTextAppearance</item>
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:stateListAnimator">@null</item>
+        <item name="android:background">@drawable/bg_btn_so</item>
+        <item name="backgroundTint">@android:color/transparent</item>
+        <item name="android:backgroundTintMode">src_over</item>
+        <item name="drawableTint">@color/colorSecondary</item>
+    </style>
+
+    <style name="AppButtonTextAppearance">
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textSize">@dimen/text_size_medium</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+
+    <style name="InputEditText">
+        <item name="android:textColor">@color/colorDarkText</item>
+        <item name="android:textColorHint">@color/editTextHintColor</item>
+        <item name="android:textSize">@dimen/text_size_medium</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:maxLines">1</item>
+    </style>
+
+    <style name="TextMedium">
+        <item name="android:textColor">@color/colorDarkText</item>
+        <item name="android:textColorHint">@color/editTextHintColor</item>
+        <item name="android:textSize">@dimen/text_size_medium</item>
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
+    <style name="TextLargeBold">
+        <item name="android:textColor">@color/colorDarkText</item>
+        <item name="android:textSize">@dimen/text_size_large</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextLargeBoldPrice">
+        <item name="android:textSize">@dimen/text_size_large</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/primary_green</item>
+    </style>
+
+    <style name="TextSmallCheckBox">
+        <item name="android:textColor">@color/colorCheckBox</item>
+        <item name="android:textSize">@dimen/text_size_small</item>
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
+    <style name="MyDatePickerDialogTheme" parent="android:Theme.Material.Light.Dialog">
+        <item name="android:colorAccent">@color/alertRed</item>
+
+        <!-- No need to override 'datePickerStyle' -->
+        <!-- <item name="android:datePickerStyle">@style/MyDatePickerStyle</item> -->
+    </style>
+
+    <style name="DialogTheme" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">@color/primary_green</item>
+        <item name="buttonBarPositiveButtonStyle">@style/Alert.Button.Positive</item>
+        <item name="buttonBarNegativeButtonStyle">@style/Alert.Button.Neutral</item>
+        <item name="buttonBarNeutralButtonStyle">@style/Alert.Button.Neutral</item>
+    </style>
+
+    <style name="Alert.Button.Positive" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="backgroundTint">@color/colorBarTransparent</item>
+        <item name="rippleColor">@color/colorAccent</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
+
+    <style name="Alert.Button.Neutral" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="backgroundTint">@color/colorBarTransparent</item>
+        <item name="rippleColor">@color/colorAccent</item>
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+<!--    <style name="MyDatePickerDialogTheme" parent="android:Theme.Material.Light.Dialog">-->
+<!--        <item name="android:datePickerStyle">@style/MyDatePickerStyle</item>-->
+<!--    </style>-->
+
+<!--    <style name="MyDatePickerStyle" parent="@android:style/Widget.Material.Light.DatePicker">-->
+<!--        <item name="android:headerBackground">@color/alertRed</item>-->
+<!--    </style>-->
+
+
+    <!--    <color name="colorWindowBackground">#fff</color>-->
+<!--    <color name="colorBarTransparent">#F0FFFFFF</color>-->
+<!--    <color name="colorYellowPrice">#F1E44C</color>-->
+</resources>

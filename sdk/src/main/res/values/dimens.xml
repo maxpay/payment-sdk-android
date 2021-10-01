@@ -1,0 +1,32 @@
+<resources>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="text_size_tiny">6sp</dimen>
+    <dimen name="text_size_small">12sp</dimen>
+    <dimen name="text_size_medium">16sp</dimen>
+    <dimen name="text_size_large">20sp</dimen>
+    <dimen name="margin_huge">48dp</dimen>
+
+
+    <dimen name="padding_tiny">1dp</dimen>
+    <dimen name="padding_extra_small">4dp</dimen>
+    <dimen name="padding_small">8dp</dimen>
+    <dimen name="padding_extra_medium">12dp</dimen>
+    <dimen name="padding_medium">16dp</dimen>
+    <dimen name="padding_large">24dp</dimen>
+
+    <dimen name="margin_extra_small">4dp</dimen>
+    <dimen name="margin_small">8dp</dimen>
+    <dimen name="margin_extra_medium">12dp</dimen>
+    <dimen name="margin_medium">16dp</dimen>
+    <dimen name="margin_large">24dp</dimen>
+    <dimen name="margin_extra_large">32dp</dimen>
+    <dimen name="margin_extra_super_large">58dp</dimen>
+
+
+    <dimen name="height_toolbar">56dp</dimen>
+    <dimen name="height_top_tab_layout">44dp</dimen>
+    <dimen name="height_top_tab_layout_and_toolbar">100dp</dimen>
+    <dimen name="corner_radius_card">12dp</dimen>
+    <dimen name="stroke_card_view">1dp</dimen>
+<!--    <item name="stroke_card_view" type="dimen" format="float">0.8dp</item>-->
+</resources>
