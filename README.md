@@ -6,8 +6,6 @@ The Maxpay Payment Android SDK makes it quick and easy to build a payment screen
 * [Requirements](#requirements)
 * [Installation](#installation)
 * [Integration with SDK](#integration-with-sdk)
-* 
-
 
 ## Requirements
 Android 5.0, Android studio 4.0.1, kotlin_version = "1.3.72"+

@@ -2,7 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.maxpay.sdk.payment">
 
-    <application android:supportsRtl="true">
+    <application android:supportsRtl="true"
+        android:name=".core.App">
         <activity
             android:name=".SdkActivity"
             android:label="@string/title_activity_sdk"

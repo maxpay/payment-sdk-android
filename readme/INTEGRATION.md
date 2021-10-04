@@ -4,59 +4,6 @@
 
 First of all [register](https://my.maxpay.com/#/signup) on site [Maxpay](https://maxpay.com/) and get merchant login and password.
 
-
-
-## 2. Add maven local as dependency to your project
-
-### 1. Download repo file
-
-### 2. Place repo file in your project 
-
-Add library from REPO folder to your project
-
-"YOURPROJECT/app/libs/"
-
-It will be like
-
-"YOURPROJECT/app/libs/com/maxpay/sdk"
-
-### 3. Dependencies
-
-To use PaySDK inside your app, you need to provide dependencies. You can use local maven repository. Just add maven{} to your gradle build file
-
-```groovy
-	allprojects {
-    repositories {
-        google()
-        mavenCentral()
-        jcenter()
-        flatDir {
-            dirs 'libs'
-        }
-        maven {
-            url uri("$projectDir/libs") //Here will be your sdk
-        }
-
-    }
-}
-
-In your project gradle file add
-
-dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-................................................................................
-    implementation "com.maxpay:sdk:0.1"
-................................................................................
-    testImplementation 'junit:junit:4.+'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
-}
-```
-
-
-
-
-
 ## 2 Prepare data
 
 In your application create all necessary forms and request to collect all data about merchant, customer and order.
@@ -128,13 +75,12 @@ On the basis of the information obtained create **PayInitInfo**, **PayPaymentInf
 Class **SDKFacade** provides information to create payment request to Pay service.
 
 ```kotlin
-        val sdk: SDKFacade = SdkFacadeImpl(
-		   val initInfo = PayInitInfo(
+            val sdk: SDKFacade = SDKFacade.instance
+		    val initInfo = PayInitInfo(
                 apiVersion = 1,
-                fieldsToShow = AvailableFields() // Fill data class to show fields that you want to show
-                publicKey = "YourPublicKey"
-                theme = null// Or you can add your theme manually by filling PayTheme data class
-            )
+                fieldsToShow = AvailableFields(), // Fill data class to show fields that you want to show
+                publicKey = "YourPublicKey",
+                theme = null // Or you can add your theme manually by filling PayTheme data class
             )
 
 			val payInfo = PayPaymentInfo() // Fill data class
