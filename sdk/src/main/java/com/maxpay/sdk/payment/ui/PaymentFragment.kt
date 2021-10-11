@@ -13,8 +13,6 @@ import android.view.View
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
-import com.google.android.material.datepicker.MaterialDatePicker
-import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener
 import com.maxpay.sdk.payment.R
 import com.maxpay.sdk.payment.core.FragmentWithToolbar
 import com.maxpay.sdk.payment.data.PayResult
@@ -23,6 +21,8 @@ import com.maxpay.sdk.payment.model.*
 import com.maxpay.sdk.payment.model.response.ResponseStatus
 import com.maxpay.sdk.payment.utils.*
 import com.maxpay.sdk.payment.utils.extensions.*
+import com.google.android.material.datepicker.MaterialDatePicker
+import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
@@ -40,23 +40,23 @@ internal class PaymentFragment: FragmentWithToolbar(R.layout.fragment_payment) {
     private val customTabsHelper: CustomTabsHelper by inject()
     private val expiryParser: ExpiryParser by inject()
     private val editTextValidator: EditTextValidator by inject {
-        parametersOf((activity?.intent?.getSerializableExtra(Constants.Companion.Extra.MAXPAY_INIT_DATA) as PayInitInfo).theme)
+        parametersOf((activity?.intent?.getSerializableExtra(Constants.Companion.Extra.PAY_INIT_DATA) as PayInitInfo).theme)
     }
     private val themeEditor: UIComponentThemeEditor by inject {
-        parametersOf((activity?.intent?.getSerializableExtra(Constants.Companion.Extra.MAXPAY_INIT_DATA) as PayInitInfo).theme)
+        parametersOf((activity?.intent?.getSerializableExtra(Constants.Companion.Extra.PAY_INIT_DATA) as PayInitInfo).theme)
     }
-    private lateinit var maxPayInitData: PayInitInfo
+    private lateinit var payInitInfo: PayInitInfo
     private lateinit var payPaymentInfo: PayPaymentInfo
-    private var maxpayTheme: PayTheme? = null
     val uiDispose = CompositeDisposable()
+    private var payTheme: PayTheme? = null
 
     private val mReceiver: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
             when (intent.action) {
                 Constants.PAY_BROAD_SIGNATURE_RES -> {
-                    intent.getSerializableExtra(Constants.Companion.Extra.PAY_BROADCAST_SIGNATURE_DATA)
+                    intent.getStringExtra(Constants.Companion.Extra.PAY_BROADCAST_SIGNATURE_DATA)
                         ?.let {
-                            viewModel.pay(it as String)
+                            viewModel.pay(it)
                         } ?: kotlin.run {
                         viewModel.sendBroadcastResult(
                             activity, PayResult(
@@ -75,22 +75,16 @@ internal class PaymentFragment: FragmentWithToolbar(R.layout.fragment_payment) {
 
 
         activity?.intent?.let {
-            maxPayInitData = it.getSerializableExtra(Constants.Companion.Extra.MAXPAY_INIT_DATA) as PayInitInfo
-            viewModel.viewState.payInitData.value = maxPayInitData
-            payPaymentInfo = it.getSerializableExtra(Constants.Companion.Extra.MAXPAY_PAYMENT_DATA) as PayPaymentInfo
+            payInitInfo = it.getSerializableExtra(Constants.Companion.Extra.PAY_INIT_DATA) as PayInitInfo
+            viewModel.viewState.payInitData.value = payInitInfo
+            payPaymentInfo = it.getSerializableExtra(Constants.Companion.Extra.PAY_PAYMENT_DATA) as PayPaymentInfo
             viewModel.viewState.payPaymentInfo.value = payPaymentInfo
 
-            maxpayTheme =
-                (it.getSerializableExtra(Constants.Companion.Extra.MAXPAY_INIT_DATA) as PayInitInfo).theme
+            payTheme =
+                (it.getSerializableExtra(Constants.Companion.Extra.PAY_INIT_DATA) as PayInitInfo).theme
         }
         registerReceiver()
-//        if (maxpayPaymentData.amount <= 0.0) //TODO removed  by customer
-//            viewModel.sendBroadcastResult(
-//                activity, MaxpayResult(
-//                    MaxpayResultStatus.ERROR,
-//                    resources.getString(R.string.error_zero_price)
-//                )
-//            )
+
         initUIElements()
         initThemeIfNeeded()
 
@@ -148,22 +142,22 @@ internal class PaymentFragment: FragmentWithToolbar(R.layout.fragment_payment) {
             Pair(resources.getString(R.string.terms_key), View.OnClickListener {
                 customTabs.launchUrl(
                     requireContext(),
-                    Uri.parse(Constants.Companion.Links.MAXPAY_TERMS)
+                    Uri.parse(getString(R.string.terms_url))
                 )
             }),
             Pair(resources.getString(R.string.privacy_key), View.OnClickListener {
                 customTabs.launchUrl(
                     requireContext(),
-                    Uri.parse(Constants.Companion.Links.MAXPAY_PRIVACY)
+                    Uri.parse(getString(R.string.privacy_url))
                 )
             }),
             Pair(resources.getString(R.string.maxpay_key), View.OnClickListener {
                 customTabs.launchUrl(
                     requireContext(),
-                    Uri.parse(Constants.Companion.Links.MAXPAY_CONTACT)
+                    Uri.parse(getString(R.string.contact_url))
                 )
             }),
-            theme = maxpayTheme
+            theme = payTheme
         )
 
         editTextValidator.validateETEmail(InputFormLength(etEmail, cvEmail, 0))
@@ -205,8 +199,7 @@ internal class PaymentFragment: FragmentWithToolbar(R.layout.fragment_payment) {
         editTextValidator.errorObservable
                          .observeOn(AndroidSchedulers.mainThread())
                          .subscribe {
-                             val isEnabled = !it && checkBoxAutoDebt.isChecked
-                                     && checkBoxTermsOfUse.isChecked
+                             val isEnabled = !it && checkBoxTermsOfUse.isChecked
                              payBtn?.isEnabled = isEnabled
                              themeEditor.changeButtonColorFilter(view, isEnabled)
                         }.addTo(uiDispose)
@@ -255,7 +248,7 @@ internal class PaymentFragment: FragmentWithToolbar(R.layout.fragment_payment) {
 //                (showCountryFields
 //                        || isFormLengthValid(InputFormLength(etCountry, cvCountry, Constants.Companion.RequiredLength.COUNTRY_INPUT_LENGTH)))
             )
-            if (checkBoxAutoDebt.isChecked && checkBoxTermsOfUse.isChecked) {
+            if (checkBoxTermsOfUse.isChecked) {
                 payPaymentInfo.userEmail = etEmail.text.toString()
                 val cardNumber = etCardNumber.text.toString().replace(" ", "")
                 val expMonth = expiryParser.getMonth(etExpirationDate.text.toString())
@@ -280,8 +273,6 @@ internal class PaymentFragment: FragmentWithToolbar(R.layout.fragment_payment) {
                 )
             }
         }
-
-        checkBoxAutoDebt.setOnClickListener { checkEnableButton() }
 
         checkBoxTermsOfUse.setOnClickListener { checkEnableButton() }
         etBirthday.setOnClickListener {
@@ -324,47 +315,47 @@ internal class PaymentFragment: FragmentWithToolbar(R.layout.fragment_payment) {
         val showNameFields = (payPaymentInfo.firstName.isNullOrEmpty())
         val showCountryFields = (payPaymentInfo.country.isNullOrEmpty())
 
-        if (maxPayInitData.fieldsToShow?.showBirthdayField == true) {
+        if (payInitInfo.fieldsToShow?.showBirthdayField == true) {
             tvBDAY.visibility = View.VISIBLE
             cvBirthday.visibility = View.VISIBLE
         }
-        if (maxPayInitData.fieldsToShow?.showBillingAddressLayout == true || showCountryFields || showNameFields)
+        if (payInitInfo.fieldsToShow?.showBillingAddressLayout == true || showCountryFields || showNameFields)
             layoutBillingAddress.visibility = View.VISIBLE
         else {
             layoutBillingAddress.visibility = View.GONE
             return
         }
-        if (maxPayInitData.fieldsToShow?.showNameField == true || showNameFields) {
+        if (payInitInfo.fieldsToShow?.showNameField == true || showNameFields) {
             tvName.visibility = View.VISIBLE
             cvName.visibility = View.VISIBLE
             tvLastName.visibility = View.VISIBLE
             cvLastName.visibility = View.VISIBLE
         }
 
-        if (maxPayInitData.fieldsToShow?.showAddressField == true) {
+        if (payInitInfo.fieldsToShow?.showAddressField == true) {
             tvAddr.visibility = View.VISIBLE
             cvAddress.visibility = View.VISIBLE
         }
-        if (maxPayInitData.fieldsToShow?.showCityField == true) {
+        if (payInitInfo.fieldsToShow?.showCityField == true) {
             tvCity.visibility = View.VISIBLE
             cvCity.visibility = View.VISIBLE
         }
-        if (maxPayInitData.fieldsToShow?.showZipField == true) {
+        if (payInitInfo.fieldsToShow?.showZipField == true) {
             tvZIP.visibility = View.VISIBLE
             cvZip.visibility = View.VISIBLE
-            if (maxPayInitData.fieldsToShow?.showCityField == null || maxPayInitData.fieldsToShow?.showCityField == false) {
+            if (payInitInfo.fieldsToShow?.showCityField == null || payInitInfo.fieldsToShow?.showCityField == false) {
                 tvCity.visibility = View.INVISIBLE
                 cvCity.visibility = View.INVISIBLE
             }
         }
-        if (maxPayInitData.fieldsToShow?.showCountryField == true || showCountryFields) {
+        if (payInitInfo.fieldsToShow?.showCountryField == true || showCountryFields) {
             tvCountry.visibility = View.VISIBLE
             cvCountry.visibility = View.VISIBLE
         }
     }
 
     private fun checkEnableButton() {
-        val isEnabled = checkBoxTermsOfUse.isChecked && checkBoxAutoDebt.isChecked
+        val isEnabled = checkBoxTermsOfUse.isChecked
         if (isEnabled)
             editTextValidator.checkEnableButton()
     }
@@ -372,13 +363,13 @@ internal class PaymentFragment: FragmentWithToolbar(R.layout.fragment_payment) {
     private fun initToolbar() {
         val toolbar = toolbar as Toolbar
         toolbar.title = resources.getString(R.string.payment_title)
-        maxpayTheme?.navigationBarColor?.let {
+        payTheme?.navigationBarColor?.let {
             toolbar.setBackgroundColor(it)
         }
-        maxpayTheme?.navigationBarTitleColor?.let {
+        payTheme?.navigationBarTitleColor?.let {
             toolbar.setTitleTextColor(it)
         }
-        maxpayTheme?.navigationBarTitleColor?.let {
+        payTheme?.navigationBarTitleColor?.let {
             toolbar.navigationIcon?.setColorFilter(it, PorterDuff.Mode.SRC_ATOP)
         }
 

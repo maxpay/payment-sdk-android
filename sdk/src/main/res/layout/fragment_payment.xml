@@ -318,33 +318,6 @@
                 tools:layout_editor_absoluteX="0dp" />
 
             <androidx.appcompat.widget.AppCompatCheckBox
-                android:id="@+id/checkBoxAutoDebt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_extra_medium"
-                android:layout_marginTop="@dimen/margin_medium"
-                android:layout_marginEnd="@dimen/margin_extra_medium"
-                android:layout_marginBottom="@dimen/margin_medium"
-                android:button="@drawable/auth_checkbox_selector"
-                android:paddingStart="@dimen/padding_small"
-                android:paddingEnd="0dp"
-                android:textSize="@dimen/text_size_medium"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/layoutBillingAddress" />
-
-            <TextView
-                android:id="@+id/tvDebt"
-                style="@style/TextSmallCheckBox"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_margin="@dimen/margin_medium"
-                android:text="@string/payment_autodebit_confirmation"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/checkBoxAutoDebt"
-                app:layout_constraintTop_toBottomOf="@id/layoutBillingAddress" />
-
-            <androidx.appcompat.widget.AppCompatCheckBox
                 android:id="@+id/checkBoxTermsOfUse"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -357,7 +330,7 @@
                 android:paddingEnd="0dp"
                 android:textSize="@dimen/text_size_medium"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvDebt" />
+                app:layout_constraintTop_toBottomOf="@id/layoutBillingAddress" />
 
             <TextView
                 android:id="@+id/tvTerms"
@@ -369,7 +342,7 @@
                 android:text="@string/payment_terms_and_privacy_confirmation"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/checkBoxTermsOfUse"
-                app:layout_constraintTop_toBottomOf="@id/tvDebt" />
+                app:layout_constraintTop_toBottomOf="@id/layoutBillingAddress" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/payBtn"

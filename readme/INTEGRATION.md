@@ -89,16 +89,15 @@ Class **SDKFacade** provides information to create payment request to Pay servic
                     _viewState.payResult.value = result
                 }
 
-                override fun onNeedCalculateSignature(dataForSignature: PaySignatureInfo?,
-                                                      signatureCalback: (String)-> Unit) {
-                    Thread {
-                        dataForSignature?.let { it1 ->
-                            // Here you need make request for your server, to calculate signature
-                            val signature = httpApi.calculateSignature(it1)
-                               
-                            signatureCalback.invoke(signature)
+                override fun onNeedCalculateSignature(dataForSignature: String,
+                                                      signatureCallback: (String)-> Unit) {
+
+                    // Here you need make request for your server, to calculate signature                                    
+                    httpApi.calculateSignature(dataForSignature) { response ->
+                        if(response.isSuccess) {
+                            signatureCallback.invoke(response.data.signature)
                         }
-                    }.start()
+                    }                                    
                 }
 
             })

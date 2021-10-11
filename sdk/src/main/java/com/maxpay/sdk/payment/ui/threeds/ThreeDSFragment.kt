@@ -18,7 +18,6 @@ import kotlinx.android.synthetic.main.fragment_three_d_s.*
 import java.net.URLEncoder
 
 internal class ThreeDSFragment: FragmentWithToolbar(R.layout.fragment_three_d_s) {
-    private val callBack = "https://callback.maxpay.com/callback/sale3dSecure" // TODO here must be valid callback
     private val viewModel: MainViewModel by activityViewModels()
     override fun getCurrentViewModel() = viewModel
 
@@ -40,15 +39,16 @@ internal class ThreeDSFragment: FragmentWithToolbar(R.layout.fragment_three_d_s)
         viewModel.viewState.savedSomething
         val url = authResponse?.accessUrl
         if (!url.isNullOrEmpty() ) {
-            if (authResponse.pareq.isNullOrEmpty())
-                maxpay_webview.loadUrl(url)
+            if (authResponse.pareq.isEmpty())
+                pay_webview.loadUrl(url)
             else {
-                val pareq = URLEncoder.encode(authResponse?.pareq)
-                val md = URLEncoder.encode(authResponse?.reference)
-                val termUrl = URLEncoder.encode(callBack)
+                val authRedirect = viewModel.viewState.payPaymentInfo.value?.auth3dRedirectUrl
+                val pareq = URLEncoder.encode(authResponse.pareq)
+                val md = URLEncoder.encode(authResponse.reference)
+                val termUrl = URLEncoder.encode(authRedirect)
                 reqData = "PaReq=$pareq&TermUrl=$termUrl&MD=$md"
-                url?.let {
-                    maxpay_webview?.postUrl(it, reqData.toByteArray())
+                url.let {
+                    pay_webview?.postUrl(it, reqData.toByteArray())
                 }
             }
         } else {
@@ -59,9 +59,9 @@ internal class ThreeDSFragment: FragmentWithToolbar(R.layout.fragment_three_d_s)
             return
         }
 
-        maxpay_webview?.settings?.javaScriptEnabled = true
-        maxpay_webview?.settings?.domStorageEnabled = true
-        maxpay_webview?.webViewClient = object : WebViewClient() {
+        pay_webview?.settings?.javaScriptEnabled = true
+        pay_webview?.settings?.domStorageEnabled = true
+        pay_webview?.webViewClient = object : WebViewClient() {
             override fun onPageFinished(view: WebView, url: String) {
                 progressDialog.cancel()
                 super.onPageFinished(view, url)
@@ -73,7 +73,7 @@ internal class ThreeDSFragment: FragmentWithToolbar(R.layout.fragment_three_d_s)
                     progressDialog.cancel()
                 }
                 val authRedirect = viewModel.viewState.payPaymentInfo.value?.auth3dRedirectUrl
-                if ( (authRedirect != null && url.contains(authRedirect)) || url.contains(callBack) ) {
+                if ( (authRedirect != null && url.contains(authRedirect))) {
                     viewModel.viewState.isFromWebView.value = true
                     viewModel.sendBroadcastResult(activity, PayResult(PayResultStatus.SUCCESS, "Success"))
                 }

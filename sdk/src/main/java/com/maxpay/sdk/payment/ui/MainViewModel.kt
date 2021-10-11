@@ -5,12 +5,10 @@ import android.app.Application
 import android.content.Intent
 import com.maxpay.sdk.payment.core.MyAndroidViewModel
 import com.maxpay.sdk.payment.data.PayResult
-import com.maxpay.sdk.payment.datamodule.repository.MaxPayRepository
+import com.maxpay.sdk.payment.datamodule.repository.PayRepository
 import com.maxpay.sdk.payment.model.PayPaymentInfo
-import com.maxpay.sdk.payment.model.PaySignatureInfo
-import com.maxpay.sdk.payment.model.request.SalePayment
+import com.maxpay.sdk.payment.model.request.PaymentDto
 import com.maxpay.sdk.payment.model.request.TransactionType
-import com.maxpay.sdk.payment.model.request.toMaxpaySignatureData
 import com.maxpay.sdk.payment.model.response.ResponseStatus
 import com.maxpay.sdk.payment.ui.navigation.SDKNavigation
 import com.maxpay.sdk.payment.ui.navigation.ThreeDSNavigation
@@ -27,10 +25,9 @@ import org.koin.core.component.inject
 
 internal class MainViewModel(
     application: Application
-)
-    : MyAndroidViewModel(application), KoinComponent {
+) : MyAndroidViewModel(application), KoinComponent {
 
-    private val repository: MaxPayRepository by inject()
+    private val repository: PayRepository by inject()
     private val ipHelper: IpHelper by inject()
 
     private val _viewState = PaymentViewStateImpl()
@@ -41,10 +38,12 @@ internal class MainViewModel(
     val mainNavigation: SingleLiveEvent<SDKNavigation>
         get() = _mainNavigation
 
-    fun prepareForPayment(activity: Activity?, paymentInfo: PayPaymentInfo, cardNumber: String,
-                          expMonth: String, expYear: String, cvv: String, cardHolder: String) {
+    fun prepareForPayment(
+        activity: Activity?, paymentInfo: PayPaymentInfo, cardNumber: String,
+        expMonth: String, expYear: String, cvv: String, cardHolder: String
+    ) {
         state.value = StateEnum.UNITERUPTEDLOADING
-        val payment = SalePayment(
+        val payment = PaymentDto(
             apiVersion = _viewState.payInitData.value?.apiVersion,
             transactionId = paymentInfo.transactionId,
             transactionType = paymentInfo.transactionType,
@@ -65,18 +64,25 @@ internal class MainViewModel(
             userEmail = paymentInfo.userEmail,
             userIp = ipHelper.getUserIp(),
             publicKey = _viewState.payInitData.value?.publicKey,
-            date_of_birth = paymentInfo.birthday
+            date_of_birth = paymentInfo.birthday,
+            merchantUserID = paymentInfo.merchantInfo?.merchantUserID,
+            merchantDomainName = paymentInfo.merchantInfo?.merchantDomainName,
+            merchantAffiliateID = paymentInfo.merchantInfo?.merchantAffiliateID,
+            merchantProductName = paymentInfo.merchantInfo?.merchantProductName,
+            merchantDescriptor = paymentInfo.merchantInfo?.merchantDescriptor,
+            merchantPhone = paymentInfo.merchantInfo?.merchantPhone,
+            midReference = paymentInfo.merchantInfo?.midReference
         )
         if (!paymentInfo.sale3dRedirectUrl.isNullOrEmpty() && !paymentInfo.sale3dCallBackUrl.isNullOrEmpty()) {
             payment.redirectUrl = paymentInfo.sale3dRedirectUrl
             payment.callBackUrl = paymentInfo.sale3dCallBackUrl
         }
-        _viewState.tmpPaymentData.value = payment
-        sendBroadcastData(activity, payment.toMaxpaySignatureData())
+        _viewState.tmpPaymentDtoData.value = payment
+        sendSignatureRequestData(activity, payment.generateDataForSignature())
     }
 
     fun pay(signature: String) {
-        viewState.tmpPaymentData.value?.let {payment ->
+        viewState.tmpPaymentDtoData.value?.let { payment ->
             payment.signature = signature
 
             repository.pay(payment, viewState.payInitData.value?.paymentGateway)
@@ -86,23 +92,22 @@ internal class MainViewModel(
                     onSuccess = {
                         if (it.status == ResponseStatus.success) {
                             state.value = StateEnum.COMPLETE
-                            when (payment.transactionType) {
-                                TransactionType.AUTH3D, TransactionType.SALE3D ->
-                                    _viewState.authPaymentResponse.value = it
-                                else -> _viewState.salePaymentResponse.value = it
+                        }
+
+                        when (payment.transactionType) {
+
+                            TransactionType.AUTH3D, TransactionType.SALE3D -> {
+                                _viewState.authPaymentResponse.value = it
                             }
 
-                        } else {
-                            when (payment.transactionType) {
-                                TransactionType.AUTH3D, TransactionType.SALE3D ->
-                                    _viewState.authPaymentResponse.value = it
-                                else -> _viewState.salePaymentResponse.value = it
+                            else -> {
+                                _viewState.salePaymentResponse.value = it
                             }
                         }
-                        _viewState.tmpPaymentData.value = null
+                        _viewState.tmpPaymentDtoData.value = null
                     },
                     onError = {
-                        _viewState.tmpPaymentData.value = null
+                        _viewState.tmpPaymentDtoData.value = null
                         errorMessage = "${it.message}"
                         state.postValue(StateEnum.ERROR)
                     }
@@ -120,9 +125,9 @@ internal class MainViewModel(
         activity?.sendBroadcast(intent)
     }
 
-    fun sendBroadcastData(activity: Activity?, data: PaySignatureInfo?) {
+    private fun sendSignatureRequestData(activity: Activity?, data: String) {
         val intent = Intent(Constants.PAY_CALLBACK_BROADCAST_SIGNATURE)
-        data?.let {
+        data.let {
             intent.setPackage(activity?.packageName)
             intent.putExtra(Constants.Companion.Extra.PAY_BROADCAST_SIGNATURE_DATA, data)
         }

@@ -39,7 +39,7 @@ android {
 
 dependencies {
   // ...
-  implementation 'com.maxpay.android:sdk-payment:1.0.0'
+  implementation 'com.maxpay.android:sdk-payment:1.1.0'
 }
 ```
 

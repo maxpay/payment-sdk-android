@@ -9,7 +9,6 @@ import com.maxpay.sdk.payment.data.PayResult
 import com.maxpay.sdk.payment.data.PayResultStatus
 import com.maxpay.sdk.payment.model.PayInitInfo
 import com.maxpay.sdk.payment.model.PayPaymentInfo
-import com.maxpay.sdk.payment.model.PaySignatureInfo
 import com.maxpay.sdk.payment.utils.Constants
 
 internal class SdkFacadeImpl private constructor() : SDKFacade {
@@ -35,10 +34,10 @@ internal class SdkFacadeImpl private constructor() : SDKFacade {
                         context.unregisterReceiver(this)
                     }
                     Constants.PAY_CALLBACK_BROADCAST_SIGNATURE -> {
-                        intent.getSerializableExtra(Constants.Companion.Extra.PAY_BROADCAST_SIGNATURE_DATA)
+                        intent.getStringExtra(Constants.Companion.Extra.PAY_BROADCAST_SIGNATURE_DATA)
                             ?.let {
-                                this@SdkFacadeImpl.checkoutCallBack?.onNeedCalculateSignature(it as? PaySignatureInfo) {
-                                    sendBroadcastData(context, it)
+                                this@SdkFacadeImpl.checkoutCallBack?.onNeedCalculateSignature(it) { signature ->
+                                    sendBroadcastData(context, signature)
                                 }
                             } ?: kotlin.run {
                             this@SdkFacadeImpl.checkoutCallBack?.onResponseResult(
@@ -67,7 +66,6 @@ internal class SdkFacadeImpl private constructor() : SDKFacade {
         val INSTANCE = SdkFacadeImpl()
     }
 
-
     override fun pay(context: Context?, data: PayInitInfo, pay: PayPaymentInfo, callback: PayCallback) {
         this.checkoutCallBack = callback
         val intentFilter = IntentFilter()
@@ -79,9 +77,9 @@ internal class SdkFacadeImpl private constructor() : SDKFacade {
         context?.registerReceiver(mReceiver, intentFilter)
 
         context?.startActivity(Intent(context, SdkActivity::class.java).apply {
-            putExtra(Constants.Companion.Extra.MAXPAY_INIT_DATA, data)
-            putExtra(Constants.Companion.Extra.MAXPAY_PAYMENT_DATA, pay)
-            putExtra(Constants.Companion.Extra.MAXPAY_CUSTOM_THEME_DATA, data.theme)
+            putExtra(Constants.Companion.Extra.PAY_INIT_DATA, data)
+            putExtra(Constants.Companion.Extra.PAY_PAYMENT_DATA, pay)
+            putExtra(Constants.Companion.Extra.PAY_CUSTOM_THEME_DATA, data.theme)
             flags = Intent.FLAG_ACTIVITY_NEW_TASK
         })
     }

@@ -21,7 +21,7 @@ ext.androidx_legacy_version = "1.0.0"
 
 ext {
     PUBLISH_GROUP_ID = 'com.maxpay.android'
-    PUBLISH_VERSION = '1.0.0'
+    PUBLISH_VERSION = '1.1.0'
     PUBLISH_ARTIFACT_ID = 'sdk-payment'
 }
 
@@ -31,9 +31,6 @@ android {
     compileSdkVersion 30
     buildToolsVersion "30.0.2"
     flavorDimensions "default"
-    dexOptions {
-        javaMaxHeapSize "4G"
-    }
 
     defaultConfig {
         minSdkVersion 21

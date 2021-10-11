@@ -14,7 +14,9 @@ internal object CheckPermissionsUtils {
         val granted = requestPermissionList.size == 0
         if (!granted) {
             val array = arrayOfNulls<String>(requestPermissionList.size)
-            ActivityCompat.requestPermissions(activity, requestPermissionList.toTypedArray(), Constants.PERMISSION)
+            ActivityCompat.requestPermissions(activity, requestPermissionList.toTypedArray(),
+                Constants.PERMISSION
+            )
         }
         return granted
     }

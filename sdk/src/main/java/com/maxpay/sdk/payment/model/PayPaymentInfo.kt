@@ -5,12 +5,7 @@ import java.io.Serializable
 import java.util.*
 
 /**
- * Prepare payment information, and start payment activity
- *
- * @param context context
- * @param data Initialisation data info
- * @param pay Payment information
- * @param callback Here you will get signature calculation callback, and response result
+ * Payment information
  */
 data class PayPaymentInfo(
     var transactionType: TransactionType = TransactionType.AUTH,
@@ -29,29 +24,8 @@ data class PayPaymentInfo(
     var sale3dRedirectUrl: String = "",
     var auth3dRedirectUrl: String? = null,
     var currency: Currency = Currency.getInstance(Locale.getDefault()),
-    var birthday: String? = null
+    var birthday: String? = null,
+    var merchantInfo: PayMerchantInfo? = null
 ): Serializable
 
-
-data class PaySignatureInfo(
-    val api_version: Int? = null,
-    val auth_type: String = "bysignature",
-    val transaction_unique_id: String? = null,
-    val transaction_type: String? = null,
-    var amount: String? = null,
-    val currency: String? = null,
-    val first_name: String? = null,
-    val last_name: String? = null,
-    val address: String? = null,
-    val city: String? = null,
-    val state: String? = null,
-    val zip: String? = null,
-    val country: String? = null,
-    val user_phone: String? = null,
-    val user_email: String? = null,
-    val user_ip: String? = null,
-    val callback_url: String? = null,
-    val redirect_url: String? = null,
-    val date_of_birth: String? = null
-): Serializable
 

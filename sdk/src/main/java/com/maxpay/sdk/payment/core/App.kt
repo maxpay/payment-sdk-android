@@ -13,7 +13,6 @@ internal class App: Application() {
 
             modules(
                 listOf(
-                    facadeModule,
                     viewModelModule,
                     utils,
                     dataModule
